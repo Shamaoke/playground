@@ -1,0 +1,38 @@
+
+##
+## ::: C++ references :::
+##
+
+playground_dir = /home/user/.development/playground
+source_dir = $playground_dir/cpp/cpp-references/source
+
+cxxflags = -fansi-escape-codes -fcolor-diagnostics
+
+rule compile_lib
+  command = clang++ $cxxflags -shared -o $out $in
+  description = Building CXX shared object $out
+
+rule compile
+  command = clang++ $cxxflags -c -o $out $in
+  description = Building CXX object $out
+
+# Check RPATH with `readelf -d|--dynamic bin/main`
+# -d|--dynamic -- Display the dynamic section (if present)
+rule link
+  command = clang++ $cxxflags -rpath lib -o $out $in
+  description = Linking CXX dynamic library $out
+
+#
+# Run with `PATH=PATH:bin LD_LIBRARY_PATH=LD_LIBRARY_PATH:lib main`
+# rule link
+#   command = clang++ -o $out $in
+#
+
+build main.o: compile $source_dir/main.cpp
+
+build examples.so: compile_lib $source_dir/examples.cpp
+
+build main: link examples.so main.o
+
+default main
+

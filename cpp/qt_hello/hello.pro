@@ -1,0 +1,9 @@
+
+TEMPLATE = app
+TARGET = hello
+INCLUDEPATH += .
+QT += widgets
+DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000
+SOURCES += hello.cpp
+DESTDIR = _build
+
