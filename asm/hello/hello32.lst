@@ -1,0 +1,27 @@
+     1                                 %line 1+1 hello32.asm
+     2                                 
+     3                                 
+     4                                 
+     5                                 [section .data]
+     6 00000000 48656C6C6F2C20776F-     msg db "Hello, world!", 0xa
+     7 00000000 726C64210A         
+     8                                  .len equ $ - msg
+     9                                 
+    10                                 [section .bss]
+    11                                 
+    12                                 [section .text]
+    13                                 [global _start]
+    14                                 
+    15                                 _start:
+    16 00000000 B804000000              mov eax, 0x4
+    17 00000005 BB01000000              mov ebx, 0x1
+    18 0000000A B9[00000000]            mov ecx, msg
+    19 0000000F BA0E000000              mov edx, msg.len
+    20 00000014 CD80                    int 0x80
+    21                                 
+    22 00000016 83F00E                  xor eax, msg.len
+    23 00000019 93                      xchg eax, ebx
+    24 0000001A B801000000              mov eax, 1
+    25 0000001F CD80                    int 0x80
+    26                                 
+    27                                 
