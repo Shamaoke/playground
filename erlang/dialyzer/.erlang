@@ -1,0 +1,8 @@
+%%
+%% ::: Erlang :::
+%%
+%% Commands in this file are executed when the Erlang REPL is started
+%%
+
+io:format("Rabbit say hello!~s").
+
