@@ -1,0 +1,138 @@
+#! /usr/bin/env zsh
+
+##
+# References
+# ----------
+#
+# • The Z Shell Manual, p. 45, 14.3 Parameter Expansion
+#
+# • Zsh Reference Card, p. 3, 4 Parameter Expansion
+#
+
+# function sample {
+#   echo ${hsh}  #~> 'one two three'
+#   echo ${1}    #~> 'hsh'
+#   echo ${(P)1} #~> 'one two three'
+# }
+
+# function main TRAPEXIT {
+  # local one='two'
+  # local two='three'
+
+  # The (P) flag interprets the _value_ of a parameter as a
+  # name of another parameter, so `${(P)name}` expands to
+  # the value of another parameter.
+  # echo ${(P)one} == ${two} #~> 'three'
+
+  # local -A hsh=(a one b two c three)
+
+  # If we pass a string as a function argument it expands to
+  # a parameter name and the value of the parameter will be
+  # used as ${(P)1} inside the function.
+  # sample 'hsh' #~> ${1}     => hsh
+  #              #~> ${(P)1}  => 'one two three'
+  #              #~> ${(Pk)1} => 'a b c'
+# }
+
+function main TRAPEXIT {
+  ##
+  # ::: ${spec:mod} :::
+  # Apply a history modifier mod
+  #
+  # a — turn a relative path into an absolute one
+  # local p1=../one/two/three
+  # echo ${p1:a} #-> `/home/user/development/playground/one/two/three`
+  #
+  # e — get a filename extension
+  # local p2=../one/two/three.txt
+  # echo ${p2:e} #-> `txt`
+  #
+  # h - get the head of a path (counting from the end)
+  # local p3=../one/two/three
+  # echo ${p3:h} #-> `../one/two`
+  #
+  # t — get the tail of a path (removing the head)
+  # local p4=../one/two/three.txt
+  # echo ${p4:t} #-> `three.txt`
+  #
+  # r — remove filename extension
+  # local p5=../one/two/three.txt
+  # echo ${p5:r}   #-> `../one/two/three`
+  # echo ${p5:t:r} #-> `three`
+  #
+  # s/l/r — substitute `l` for `r` any symbols can be used
+  # to separate `l` from `r`
+  # local    p6=../two/one/two/three
+  # local -a a1=(two one two three)
+  #
+  # echo ${p6:s/two/too}  #-> `../too/one/two/three`
+  # echo ${p6:gs/two/too} #-> `../too/one/too/three`
+  #
+  # echo ${p6:gs%/% → } #-> `.. → two → one → two → three`
+  # echo ${p6:gs-/- → } #-> the same
+  #
+  # echo ${a1:s/two/too}  #-> `too one too three`
+  #
+  # f    — repeat any following modifier until the end
+  # F(n) — repeat any following modifier n times (n can be
+  # any expression which evaluates to a number
+  # local    p7=../two/one/two/three/two
+  # local -a a2=(-1 -2 -3 -4)
+  #
+  # echo ${p7:fs/two/too}        #-> `../too/one/too/three/too`
+  # echo ${p7:F(2)s/two/too}     #-> `../too/one/too/three/two`
+  # echo ${p7:F(1 + 1)s/two/too} #-> the same
+  #
+  # echo ${a2:F(${#a2})s/-/+} #-> `+1 +2 +3 +4`
+  #                           # ${#a2} is the size of a2, that is `4`,
+  #                           # thus F(${#a2}) == F(4)
+  #
+  # w      — apply the following modifier to each word
+  # W(sep) — apply the following modifier to each word, where
+  # worlds are separated by `sep`
+  # local    p8=one.txt/two.txt/three.txt
+  # local -a a3=(one.txt two.txt three.txt)
+  #
+  # echo ${a3:wr}    #-> `one two three`
+  # echo ${p8:W(/)r} #-> `one/two/three`
+  #
+  # Reference
+  # ---------
+  # The Z Shell Manual, 14.1.4 Modifiers, p. 42
+  #
+
+  ##
+  # ::: ${name#pattern} | ${name%pattern} :::
+  #
+  # Substitute the value of `name` with `pattern` removed
+  # from the beginning (`#`) or the end (`%`) of the `name`.
+  #
+  # Everything matching the pattern will be removed up to
+  # the first occurrence of a pattern (`#`, `%`) or the last
+  # occurrence of it (`##`, `%`).
+  #
+  # local p1=one/two/three/four
+  #
+  # local r1=${p1#*/}  #-> `two/three/four`
+  # local r2=${p1##*/} #-> `four`
+  # local r3=${p1%/*}  #-> `one/two/three`
+  # local r4=${p1%%/*} #-> `one`
+  #
+  # print ' #*/' $r1
+  # print '##*/' $r2
+  # print ' %/*' $r3
+  # print '%%/*' $r4
+  #
+  # Reference
+  # ---------
+  # The Z Shell Manual, 14.3 Parameter Expansion, p. 47
+  #
+
+  #
+  #  local -a files=(one.txt two.txt three.txt)
+  #
+  #  print $files:wr
+  #
+}
+
+# vim: set textwidth=60 colorcolumn=60:

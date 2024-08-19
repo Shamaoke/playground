@@ -1,0 +1,164 @@
+#! /usr/bin/env zsh
+
+function while_parse {
+  local one
+  local two
+  local three
+
+  while [[ "$#" -gt 0 ]]
+  do
+    case $1 {
+      (-o|--one) one="$2"; shift ;;
+      (-t|--two) two="$2"; shift ;;
+      (-h|--three) three="$2"; shift ;;
+      (*) echo "Unknown parameter passed: $1"; shift;;
+    }
+    shift
+  done
+
+  echo ${one:-undefined}
+  echo ${two:-undefined}
+  echo ${three:-undefined}
+}
+
+function foreach_parse {
+  local -A options=($@)
+
+  local one
+  local two
+  local three
+
+  foreach k v (${(kv)options}) {
+     one=${options[--one]:-undefined}
+     two=${options[--two]:-undefined}
+     three=${options[--three]:-undefined}
+  }
+
+  echo ${one:-not set}
+  echo ${two:-not set}
+  echo ${three:-not set}
+}
+
+function assoc_parse {
+  local -A options=($@)
+
+  local one=${options[-o]:-${options[--one]:-undefined}}
+  local two=${options[-t]:-${options[--two]:-undefined}}
+  local three=${options[-h]:-${options[--three]:-undefined}}
+
+  echo $one
+  echo $two
+  echo $three
+}
+
+function match_parse {
+  local -a options=($@)
+
+  local one
+  local two
+  local three
+
+  local a
+  local b
+  local c
+
+  #
+  # one=${${(R)${(M)options##*--one=*}#--one=}:-undefined}
+  # two=${${(R)${(M)options##*--two=*}#--two=}:-undefined}
+  # three=${${(R)${(M)options##*--three=*}#--three=}:-undefined}
+  #
+
+  #
+  # setopt extendedglob
+  #
+  # one=${${(M)options##--one=*}/(#b)--one=(*)/$match[1]}
+  # two=${${(M)options##--two=*}/(#b)--two=(*)/$match[1]}
+  # three=${${(M)options##--three=*}/(#b)--three=(*)/$match[1]}
+  #
+
+  #
+  # one=${options[(r)--one=*]#--one=}
+  # two=${options[(r)--two=*]#--two=}
+  # three=${options[(r)--three=*]#--three=}
+  #
+
+  #
+  # one=${${(M)options:#--one=*}#--one=}
+  # two=${${(M)options:#--two=*}#--two=}
+  # three=${${(M)options:#--three=*}#--three=}
+  #
+
+  # printf "%s; \n" $options
+
+  one=${options[options[(i)-o|--one] + 1]:-${${options[(r)--one=*]#--one=}:-undefined}}
+  two=${options[options[(i)-t|--two] + 1]:-${${options[(r)--two=*]#--two=}:-undefined}}
+  three=${options[options[(i)-h|--three] + 1]:-${${options[(r)--three=*]#--three=}:-undefined}}
+
+  a=${${options[(r)-a]:+alpha}:-undefined}
+  b=${${options[(r)-b]:+beta}:-undefined}
+  c=${${options[(r)-c]:+gamma}:-undefined}
+
+  echo "a: $a"
+  echo "b: $b"
+  echo "c: $c"
+
+  echo "one: $one"
+  echo "two: $two"
+  echo "three: $three"
+}
+
+function multiple_parse {
+  local -a options=($@)
+
+  local -a _options=($options)
+  local -a multiples
+
+  foreach o ($_options) {
+    [[ $o =~ '-m' ]] && multiples+=${_options[_options[(i)$o] + 1]} ; shift _options
+  }
+
+  # printf "arguments: %s;\n" $@
+  # printf "options: %s;\n" $options
+  printf "multiples: %s;\n" $multiples
+}
+
+function split_parse {
+  local -a args=(${(s/; /)1})
+  local -a options
+
+  options+=(--in-place)
+
+  foreach arg ($args) {
+    options+=(--add $arg)
+  }
+
+  printf "%s;\n" ${(@)options}
+}
+
+function main {
+
+# while_parse $@
+
+# foreach_parse $@
+
+# assoc_parse $@
+
+# match_parse $@
+
+# multiple_parse $@
+
+# multiple_parse $@
+
+#  local -a args=($@)
+#  local -a options
+#
+#  options=(${args:0:-1})
+#
+#  local metadata=${options[options[(i)-m|--metadata] + 1]:-${${options[(r)--metadata=*]#--metadata=}:-undefined}}
+#
+#  split_parse $metadata
+
+}
+
+main $@
+

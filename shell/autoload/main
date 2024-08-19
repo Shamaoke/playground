@@ -1,0 +1,120 @@
+#! /usr/bin/env zsh
+
+#
+# function one {
+#   echo 'Main one'
+# }
+#
+# function one {
+#   autoload -X './functions'
+#   #
+#   # Load the following from `./functions/one`
+#   # function one {
+#   #   echo 'Loaded one'
+#   # }
+#   #
+# }
+# • Do not mark the function `one` as autoloaded;
+# • Add the `./functions` directory to `$fpath`;
+# • Load the function definition from `./functions/one` by searching `$fpath`;
+# • Redefine the previously defined function with the same name.
+#
+# one #~> Loaded one
+#
+
+#
+# function one two {
+#   autoload -X './functions'
+# }
+#
+# one #~> Loaded one
+# two #~> Loaded two
+#
+#
+
+#
+# autoload +X one
+# echo $? #~> 1 (i. e. failure: no function definition found in `$fpath` for the function `one`)
+#
+
+#
+# function one {
+#   echo 'Main one'
+# }
+#
+# autoload +X one
+# echo $? #~> 1 (i. e. failure: a function definition for `one` was already defined)
+# one #~> Main one
+#
+
+#
+# declare fpath=('./functions' $fpath)
+# autoload +X one
+# echo $? #~> 0 (i. e. success: a function definition for the function `one` was found and no functions with the same name was previously defined)
+# one #~> Loaded one
+#
+
+#
+# declare fpath=('./functions' $fpath)
+#
+# autoload three # or `typeset -fu` or `functions -u`
+# # • Declare a function with the name ‘three’.
+#
+# functions
+# # three () {
+# #   autoload -X
+# # }
+#
+# three
+# # • Search a definition for the function in `$fpath`.
+# # • Load the function definition if it's found, raise the ‘function definition file not found’ error othewise.
+# # • Call the function.
+#
+
+#
+# declare fpath=('./functions' $fpath)
+#
+# autoload +X three
+# # • Declare a function with the name ‘three’.
+# # • Search a definition for the function in `$fpath`.
+# # • Load the function definition if it's found, raise the ‘function definition file not found’ error othewise.
+# # • Set the exit status (`$?`) to `0` if a function definition is found or the function was not previously defined.
+# #   Set the exit status (`$?`) to `1` otherwise.
+#
+# functions
+# # three () {
+# #   echo 'Loaded three'
+# # }
+#
+# # three
+# # • Call the function.
+#
+
+#
+# declare fpath=('./functions' $fpath)
+# autoload one two my_one my_two
+#
+# autoload +X -m my_\* # is the same as `autoload +X my_one my_two`
+# # • Load functions already marked for autoload which match the pattern (in this case — `my_one` and `my_two`).
+#
+# functions
+# # Display all autolodable functions with definitions (same as `typeset -f`).
+# # Use the `+` flag to display only names of the functions (e. g. `functions +`).
+# my_one () {
+#   echo 'Loaded my one'
+# }
+#
+# my_two () {
+#   echo 'Loaded my two'
+# }
+#
+# one () {
+#   autoload -X
+# }
+#
+# two () {
+#   autoload -X
+# }
+#
+
+# vim: set textwidth=80 colorcolumn=80:

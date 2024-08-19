@@ -1,0 +1,35 @@
+#! /usr/bin/env zsh
+
+#
+# ::: Utility :::
+#
+
+function succ next; echo $(( ${@:1:1} + 1 ))
+
+function pred previous
+  echo $(( ${@:1:1} - 1 ))
+
+#
+# ::: Main :::
+#
+
+function main {
+  local i=10
+  local d=0
+
+  coproc repeat $i {
+    if [[ $i -eq 0 ]] { d=1; print $d; break }
+    sleep 1
+    print $i
+    i=$(previous $i)
+  }
+
+  until [[ $(read -ep $d) -eq 1 ]] {
+    print $d
+    read -ep $i
+  }
+}
+
+main $@
+
+# vim: set textwidth=80 colorcolumn=80:

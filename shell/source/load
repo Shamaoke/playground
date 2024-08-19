@@ -1,0 +1,11 @@
+#! /usr/bin/env zsh
+
+source loaded 'ok!'
+
+source loaded
+
+autoload throw
+autoload catch
+
+{ throw Error } always { if catch Error; then echo 'Error caught!'; fi }
+

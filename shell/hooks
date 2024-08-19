@@ -1,0 +1,26 @@
+#! /usr/bin/env zsh
+
+#
+# ::: Hooks :::
+#
+
+function setup preexec {
+  print 'setup'
+}
+
+function cleanup zshexit {
+  print 'cleanup'
+}
+
+#
+# ::: Main :::
+#
+
+function main {
+  print 'main 1'
+  print 'main 2'
+}
+
+main
+
+# vim: set textwidth=80 colorcolumn=80:

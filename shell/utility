@@ -1,0 +1,24 @@
+#! /usr/bin/env zsh
+
+function map {
+  local    callback=${@:1:1}
+  local -a list=(${@:2})
+
+  foreach e ($list) {
+    $callback $e
+  }
+}
+
+function main TRAPEXIT {
+  # :::map:::
+  f() { print $(( $1 * 2 )) }
+  g() { print $(( $1 * 2 + 1 )) }
+
+  local -a a=(1 2 3 4)
+  local -a b=($(map f $a))
+  local -a c=($(map g $a))
+
+  print $a[1] #-> 1
+  print $b[1] #-> 2
+  print $c[1] #-> 3
+}

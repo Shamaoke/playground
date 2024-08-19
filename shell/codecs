@@ -1,0 +1,43 @@
+#! /usr/bin/env zsh
+
+local ARG=$1
+
+function select_codec {
+  # local    kommand
+  local -A codecs=(aac AAC aptx APTX aptxhd APTX-HD ldac LDAC sbc SBC)
+  # local    codec=$codecs[$1]
+
+  [[ -n $codecs[$1] ]] \
+    && eval "print 'The codec $codecs[$1] is selected.'" \
+    || print "Wrong codec is selected!\nChoose from { ${(kj[ | ])codecs} }."
+
+  # if [[ $codec != '' ]]
+  # then
+  #   kommand="print 'The codec $codec is selected.'"
+  #   eval $kommand
+  # else
+  #   print "Wrong codec is selected!\nChoose from ${(kj[/])codecs}."
+  # fi
+}
+
+function select_codec_alt {
+  local    kommand
+  local -A codecs=(aac AAC aptx APTX aptxhd APTX-HD ldac LDAC sbc SBC)
+  local    codec=${(Mkj[])codecs%$1}
+
+  # ${string%substring}    -> serch substring in string and return string with substring removed
+  # ${(M)string%substring} -> search substring in string and return substring
+
+  if [[ -n $codec ]]
+  then
+    kommand="print 'The codec $codecs[$codec] is selected.'"
+    eval $kommand
+  else
+    print "Wrong codec is selected!\nChoose from { ${(kj[|])codecs} }."
+  fi
+}
+
+function main TRAPEXIT {
+  # select_codec $ARG
+  # select_codec_alt $ARG
+}

@@ -1,0 +1,52 @@
+#! /usr/bin/env zsh
+
+autoload zcalc
+
+function main {
+  ##
+  # OPTIONS
+  # -------
+  # -t | --title | --title=
+  #  Page title
+  #
+  # -p:n | --page:number | --page:number=
+  #  Page number
+  #
+  # -p:w | --page:width | --page:width=
+  #  Page width
+  #
+  # -p:h | --page:height | --page:height=
+  #  Page height
+  #
+  # -t:w | --text:width | --text:width=
+  #  Text block width
+  #
+  # -t:h | --text:height | --text:height=
+  #  Text block height
+  #
+  # EXAMPLE OUTPUT
+  # --------------
+  # „Yale language series“, с. 3
+  #   Ширина: 38.0 мм
+  #   Высота: 2.0 мм
+  #   ----
+  #   Верхняя: 127.5 мм
+  #   Правая: 110.0 мм
+  #   Нижняя: 129.5 мм
+  #   Левая: 72.0 мм
+  #
+
+  local page_width=182.0
+  local text_width=142.7
+
+  local left_margin=$(zcalc -e "($page_width - $text_width) / 2.0")
+  local right_margin=$(zcalc -e "$text_width + $left_margin")
+
+  printf "%s\n" $(zcalc -e "$page_width - ($left_margin + $text_width + $left_margin)")
+  printf "%s\n" $(zcalc -e "$page_width - $right_margin")
+  printf "Левая: %s мм\nПравая: %s мм\n" $left_margin $right_margin
+}
+
+main
+
+# vim: set textwidth=80 colorcolumn=80:

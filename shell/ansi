@@ -1,0 +1,59 @@
+#! /usr/bin/env zsh
+
+##
+# ANSI C Quoting
+# --------------
+#
+
+# Key points:
+# -----------
+#
+# • There are two types of things in shells: commands and data
+#
+# • Data passed to commands can contain special characters
+#
+# • Data passed to commands can be quoted
+#
+# • Depending of a kind of quoting, the special characters can be treated
+#   by a command as well as the shell interpreter the special way
+#
+# • The behavior of one command can be different from another command
+#   when working with data quoted the same way
+#
+# • When working with data quoted in different ways, the behavior of a command
+#   can be no different
+#
+# • There can be many types of special characters. Control characters and
+#   shell expansions are the examples of these types
+#
+# • A control character has a form: `\symbol`, i. e. a backslash, then a meaningful symbol
+#
+# • Examples of control characters: `\b` — bell; `\e` — escape; `\n` — new line;
+#   `\0NNN` — a character code in octal; `\xNN` — a character code in hexadecimal
+#
+# • A shell expansion can have different forms depending of a type of shell
+#
+# • Example of shell expansion in the Z shell: `$parameter` — parameter substitution
+#
+# • The Z shell supports the following types of quoting:
+#
+#   ◦ “Bare” quoting — one\ two\ three\ four
+#
+#   ◦ Single quoting — 'one two three'
+#
+#   ◦ Double quoting — "one two three"
+#
+#   ◦ ANSI-C quoting — $'one two three'
+#
+# References:
+# -----------
+#
+# • [ANSI-C Quoting][*]
+#
+# • [Stackoverflow | Zsh: Why is \n interpreted within single quotes?][2]
+#
+# [*]: http://www.gnu.org/software/bash/manual/html_node/ANSI_002dC-Quoting.html#ANSI_002dC-Quoting
+#
+# [2]: https://stackoverflow.com/questions/36277870/zsh-why-is-n-interpreted-within-single-quotes
+
+# vim: set textwidth=80 colorcolumn=80:

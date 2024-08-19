@@ -1,0 +1,6 @@
+
+function my_one {
+  echo 'Loaded my one'
+}
+
+# vim: set filetype=zsh textwidth=80 colorcolumn=80:

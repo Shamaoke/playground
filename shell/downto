@@ -1,0 +1,38 @@
+#! /usr/bin/env zsh
+
+# function downto {
+#   local cnt=$1
+#
+#   repeat $cnt {
+#     cnt=$(( $cnt - 1 ))
+#     print $cnt
+#   }
+#
+# }
+
+function downto {
+  local current
+  local bbegin=$1
+  local eend=$2
+  local callback=$3
+
+  current=$bbegin
+
+  $callback $current
+
+  current=$(( current - 1 ))
+
+  [[ $current -le $eend ]] && return
+
+  ( downto $current $eend $callback )
+}
+
+function main {
+  f() { sleep 1; printf "%02d: %s\n" $1 'ok!' }
+
+  downto 100 0 f
+}
+
+main
+
+# vim: set textwidth=80 colorcolumn=80:

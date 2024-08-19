@@ -1,0 +1,285 @@
+#! /usr/bin/env zsh
+
+# function count {
+#   local element=$1
+#   shift
+#   local -a array=($@)
+#
+#   local count=0
+#
+#   foreach e ($array) {
+#     [[ $element == $e ]] && (( count+=1 ))
+#   }
+#   echo $count
+# }
+
+# function any {
+#   local element=$1
+#   shift
+#   local -a array=($@)
+#
+#   # echo $element
+#   # echo $array
+#
+#   # echo "${array[(i)$element]} -le ${#array}"
+#
+#   [[ ${array[(i)$element]} -le ${#array} ]]
+# }
+
+# function any_bis {
+#   see comment to the answer at `https://askubuntu.com/questions/674333/how-to-pass-an-array-as-function-argument/995110#995110`
+#   about how to use ${@:2}
+#
+#   echo $1
+#   echo ${@:2}
+#   echo ${${@:2}[(i)$1]}
+#   echo ${#@:2}
+
+#  [[ ${${@:2}[(i)$1]} -le ${#@:2} ]]
+# }
+
+# function is_every {
+#   local counter=0
+#
+#   foreach e (${@:2})
+#     [[ $e =~ ${1} ]] && (( counter+=1 ))
+#   end
+#
+#   # echo $counter
+#   # echo ${@:2}
+#
+#   [[ $counter -eq ${#${@:2}} ]]
+# }
+
+# function is_every {
+#   # foreach e (${@:2})
+#   #   [[ $e =~ ${1} ]] && shift -p
+#   # end
+#
+#   while [[ ${#@:2} -ne 0 ]] {
+#     echo "${${@:2}[-1]},${#@:2},${1},"
+#     [[ ${${@:2}[-1]} =~ ${1} ]] && shift -p
+#   }
+#
+#   [[ ${#@:2} -eq 0 ]]
+# }
+
+# function is_any; [[ ${${@:2}[(i)$1]} -le ${#@:2} ]]
+
+# function is_none; [[ ${${@:2}[(i)$1]} -gt ${#@:2} ]]
+
+# function is_one_exist {
+#   echo 'one two three' | [[ -n $(grep one) ]]
+# }
+
+# function is_four_exist {
+#   echo 'one two three' | [[ -n $(grep four) ]]
+# }
+
+function main {
+
+  local -a ary=(one two three four)
+  local -a arr=({1..${#ary}})
+
+  printf "%s => %s;\n" ${${(kv)${(AA)${arr:^ary}}}}
+
+  #
+  # printf "%s;\n" "${(f)$(<~/.desktop/jsl.tags)}"
+  #
+
+  #
+  # local -a ary=(one two three four)
+  # local -A arr=(${$(seq 1 ${#ary}):^ary})
+  #
+  # printf "%s => %s;\n" ${(kv)arr}
+  #
+
+  # local -a arguments=(-i 16ed.webm output.opus)
+
+  # local -A options=(${arguments:0:-1})
+
+  # local arg=${arguments[-1]}
+
+  # echo ${(kv)options}
+  # echo $arg
+
+  # local -a ary=(-m)
+
+  # local -a arr=(-m 'ok!' -n 'ok too!' -m 'ok free!')
+
+  # local -a common=(${ary:*arr})
+
+  # local -a different=(${ary:|arr})
+
+  # printf "common: %s;\n" $common
+  # printf "different: %s;\n" $different
+
+  # local -a ary=(one two one three)
+
+  # local -a res=($ary:s/one/five/)
+
+  # printf "result: %s;\n" $res
+
+  # local -a ary=(one 'ok' two 'ok too' three 'ok free')
+  # local -A hsh=(${(AA)ary})
+
+  # foreach e (${(k)hsh}) {
+  #   echo "$e => ${hsh[$e]}"
+  # }
+
+  # local -a arr
+  # local val1 val2
+
+  # arr=(three thirteen thirty)
+  # val1=th*
+  # val2=thi
+
+  # if is_every $val1 $arr
+  # then
+  #   echo 'th* is every in (three thirteen thirty)'
+  # else
+  #   echo 'th* is not every in (three thirteen thirty)'
+  # fi
+
+  # if is_every $val2 $arr
+  # then
+  #   echo 'thi* is every in (three thirteen thirty)'
+  # else
+  #   echo 'thi* is not ever in (three thirteen thirty)'
+  # fi
+
+  # arr=(one two three)
+  # val1=two
+  # val2=four
+  # val3=th*
+
+  # if is_none $val1 $arr
+  # then
+  #   echo 'two is not in (one two three)'
+  # else
+  #   echo 'two is in (one two three)'
+  # fi
+
+  # if is_none $val2 $arr
+  # then
+  #   echo 'four is not in (one two three)'
+  # else
+  #   echo 'four is in (one two three)'
+  # fi
+
+  # if is_none $val3 $arr
+  # then
+  #   echo 'th* is not in (one two three)'
+  # else
+  #   echo 'th* is in (one two three)'
+  # fi
+
+  # if is_any $val1 $arr
+  # then
+  #   echo 'two in (one two three)'
+  # else
+  #   echo 'two not in (one two three)'
+  # fi
+
+  # if is_any $val2 $arr
+  # then
+  #   echo 'four in (one two three)'
+  # else
+  #   echo 'four not in (one two three)'
+  # fi
+
+  # if is_any $val3 $arr
+  # then
+  #   echo 'th* in (one two three)'
+  # else
+  #   echo 'th* not in (one two three)'
+  # fi
+
+  # arr=(one two three two four two two five)
+
+  # echo ${arr:0}
+
+  # val1=two
+  # val2=six
+  # val3=$arr[-1]; shift -p arr
+  # val4=$arr[1];  shift    arr
+
+  # echo $arr
+  # echo $val3
+  # echo $val4
+
+  # if [[ ${arr[(i)$val1]} -le ${#arr} ]] { echo ok }
+  # if [[ ${arr[(i)$val2]} -le ${#arr} ]] { echo ok too }
+
+  # is_one_exist && echo one
+
+  # is_four_exist && echo four
+
+  # if [[ ( is_one_exist ) ]] { echo ok }
+
+  # if [[ ( is_four_exist ) ]] { echo ok too }
+
+  # if ( is_one_exist ) { echo one exists }
+
+  # if ( is_four_exist ) { echo four exists }
+
+  # if { is_one_exist } { echo one exists }
+
+  # if { is_four_exist } { echo four exists }
+
+  # if is_one_exist
+  # then
+  #   echo one exists
+  # fi
+
+  # if is_four_exist
+  # then
+  #   echo four exists
+  # fi
+
+  # if any $val1 $arr
+  # then
+  #   echo back to ok
+  # fi
+
+  # if any $val2 $arr
+  # then
+  #   echo back to ok again
+  # fi
+
+  # result=$(count $val $arr)
+
+  # echo $(($result + $result))
+
+  # arr=(one two three four)
+  # val1=three
+  # val2=five
+
+
+  # [[ $(any $val1 $arr) ]]
+
+  # [[ $(any $val2 $arr) ]]
+
+  # typeset -a arr
+
+  # local val
+
+  # arr=(one two three four)
+  # val=three
+
+  # echo ${arr[(r)$val]} #~> three
+  # echo ${arr[(i)$val]} #~> 3
+
+  # str="ok:ok_too:ok_free:ok_for"
+
+  # echo ${str[1]}
+  # echo ${str[(ws(:))2]}
+
+  # str2=$'ok\nok too\nok free\nok for'
+
+  # echo ${str2[1]}
+  # echo ${str2[(f)2]}
+}
+
+main $1
+

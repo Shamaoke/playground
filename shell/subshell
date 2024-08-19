@@ -1,0 +1,65 @@
+#! /usr/bin/env zsh
+
+zmodload zsh/system
+# Load the module to the current shell process and make available the builtin
+# commands (builtins) and parameters which it exposes.
+
+# zmodload -u zsh/system
+# Unload the module from the current shell process and make unavailable the
+# builtin commands (builtins) and parameters which it exposes.
+
+###
+# ---------------------
+# The zsh/system module
+# ---------------------
+# The zsh/system module makes available various builtin commands and parameters.
+#
+# Parameters
+# ----------
+# sysparams
+#   A readonly associative array. The keys are:
+#
+#   pid
+#     Returns the process ID of the current process, even in subshells. Compare
+#     $$, which returns the process ID of the main shell process.
+#
+#   ppid
+#     Returns the process ID of the parent of the current process, even in
+#     subshells. Compare $PPID, which returns the process ID of the parent of the
+#     main shell process.
+#
+#   procsubstpid
+#     Returns the process ID of the last process started for process substitution,
+#     i.e. the <(...) and >(...) expansions.
+#
+# [Falstad: The Z shell manual; 22.27 The zsh/system module]
+#
+
+function one
+  printf "One — PID: %s; PPID: %s\n" $@[1] $@[2]
+
+function two
+  printf "Two — PID: %s; PPID: %s\n" $@[1] $@[2]
+
+function three
+  printf "Done!\n"
+
+function main {
+  ( sleep 5; one $sysparams[pid] $sysparams[ppid] )
+  # • Create a subshell (in a child process of the current process) — `( ... )`;
+  # • Get the specified values, — `pid`, `ppid` — from the `sysparams` association.
+  #   It's provided by the loadad `zsh/system` module;
+  # • Execute the `one` function in the subshell.
+
+  { sleep 5; two $sysparams[pid] $sysparams[ppid] } always { three }
+  # • Get the specified values, — `pid`, `ppid` — from the `sysparams` association.
+  #   It's provided by the loadad `zsh/system` module;
+  # • Execute the 'two' function in the current shell;
+  # • First execute _try-list_. Regardless of errors, or `break`, `continue`, or
+  #   `return` commands encountered within _try-list_, execute _always-list_. The two
+  #   chunks of code are referred to as the ‘try block’ and the ‘always block’.
+}
+
+main
+
+# vim: set textwidth=80 colorcolumn=80:

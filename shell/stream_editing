@@ -1,0 +1,25 @@
+#! /usr/bin/env zsh
+
+data='This is global data.'
+
+function replace {
+  local data
+
+read -r -d '' data <<END
+<useExternalPlayer>1</useExternalPlayer>
+<useInternalPlayer>0</useInternalPlayer>
+<audioPlaybackProgram>mplayer -ao jack</audioPlaybackProgram>
+<alwaysOnTop>0</alwaysOnTop>
+<searchInDock>1</searchInDock>
+END
+
+  echo $data
+
+  echo $data | sed 's/mplayer -ao jack/mplayer -ao alsa/'
+}
+
+function main TRAPEXIT {
+  replace
+
+  echo $data
+}

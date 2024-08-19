@@ -1,0 +1,46 @@
+#! /usr/bin/env zsh
+
+function red {
+  local msg=$1
+  echo "\x1b\x5b38;5;1\x6d$msg\x1b\x5b0\x6d"
+}
+
+function green {
+  local msg=$1
+  echo "\x1b\x5b38;5;2\x6d$msg\x1b\x5b0\x6d"
+}
+
+function one {
+  sleep 1
+  return 0
+}
+
+function two {
+  sleep 1
+  return 1
+}
+
+function three {
+  sleep 1
+  return 0
+}
+
+function perform {
+  local fn=$1
+  local msg=$2
+
+  printf "%s... " $msg
+  $fn
+  [[ $? -gt 0 ]] && red 'Fail' || green 'Done'
+}
+
+function main {
+  spinner
+  # perform one 'Executing one'
+  # perform two 'Executing two'
+  # perform three 'Executing three'
+}
+
+main
+
+# vim: set textwidth=80 colorcolumn=80:

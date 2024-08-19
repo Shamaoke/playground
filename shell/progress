@@ -1,0 +1,31 @@
+#! /usr/bin/env zsh
+
+function spinner {
+  local -a spin=('   ' '.  ' '.. ' '...')
+  local i=0
+
+  # Hide the cursor
+  printf "\x1b\x5b\x3f\x32\x35\x6c"
+
+  repeat 20 {
+    i=$(( (i + 1) % ${#spin} ))
+    printf "\r${spin:$i:1}"
+    sleep .3
+  }
+
+  # Show the cursor
+  printf "\x1b\x5b\x3f\x32\x35\x68"
+}
+
+function main {
+  spinner
+  printf "\rDone\n"
+  spinner
+  printf "\rDone\n"
+  spinner
+  printf "\rDone\n"
+}
+
+main
+
+# vim: set textwidth=80 colorcolumn=80:

@@ -1,0 +1,101 @@
+#! /usr/bin/env zsh
+
+# =========
+# Functions
+# =========
+
+##
+# Anonymous Functions
+# -------------------
+#
+# The Z Shell Reference Manual, p. 23, 9.2 Anonymous Functions
+#
+# local one two
+#
+# function do_one { one='ok!' }
+#
+# function do_two { two='ok too!' }
+#
+# function { do_one; do_two }
+#
+# function { print -l $1 $2 } $one $two
+#
+
+##
+# Local Parameters
+# ----------------
+#
+# The Z Shell Reference Manual, p. 81, 15.4 Local Parameters
+#
+# Assigning to a non-existent parameter without using the `local` builtin causes
+# it to be created in the outermost scope
+#
+# function {
+#   function {
+#     one='ok!'
+#     echo ${one-not set} #~> ok!
+#   }
+#
+#   echo ${one-not set} #~> ok!
+# }
+#
+# function {
+#   function {
+#     local two='ok too!'
+#     echo ${two-not set} #~> ok too!
+#   }
+#
+#   echo ${two-not set} #~> not set
+# }
+#
+
+##
+# Piping Functions
+# ----------------
+#
+# Piping functions and getting their statuses
+#
+# The Z Shell Reference Manual, p. 82, 15.5 Parameters Set By The Shell, `pipestatus`
+#
+# function change {
+#   exit 1
+# }
+#
+# function copy {
+#   exit 0
+# }
+#
+# function main TRAPEXIT {
+#   change | copy
+#
+#   case $pipestatus[1] {
+#     (0) echo "ok! result=${pipestatus[1]}" ;;
+#     (1) echo "fail! result=${pipestatus[1]}" ;;
+#   }
+# }
+#
+
+##
+# argv
+# ----
+#
+# TODO: Find a way to pass command line arguments into a function
+#
+# function main TRAPEXIT {
+#   foreach p ($*) { echo "in main: p is $p\n" }
+# }
+#
+# foreach p ($*) { echo "in global: p is $p\n" }
+#
+
+##
+# ::: ${@:from:length} :::
+#
+# function main TRAPEXIT {
+#   local -a a=(1 2 3 4)
+#
+#   () { echo ${@:2:2} } $a #-> `2 3`, that is `from`, `length`
+# }
+#
+
+# vim: set textwidth=80 colorcolumn=80:

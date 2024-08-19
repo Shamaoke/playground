@@ -1,0 +1,7 @@
+
+function three {
+  # a comment
+  echo 'Loaded three'
+}
+
+# vim: set filetype=zsh textwidth=80 colorcolumn=80:

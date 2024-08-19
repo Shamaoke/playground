@@ -1,0 +1,68 @@
+#! /usr/bin/env zsh
+
+# function get_dictionaries {
+#   local    prompt
+#   local    selection
+#   local -A entries
+#
+#   entries=(
+#     [GoldenDict]=/usr/bin/goldendict
+#     [EBview]=/usr/bin/ebview
+#     [Tagaini\ Jisho]=/usr/bin/tagainijisho
+#   )
+#
+#   prompt='Select a dictionary'
+#
+#   selection=$(echo ${(kF)entries} | sort | rofi -p $prompt -dmenu)
+#
+#   eval $entries[$selection]
+# }
+
+# function get_dictionaries_generic {
+#   local prompt=$1
+#   local -A dictionaries=(${(AA)@:2})
+#   local keys=${(kF)dictionaries}
+#   local lines=${#dictionaries}
+#   local cmd=(rofi -p $prompt -lines $lines -dmenu)
+#   local selection=$(echo $keys | sort | $cmd)
+#
+#   eval ${dictionaries[$selection]}
+# }
+
+# function sample {
+#   local    prompt=$1
+#   local -A dict=(${(AA)@:2})
+#
+#   echo $prompt
+#
+#   foreach e (${(k)dict}) {
+#     echo "$e => ${dict[$e]}"
+#   }
+# }
+
+# function sample2 {
+#   local -A dict=(${(Pkv)@})
+#
+#   echo ${(k)dict}
+# }
+
+# function sample3 {
+#   echo ${@:$}
+# }
+
+# function main TRAPEXIT {
+#   sample3 one two three four
+#
+#     local    prompt='Select a dictionary:'
+#     local -A dictionaries=(
+#       [GoldenDict]='notify-send --app-name=rofi "Rofi" "GoldenDict was selected"'
+#       [EBView]='notify-send --app-name=rofi "Rofi" "EBView was selected"'
+#       [Tagaini\ Jisho]='notify-send --app-name=rofi "Rofi" "Tagaini Jisho was selected"'
+#     )
+#
+#     sample $prompt ${(kv)dictionaries}
+#
+#     sample2 dictionaries
+#
+#     get_dictionaries 'Select a dictionary' ${(kv)dictionaries}
+# }

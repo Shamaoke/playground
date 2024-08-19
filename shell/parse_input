@@ -1,0 +1,44 @@
+#! /usr/bin/env zsh
+
+function map; foreach e (${@:2}) { ${@:1:1} $e }
+
+function any; [[ ${${@:2}[(i)$1]} -le ${#@:2} ]]
+
+function none; [[ ${${@:2}[(i)$1]} -gt ${#@:2} ]]
+
+function succ; echo $(( ${@:1:1} + 1 ))
+
+function pred; echo $(( ${@:1:1} - 1 ))
+
+function main {
+  local -a args=($@)
+
+  #
+  # local -A options
+  #
+  # zparseopts -A options -title:=options -input:=options
+  #
+  # foreach k v (${(kv)options}) {
+  #   printf "%s => %s;\n" $k $v
+  # }
+  #
+
+  local -A options
+  local -a input
+  local title
+  local output
+
+  options=(${args:0:-1})
+  input=${options[-i]:-${options[--input]:-undefined}}
+  title=${options[-t]:-${options[--title]:-undefined}}
+  output=${args[-1]}
+
+  printf "options: %s => %s;\n" ${(kv)options}
+  printf "input: %s;\n" $input
+  printf "title: %s;\n" $title
+  printf "output: %s.\n" $output
+}
+
+main $@
+
+# vim: textwidth=80 colorcolumn=80:

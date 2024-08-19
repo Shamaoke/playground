@@ -1,0 +1,95 @@
+#! /usr/bin/env zsh
+
+function main TRAPEXIT {
+  ##
+  # :::seq:::
+  # local -a list=($(seq 1 4))
+  #
+  # echo ${(j[ → ])list} #-> `1 → 2 → 3 → 4`
+  #
+
+  ##
+  # :::read:::
+  #
+  # read -r -d '' data <<HEREDOC
+  # one
+  # two
+  # three
+  # four
+  # HEREDOC
+  #
+  #   print $data
+  #
+  # read one two rest <<HEREDOC
+  # one two three four five
+  # HEREDOC
+  #
+  #   print $one '->' $two '->' $rest
+  #
+  # local str='this is data'
+  #
+  # read data1 <<HEREDOC
+  # $str
+  # HEREDOC
+  #
+  #   print $data1 #~> 'this is data'
+  #
+  # read data2 <<'HEREDOC'
+  # $str
+  # HEREDOC
+  #
+  #   print $data2 #~> $str
+  #
+  #   local IFS='|'
+  #   ##
+  #   # IFS stands for “Internal Field Separator”.
+  #   # It contains a list of characters.
+  #   # It can be used internally by the shell in variable expansions and
+  #   # builtins (e.g `read`). NOTE: Check The Z Shell Manual!
+  #   # The default value of IFS is in order: space, tab, new line and null terminator.
+  #   # Check its current value with `print $IFS | cat -A` or better `printf "%q" $IFS`.
+  #   # By default it has the folloing value: `\ $'\t'$'\n'$'\0'`, that is:
+  #   # `\ ` — space; `$'\t' — tab; `$'\n'` — newline; `$'\0'` — null terminator.
+  #   #
+  #   # References:
+  #   #   • https://unix.stackexchange.com/questions/184863/what-is-the-meaning-of-ifs-n-in-bash-scripting
+  #   #
+  #
+  # read one two <<'HEREDOC'
+  # one,two|three,four
+  # HEREDOC
+  #
+  #   print $one '->' $two #~> 'one,two -> three,four'
+  #
+  #   local IFS=','
+  #
+  # read one two three <<'HEREDOC'
+  # one,two|three,four
+  # HEREDOC
+  #
+  #   print $one '->' $two '->' $three #~> one -> two|three -> four
+  #
+  #   local IFS='\n'
+  #
+  # read one two three <<'HEREDOC'
+  # 1n2\3
+  # HEREDOC
+  #
+  #   print $one '->' $two '->' $three #~> 1 -> 2 -> 3
+  #
+  #   local IFS=$'\n'
+  #
+  # read -d '' one two three <<'HEREDOC'
+  # 1
+  # 2
+  # 3
+  # HEREDOC
+  #
+  #   print $one '->' $two '->' $three #~> 1 -> 2 -> 3
+  #
+  #
+  # The Z Shell Reference Manual, 17. Shell Builtin Commands, p. 140, “read”
+  #
+}
+
+# vim: set textwidth=80 colorcolumn=80:
