@@ -1,0 +1,7 @@
+# rothko-fantasy-sample
+
+primary_bg   = #0f0f0f
+secondary_bg = #010101
+primary_fg   = #ffffff
+secondary_fg = #d68051
+status_line  = #4f2624

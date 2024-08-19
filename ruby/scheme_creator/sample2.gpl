@@ -1,0 +1,8 @@
+GIMP Palette
+Name: rothko-fantasy-sample
+Columns: 3
+#
+ 79  38  36	bg-status
+255 255 255	fg-primary
+214 128  81	fg-secondary
+ 15  15  15	bg-normal

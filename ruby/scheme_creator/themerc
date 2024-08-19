@@ -1,0 +1,5 @@
+# <%= name %>
+
+window.active.title.bg.color:   <%= scheme['bg-status'] %>
+window.active.label.bg.color:   <%= scheme['bg-status'] %>
+window.active.label.text.color: <%= scheme['fg-primary'] %>
