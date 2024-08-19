@@ -1,0 +1,16 @@
+{
+  "type": "module",
+  "name": "data_end",
+  "version": "0.0.0",
+  "description": "Read data from a souce file",
+  "main": "index.js",
+  "author": "Shamaoke <shamaoke@yandex.ru>",
+  "dependencies": {
+    "yaml": "next",
+    "handlebars": "^4.7.7"
+  },
+  "scripts": {
+    "script": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

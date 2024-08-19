@@ -1,0 +1,2 @@
+{ "name": "javascript-playground",
+  "scripts":  { "alice": "node --experimental-modules alice.mjs 2>./log/npm.error" } }
