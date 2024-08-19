@@ -1,0 +1,7 @@
+#! /bin/zsh
+
+local default='ok!'
+local arg=${1:-$default}
+
+echo $arg
+
