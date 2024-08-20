@@ -1,0 +1,10 @@
+
+[package]
+name = "minimal_warp"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1.39.3", features = ["full"] }
+warp = "0.3.7"
+
