@@ -129,5 +129,13 @@ async fn main( ) {
   // `curl --silent http://127.0.0.1:1337/questions | jq .title`
   // `curl --silent http://127.0.0.1:1337/questions | jq '.tags.list | .[0]'
   //
+  // Request acceptable origins, methods and headers for forein origin clients.
+  // ````
+  // curl --request OPTIONS '127.0.0.1:1337/questions' \
+  //      --header 'Origin: https://other.io' \
+  //      --header 'Access-Control-Request-Method: PUT' \
+  //      --header 'Access-Control-Request-Headers: content-type' \
+  //      --verbose
+  // ````
 }
 
