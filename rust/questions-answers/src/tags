@@ -33,26 +33,26 @@
 !_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
 !_TAG_PROGRAM_URL	https://ctags.io/	/official site/
 !_TAG_PROGRAM_VERSION	6.1.0	/v6.1.0/
-Err	main.rs	95;"	kind:typedef	line:95
-InvalidId	main.rs	79;"	kind:struct	line:79
-InvalidId	main.rs	81;"	kind:implementation	line:81
-Question	main.rs	68;"	kind:struct	line:68
-Question	main.rs	88;"	kind:implementation	line:88
-QuestionId	main.rs	76;"	kind:struct	line:76
-QuestionId	main.rs	94;"	kind:implementation	line:94
+Err	main.rs	80;"	kind:typedef	line:80
+InvalidId	main.rs	64;"	kind:struct	line:64
+InvalidId	main.rs	66;"	kind:implementation	line:66
+Question	main.rs	53;"	kind:struct	line:53
+Question	main.rs	73;"	kind:implementation	line:73
+QuestionId	main.rs	61;"	kind:struct	line:61
+QuestionId	main.rs	79;"	kind:implementation	line:79
 Store	main.rs	32;"	kind:struct	line:32
 Store	main.rs	36;"	kind:implementation	line:36
-Tags	main.rs	84;"	kind:struct	line:84
-content	main.rs	71;"	kind:field	line:71
-from_str	main.rs	97;"	kind:method	line:97
-get_questions	main.rs	105;"	kind:function	line:105
-id	main.rs	69;"	kind:field	line:69
-init	main.rs	45;"	kind:method	line:45
-list	main.rs	85;"	kind:field	line:85
-main	main.rs	141;"	kind:function	line:141
+Tags	main.rs	69;"	kind:struct	line:69
+content	main.rs	56;"	kind:field	line:56
+from_str	main.rs	82;"	kind:method	line:82
+get_questions	main.rs	90;"	kind:function	line:90
+id	main.rs	54;"	kind:field	line:54
+init	main.rs	44;"	kind:method	line:44
+list	main.rs	70;"	kind:field	line:70
+main	main.rs	126;"	kind:function	line:126
 new	main.rs	38;"	kind:method	line:38
-new	main.rs	89;"	kind:method	line:89
+new	main.rs	74;"	kind:method	line:74
 questions	main.rs	33;"	kind:field	line:33
-return_error	main.rs	120;"	kind:function	line:120
-tags	main.rs	72;"	kind:field	line:72
-title	main.rs	70;"	kind:field	line:70
+return_error	main.rs	105;"	kind:function	line:105
+tags	main.rs	57;"	kind:field	line:57
+title	main.rs	55;"	kind:field	line:55
