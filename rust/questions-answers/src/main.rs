@@ -18,6 +18,7 @@
 
 use std::str::FromStr;
 use std::io::{Error, ErrorKind};
+use std::collections::HashMap;
 
 use warp::{Filter, Reply, Rejection};
 use warp::reply::json;
@@ -28,6 +29,24 @@ use warp::filters::cors::CorsForbidden;
 
 use serde::Serialize;
 
+struct Store {
+  questions: HashMap<QuestionId, Question>
+}
+
+impl Store {
+
+  fn new( ) -> Self {
+    Store {
+      questions: HashMap::new()
+    }
+  }
+
+  fn add_question(mut self, question: Question) -> Self {
+    self.questions.insert(question.id.clone(), question);
+    self
+  }
+}
+
 #[derive(Serialize)]
 struct Question {
   id: QuestionId,
@@ -36,7 +55,7 @@ struct Question {
   tags: Option<Tags>,
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Clone, Eq, Hash, PartialEq)]
 struct QuestionId(String);
 
 #[derive(Debug)]
