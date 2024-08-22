@@ -83,7 +83,6 @@ async fn get_questions( ) -> Result<impl Reply, Rejection> {
 
 async fn return_error(r: Rejection) -> Result<impl Reply, Rejection> {
 
-  // println!("{:?}", r);
   if let Some(error) = r.find::<CorsForbidden>() {
     Ok(warp::reply::with_status(
       error.to_string(),
