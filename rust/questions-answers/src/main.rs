@@ -41,6 +41,18 @@ impl Store {
     }
   }
 
+  fn init(self) -> Self {
+
+    let question = Question::new(
+      QuestionId::from_str("1").expect("No ID provided"),
+      String::from("Frist question"),
+      String::from("First question content"),
+      Some(Tags { list: vec!(String::from("faq")) }),
+    );
+
+    self.add_question(question)
+  }
+
   fn add_question(mut self, question: Question) -> Self {
     self.questions.insert(question.id.clone(), question);
     self
