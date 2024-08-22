@@ -17,17 +17,17 @@
 ///
 
 use std::str::FromStr;
-use std::io::{Error, ErrorKind};
+use std::io::{ Error, ErrorKind };
 use std::collections::HashMap;
 
-use warp::{Filter, Reply, Rejection};
+use warp::{ Filter, Reply, Rejection };
 use warp::reply::json;
 use warp::reject::custom;
 use warp::reject::Reject;
 use warp::http::{ Method, StatusCode };
 use warp::filters::cors::CorsForbidden;
 
-use serde::Serialize;
+use serde::{ Serialize, Deserialize };
 
 struct Store {
   questions: HashMap<QuestionId, Question>
@@ -37,29 +37,34 @@ impl Store {
 
   fn new( ) -> Self {
     Store {
-      questions: HashMap::new()
+      // questions: HashMap::new()
+      questions: Self::init()
     }
   }
 
-  fn init(self) -> Self {
+  fn init( ) -> HashMap<QuestionId, Question> {
 
-    let question = Question::new(
-      QuestionId::from_str("1").expect("No ID provided"),
-      String::from("Frist question"),
-      String::from("First question content"),
-      Some(Tags { list: vec!(String::from("faq")) }),
-    );
+    let file = include_str!("../questions.json");
 
-    self.add_question(question)
+    serde_json::from_str(file).expect("Can't read questions.json")
+
+    // let question = Question::new(
+    //   QuestionId::from_str("1").expect("No ID provided"),
+    //   String::from("Frist question"),
+    //   String::from("First question content"),
+    //   Some(Tags { list: vec!(String::from("faq")) }),
+    // );
+
+    // self.add_question(question)
   }
 
-  fn add_question(mut self, question: Question) -> Self {
-    self.questions.insert(question.id.clone(), question);
-    self
-  }
+  // fn add_question(mut self, question: Question) -> Self {
+  //   self.questions.insert(question.id.clone(), question);
+  //   self
+  // }
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Deserialize)]
 struct Question {
   id: QuestionId,
   title: String,
@@ -67,7 +72,7 @@ struct Question {
   tags: Option<Tags>,
 }
 
-#[derive(Serialize, Clone, Eq, Hash, PartialEq)]
+#[derive(Serialize, Deserialize, Clone, Eq, Hash, PartialEq)]
 struct QuestionId(String);
 
 #[derive(Debug)]
@@ -75,7 +80,7 @@ struct InvalidId;
 
 impl Reject for InvalidId { }
 
-#[derive(Serialize)]
+#[derive(Serialize, Deserialize)]
 struct Tags {
   list: Vec<String>,
 }
