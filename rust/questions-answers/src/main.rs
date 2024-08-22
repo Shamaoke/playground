@@ -104,6 +104,8 @@ async fn return_error(r: Rejection) -> Result<impl Reply, Rejection> {
 #[tokio::main]
 async fn main( ) {
 
+  // Define a resonse to the cross-origin OPTIONS request and set which origins,
+  // methods and headers are allowed.
   let cors = warp::cors()
     .allow_any_origin()
     .allow_header("content-type")
