@@ -66,7 +66,9 @@ struct Tags {
 
 async fn get_questions(store: Store) -> Result<impl Reply, Rejection> {
 
-  let res: Vec<Question> = store.questions.values().cloned().collect();
+  // let res: Vec<Question> = store.questions.values().cloned().collect();
+  // or
+  let res = store.questions.values().cloned().collect::<Vec<Question>>();
 
   Ok(warp::reply::json(&res))
 }
