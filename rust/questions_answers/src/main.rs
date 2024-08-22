@@ -24,6 +24,7 @@ use warp::reply::json;
 use warp::reject::custom;
 use warp::reject::Reject;
 use warp::http::{ Method, StatusCode };
+use warp::filters::cors::CorsForbidden;
 
 use serde::Serialize;
 
@@ -82,14 +83,20 @@ async fn get_questions( ) -> Result<impl Reply, Rejection> {
 
 async fn return_error(r: Rejection) -> Result<impl Reply, Rejection> {
 
-  if let Some(_invalid_id) = r.find::<InvalidId>() {
+  // println!("{:?}", r);
+  if let Some(error) = r.find::<CorsForbidden>() {
     Ok(warp::reply::with_status(
-      "No valid ID presented",
+      error.to_string(),
+      StatusCode::FORBIDDEN,
+    ))
+  } else if let Some(_invalid_id) = r.find::<InvalidId>() {
+    Ok(warp::reply::with_status(
+      "No valid ID presented".to_string(),
       StatusCode::UNPROCESSABLE_ENTITY,
     ))
   } else {
     Ok(warp::reply::with_status(
-       "Route not found",
+       "Route not found".to_string(),
        StatusCode::NOT_FOUND,
     ))
   }
@@ -100,7 +107,7 @@ async fn main( ) {
 
   let cors = warp::cors()
     .allow_any_origin()
-    .allow_header("content-type")
+    .allow_header("not-in-the-request")
     .allow_methods(
       &[Method::GET, Method::POST, Method::PUT, Method::DELETE]
     );
