@@ -19,9 +19,6 @@
 use std::collections::HashMap;
 
 use warp::{ Filter, Reply, Rejection };
-use warp::reply::json;
-use warp::reject::custom;
-use warp::reject::Reject;
 use warp::http::{ Method, StatusCode };
 use warp::filters::cors::CorsForbidden;
 
@@ -91,8 +88,12 @@ async fn return_error(r: Rejection) -> Result<impl Reply, Rejection> {
 #[tokio::main]
 async fn main( ) {
 
-  let store = Store::new();
-  let store_filter = warp::any().map(move | | store.clone());
+  // let store = Store::new();
+  // let store_filter = warp::any().map(move | | store.clone());
+  // let store_filter = warp::any().map(move | | store);
+  // let f = | | Store::new();
+  // let store_filter = warp::any().map(f);
+  let store_filter = warp::any().map(| | Store::new());
 
   // Define a resonse to the cross-origin OPTIONS request and set which origins,
   // methods and headers are allowed.
