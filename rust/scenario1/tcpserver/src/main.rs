@@ -47,20 +47,20 @@ fn main( ) {
 
   // for stream in listener.incoming() { handle_connection(stream); }
 
-  // listener.incoming().for_each(handle_connection);
+  listener.incoming().for_each(handle_connection);
 
-  loop {
-    match listener.accept() {
-      Ok((mut stream, _)) => {
-        let mut buffer = [0; 1024];
-        stream.read(&mut buffer).unwrap();
-        let request = std::str::from_utf8(&mut buffer).unwrap();
-        println!("request: {}", request);
-        let response = "大丈夫だよ！";
-        stream.write(response.as_bytes()).unwrap();
-      },
-      Err(e) => println!("Couldn't get client: {e:?}"),
-    }
-  }
+  // loop {
+  //   match listener.accept() {
+  //     Ok((mut stream, _)) => {
+  //       let mut buffer = [0; 1024];
+  //       stream.read(&mut buffer).unwrap();
+  //       let request = std::str::from_utf8(&mut buffer).unwrap();
+  //       println!("request: {}", request);
+  //       let response = "大丈夫だよ！";
+  //       stream.write(response.as_bytes()).unwrap();
+  //     },
+  //     Err(e) => println!("Couldn't get client: {e:?}"),
+  //   }
+  // }
 }
 
