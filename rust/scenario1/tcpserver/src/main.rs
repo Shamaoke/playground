@@ -5,23 +5,28 @@
 
 use std::net::{ TcpListener, TcpStream, SocketAddr };
 // use std::io::{ Error, Read, Write };
-use std::io::{ Error, Write };
+use std::io::{ Error, Read };
+// use std::io::{ Error, Write };
 
 fn handle_connection(stream: Result<TcpStream, Error>) {
 
   // let _stream = stream.unwrap();
   let mut stream = stream.unwrap();
-  //let msg = "ok!".as_bytes();
-  let msg = b"ok!";
-  // let mut buffer = [0; 1024];
+  // let msg = "ok!".as_bytes();
+  // let msg = b"ok!";
+  let mut buffer = [0; 1024];
 
   println!("Connection established");
 
   // stream.write(&msg).unwrap();
-  stream.write(msg).unwrap();
+  // stream.write(msg).unwrap();
 
-  // stream.read(&mut buffer).unwrap();
+  stream.read(&mut buffer).unwrap();
   // stream.write(&mut buffer).unwrap();
+
+  let request = std::str::from_utf8(&mut buffer).unwrap();
+
+  println!("request: {}", request);
 }
 
 fn main( ) {

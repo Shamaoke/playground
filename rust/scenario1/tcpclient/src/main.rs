@@ -6,7 +6,8 @@
 use std::env::{ args };
 use std::str::FromStr;
 use std::net::{ TcpStream, SocketAddr };
-use std::io::{ Read };
+// use std::io::{ Read, Write };
+use std::io::{ Write };
 
 fn main( ) {
 
@@ -19,16 +20,20 @@ fn main( ) {
   let socket = SocketAddr::from(([127, 0, 0, 1], port));
 
   // let _stream = TcpStream::connect(socket).unwrap();
+  // let mut buffer = [0; 1024];
 
-  let mut buffer = [0; 1024];
+  let buffer = b"Are you ok?";
 
   if let Ok(mut stream) = TcpStream::connect(socket) {
     println!("Connected to the server!");
 
-    let size = stream.read(&mut buffer).unwrap();
-    let content = std::str::from_utf8(&buffer[..]).unwrap();
+    // stream.write(&mut buffer)
+    stream.write(buffer).unwrap();
 
-    println!("size: {0}, content: {1}", size, content);
+    // let size = stream.read(&mut buffer).unwrap();
+    // let content = std::str::from_utf8(&buffer[..]).unwrap();
+    // println!("size: {0}, content: {1}", size, content);
+
   } else {
     println!("Couldn't connect to server...");
   }
