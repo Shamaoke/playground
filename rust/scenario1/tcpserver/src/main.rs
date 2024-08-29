@@ -11,12 +11,14 @@ fn handle_connection(stream: Result<TcpStream, Error>) {
 
   // let _stream = stream.unwrap();
   let mut stream = stream.unwrap();
-  let msg = "ok!".as_bytes();
+  //let msg = "ok!".as_bytes();
+  let msg = b"ok!";
   // let mut buffer = [0; 1024];
 
   println!("Connection established");
 
-  stream.write(&msg).unwrap();
+  // stream.write(&msg).unwrap();
+  stream.write(msg).unwrap();
 
   // stream.read(&mut buffer).unwrap();
   // stream.write(&mut buffer).unwrap();
