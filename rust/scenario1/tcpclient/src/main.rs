@@ -22,13 +22,13 @@ fn main( ) {
   // let _stream = TcpStream::connect(socket).unwrap();
   // let mut buffer = [0; 1024];
 
-  let buffer = b"Are you ok?";
+  let request = b"Are you ok?";
 
   if let Ok(mut stream) = TcpStream::connect(socket) {
     println!("Connected to the server!");
 
     // stream.write(&mut buffer)
-    stream.write(buffer).unwrap();
+    stream.write(request).unwrap();
 
     // let size = stream.read(&mut buffer).unwrap();
     // let content = std::str::from_utf8(&buffer[..]).unwrap();
