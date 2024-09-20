@@ -5,9 +5,9 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def current_user
-    # return unless session[:user_id]
-    return unless session.fetch(:user_id)
-    @current_user ||= User.find(session.fetch(:user_id))
-    # @current_user ||= User.find(session[:user_id])
+    return unless session[:user_id]
+    # return unless session.fetch(:user_id)
+    # @current_user ||= User.find(session.fetch(:user_id))
+    @current_user ||= User.find(session[:user_id])
   end
 end
