@@ -1,0 +1,32 @@
+
+ru:
+  activerecord:
+    models:
+      contract: 'договор'
+
+  contract:
+    attr:
+      number: 'Номер'
+      date: 'Дата'
+      description: 'Содержание'
+    title:
+      list: 'Договоры'
+      new: 'Новый договор'
+      show: 'Договор'
+      edit: 'Редактировать договор'
+    notice:
+      create: 'Новый договор успешно создан'
+      update: 'Договор успешно отредактирован'
+      destroy: 'Договор успешно удален'
+    button:
+      show: 'Показать договор'
+      new: 'Новый договор'
+      edit: 'Редактировать договор'
+      delete: 'Удалить договор'
+      back: 'К списку договоров'
+
+  helpers:
+    submit:
+      create: "Создать %{model}"
+      update: "Отредактировать %{model}"
+
