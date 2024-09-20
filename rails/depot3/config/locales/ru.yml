@@ -1,0 +1,10 @@
+
+ru:
+  products: 'продукты'
+  new_product: 'новый продукт'
+
+  activerecord:
+    errors:
+      messages:
+        record_invalid: 'запись некорректна'
+

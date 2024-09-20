@@ -1,0 +1,31 @@
+<div class="mx-auto md:w-2/3 w-full">
+  <% if alert.present? %>
+    <div class="bg-red-100 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <%= alert %>
+    </div>
+  <% end %>
+
+  <% if notice.present? %>
+    <div class="bg-green-100 text-green-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <%= notice %>
+    </div>
+  <% end %>
+
+  <% unless session[:user_id] %>
+    <%= form_tag do %>
+      <div class="my-5">
+        <%= label_tag :name %>
+        <%= text_field_tag :name, params[:name], class: 'block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full' %>
+      </div>
+      <div class="my-5">
+        <%= label_tag :password %>
+        <%= password_field_tag :password, params[:password], class: 'block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full' %>
+      </div>
+      <div class="inline">
+        <%= submit_tag "Login", class: 'rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer' %>
+      </div>
+    <% end %>
+  <% else %>
+    <%= link_to 'Logout', logout_path, data: { turbo_method: :delete, turbo_confirm: 'Вы действительно хотите выйти?' }, class: 'ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium' %>
+  <% end %>
+</div>
