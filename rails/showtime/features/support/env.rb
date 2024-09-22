@@ -4,13 +4,21 @@
 # instead of editing this one. Cucumber will automatically load all features/**/*.rb
 # files.
 
-
 require 'cucumber/rails'
 
-class << self
-  alias_method :step, :register_rb_step_definition
-  alias_method :define, :register_rb_step_definition
-end
+# class << self
+#   alias_method :step, :register_rb_step_definition
+#   alias_method :define, :register_rb_step_definition
+# end
+
+singleton_class.alias_method :define, :register_rb_step_definition
+#
+# Details:
+# --------
+# • [Class: Object — Documentation for core (3.0.2)](https://www.rubydoc.info/stdlib/core/Object#singleton_class-instance_method)
+#
+# • [ruby - Is there an alias_method for a class method? - Stack Overflow](https://stackoverflow.com/questions/61330429/is-there-an-alias-method-for-a-class-method)
+#
 
 # By default, any exception happening in your Rails application will bubble up
 # to Cucumber so that your scenario will fail. This is a different from how
