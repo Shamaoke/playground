@@ -1,0 +1,33 @@
+
+source 'https://rubygems.org'
+
+gem 'rake'
+gem 'rails'
+gem 'sprockets-rails'
+gem 'sqlite3'
+gem 'puma'
+gem 'importmap-rails'
+gem 'turbo-rails'
+gem 'stimulus-rails'
+gem 'bcrypt'
+gem 'ostruct'
+gem 'haml-rails'
+gem 'dartsass-sprockets'
+
+group :development, :test do
+  gem 'debug', require: 'debug/prelude'
+  gem 'rspec-rails'
+end
+
+group :development do
+  gem 'foreman'
+  gem 'tailwindcss-rails'
+end
+
+group :test do
+  gem 'cucumber-rails', require: false
+  gem 'database_cleaner'
+  gem 'capybara'
+  gem 'selenium-webdriver'
+end
+

@@ -1,0 +1,4 @@
+
+server: bundle exec rails server --port 4444
+css: bundle exec rails tailwindcss:watch
+

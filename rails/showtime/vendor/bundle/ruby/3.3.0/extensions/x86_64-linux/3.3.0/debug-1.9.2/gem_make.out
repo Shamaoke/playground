@@ -1,0 +1,19 @@
+current directory: /home/user/.workspace/playground/rails/showtime/vendor/bundle/ruby/3.3.0/gems/debug-1.9.2/ext/debug
+/home/user/.rvm/rubies/ruby-3.3.5/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /home/user/.workspace/playground/rails/showtime/vendor/bundle/ruby/3.3.0/gems/debug-1.9.2/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20240922-882095-hy2jqz sitelibdir\=./.gem.20240922-882095-hy2jqz clean
+
+current directory: /home/user/.workspace/playground/rails/showtime/vendor/bundle/ruby/3.3.0/gems/debug-1.9.2/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20240922-882095-hy2jqz sitelibdir\=./.gem.20240922-882095-hy2jqz
+compiling debug.c
+compiling iseq_collector.c
+linking shared-object debug/debug.so
+
+current directory: /home/user/.workspace/playground/rails/showtime/vendor/bundle/ruby/3.3.0/gems/debug-1.9.2/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20240922-882095-hy2jqz sitelibdir\=./.gem.20240922-882095-hy2jqz install
+/usr/bin/install -c -m 0755 debug.so ./.gem.20240922-882095-hy2jqz/debug
+
+current directory: /home/user/.workspace/playground/rails/showtime/vendor/bundle/ruby/3.3.0/gems/debug-1.9.2/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20240922-882095-hy2jqz sitelibdir\=./.gem.20240922-882095-hy2jqz clean
