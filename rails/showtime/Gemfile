@@ -17,11 +17,11 @@ gem 'dartsass-sprockets'
 group :development, :test do
   gem 'debug', require: 'debug/prelude'
   gem 'rspec-rails'
+  gem 'tailwindcss-rails'
 end
 
 group :development do
   gem 'foreman'
-  gem 'tailwindcss-rails'
 end
 
 group :test do
