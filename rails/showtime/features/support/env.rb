@@ -17,10 +17,12 @@ end
 
 #
 # Ruby logger has 5 logger levels: :debug, :info, :warn, :error, :fatal. The default is :info.
+#
+Selenium::WebDriver.logger.level = :fatal
+#
 # Details: [Logging Selenium commands | Selenium][*]
 # [*]: https://www.selenium.dev/documentation/webdriver/troubleshooting/logging
 #
-Selenium::WebDriver.logger.level = :fatal
 
 # class << self
 #   alias_method :step, :register_rb_step_definition
