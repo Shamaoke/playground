@@ -40,6 +40,9 @@
 /app/assets/builds/*
 !/app/assets/builds/.keep
 
+# Ignre vendor gems
+/vendor/*
+
 # Ignore tags file
 tags
 
