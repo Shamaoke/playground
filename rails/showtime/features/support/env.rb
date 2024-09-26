@@ -6,6 +6,22 @@
 
 require 'cucumber/rails'
 
+class Selenium::WebDriver::SeleniumManager
+  def self.binary_paths(*arguments) = {
+    'code' => 0,
+    'message' => '',
+    'driver_path' => '/usr/bin/geckodriver',
+    'browser_path' => '/usr/bin/firefox'
+  }
+end
+
+#
+# Ruby logger has 5 logger levels: :debug, :info, :warn, :error, :fatal. The default is :info.
+# Details: [Logging Selenium commands | Selenium][*]
+# [*]: https://www.selenium.dev/documentation/webdriver/troubleshooting/logging
+#
+Selenium::WebDriver.logger.level = :fatal
+
 # class << self
 #   alias_method :step, :register_rb_step_definition
 #   alias_method :define, :register_rb_step_definition
