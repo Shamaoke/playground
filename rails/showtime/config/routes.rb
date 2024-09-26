@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
 
+  get 'genres', to: 'genres#index'
+  get 'genres/:id', to: 'genres#show', as: :genre
+
   get 'movies', to: 'movies#index'
+  post 'movies', to: 'movies#create'
+
   get 'movies/new', to: 'movies#new'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

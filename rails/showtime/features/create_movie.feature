@@ -5,9 +5,9 @@ Feature: Create movie
   As a site administrator
   I want to create a movie in a specific genre
 
-  @dev
+  @dev @javascript
   Scenario: Create movie in a genre
-    Given a genre named "Comedy"
-    When I create a movie "Caddyshack" in the "Comedy" genre
-    Then "Caddyshack" should be in the "Comedy" genre
+    Given a genre named "comedy"
+    When I create a movie "Caddyshack" in the "comedy" genre
+    Then "Caddyshack" should be in the "comedy" genre
 
