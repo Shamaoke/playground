@@ -5,20 +5,29 @@
 # files.
 
 require 'cucumber/rails'
+require "capybara/cuprite"
 
-class Selenium::WebDriver::SeleniumManager
-  def self.binary_paths(*arguments) = {
-    'code' => 0,
-    'message' => '',
-    'driver_path' => '/usr/bin/geckodriver',
-    'browser_path' => '/usr/bin/firefox'
-  }
+Capybara.register_driver(:cuprite) do |app|
+
+  Capybara::Cuprite::Driver.new(app, headless: false, slowmo: 0.5, window_size: [1200, 800])
+
 end
+
+Capybara.javascript_driver = :cuprite
+
+# class Selenium::WebDriver::SeleniumManager
+#   def self.binary_paths(*arguments) = {
+#     'code' => 0,
+#     'message' => '',
+#     'driver_path' => '/usr/bin/geckodriver',
+#     'browser_path' => '/usr/bin/firefox'
+#   }
+# end
 
 #
 # Ruby logger has 5 logger levels: :debug, :info, :warn, :error, :fatal. The default is :info.
 #
-Selenium::WebDriver.logger.level = :fatal
+# Selenium::WebDriver.logger.level = :fatal
 #
 # Details: [Logging Selenium commands | Selenium][*]
 # [*]: https://www.selenium.dev/documentation/webdriver/troubleshooting/logging
@@ -93,3 +102,4 @@ end
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :truncation
 # Cucumber::Rails::Database.javascript_strategy = :transaction
+
