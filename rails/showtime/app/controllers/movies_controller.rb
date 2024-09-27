@@ -3,9 +3,7 @@ class MoviesController < ApplicationController
 
   def index = ( )
 
-  def new = (
-    @movie, @genres = [ Movie.new, Genre.all ]
-  )
+  def new = ( @movie, @genres = [ Movie.new, Genre.all ] )
 
   def create = Movie.new(movie_params) { _1.save and redirect_to movies_path }
 
