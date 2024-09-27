@@ -8,10 +8,8 @@ class MoviesController < ApplicationController
   def create = Movie.new(movie_params) { _1.save and redirect_to movies_path }
 
   private
-    def movie_params = (
-      params
-        .require(:movie)
-        .permit(:title, :release_year, { genre_ids: [ ] })
-    )
+    def movie_params = params
+                         .require(:movie)
+                         .permit(:title, :release_year, { genre_ids: [ ] })
 end
 
