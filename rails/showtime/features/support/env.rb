@@ -9,7 +9,7 @@ require "capybara/cuprite"
 
 Capybara.register_driver(:cuprite) do |app|
 
-  Capybara::Cuprite::Driver.new(app, headless: false, slowmo: 0.5, window_size: [1200, 800])
+  Capybara::Cuprite::Driver.new(app, headless: false, slowmo: 0.2, window_size: [1200, 800])
 
 end
 
