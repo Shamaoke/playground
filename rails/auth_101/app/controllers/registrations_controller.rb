@@ -10,9 +10,22 @@ class RegistrationsController < ApplicationController
 
     if @user.save
       session_record = @user.sessions.create!
-      cookies.signed.permanent[:session_token] = { value: session_record.id, httponly: true }
+      # cookies.signed.permanent[:session_token] = { value: session_record.id, httponly: true }
+      cookies[:session_token] = { value: session_record.id, expires: 1.hour }
 
-      send_email_verification
+      logger.info "\nINFO\n"
+
+      logger.info("session_record = #{session_record}")
+      logger.info("cookies.class = #{cookies.class}")
+      logger.info("cookies = #{cookies}")
+      logger.info("cookies.signed.class = #{cookies.signed.class}")
+      logger.info("cookies.signed = #{cookies.signed}")
+      logger.info("cookies.signed.permanent.class = #{cookies.signed.permanent.class}")
+      logger.info("cookies.signed.permanent = #{cookies.signed.permanent}")
+
+      logger.info "\nINFO END\n"
+
+      # send_email_verification
       redirect_to root_path, notice: "Welcome! You have signed up successfully"
     else
       render :new, status: :unprocessable_entity
@@ -24,7 +37,7 @@ class RegistrationsController < ApplicationController
       params.permit(:email, :password, :password_confirmation)
     end
 
-    def send_email_verification
-      UserMailer.with(user: @user).email_verification.deliver_later
-    end
+    # def send_email_verification
+    #   UserMailer.with(user: @user).email_verification.deliver_later
+    # end
 end
