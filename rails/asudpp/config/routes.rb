@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   resources :specifications
 
-  root 'contracts#index'
+  # root 'contracts#index'
+  root 'users#index'
 
   controller :sessions do
     get    'login'  => :new
