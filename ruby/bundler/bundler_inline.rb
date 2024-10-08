@@ -1,5 +1,5 @@
 
-=begin
+# =begin
 require 'bundler/inline'
 
 gemfile(true, quiet: false) do
@@ -18,5 +18,5 @@ template = <<~doc
 doc
 
 puts Haml::Template.new { template }.render
-=end
+# =end
 
