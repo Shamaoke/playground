@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   # ::: Sessions routes :::
   get 'sessions/new', to: 'sessions#new'
   post 'sessions/new', to: 'sessions#create'
+  delete 'sessions/new', to: 'sessions#destroy'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

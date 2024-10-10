@@ -14,5 +14,10 @@ class SessionsController < ApplicationController
     end
   end
 
+  def destroy
+    cookies.delete(:user_id)
+    redirect_to sessions_new_path, notice: 'Logged out!'
+  end
+
 end
 
