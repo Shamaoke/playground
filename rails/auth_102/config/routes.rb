@@ -1,8 +1,13 @@
 Rails.application.routes.draw do
 
+  # ::: Users routes :::
   get 'users', to: 'users#index'
   get 'users/new', to: 'users#new'
   post 'users', to: 'users#create'
+
+  # ::: Sessions routes :::
+  get 'sessions/new', to: 'sessions#new'
+  post 'sessions/new', to: 'sessions#create'
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 

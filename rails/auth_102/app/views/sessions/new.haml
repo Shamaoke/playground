@@ -1,0 +1,14 @@
+
+- if notice.present?
+  %div= notice
+
+- if Current.user
+  %div= Current.user.login
+
+= form_with url: sessions_new_path do |form|
+  = form.label :login
+  = form.text_field :login
+  = form.label :password
+  = form.text_field :password
+  = form.submit 'login'
+
