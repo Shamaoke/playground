@@ -1,0 +1,16 @@
+!!!html
+%html
+  %head
+    %title= content_for :title or 'Auth 102'
+    %meta{ name: 'viewport', content: 'width=device-width,initial-scale=1' }
+    %link{ rel: 'manifest', href: '/manifest.json' }
+    %link{ rel: 'icon', type: 'image/svg+xml', href: '/icon.svg' }
+    = csrf_meta_tags
+    = csp_meta_tag
+    = stylesheet_link_tag 'tailwind', 'inter-font', 'data-turbo-track': 'reload'
+    = stylesheet_link_tag 'application', 'data-turbo-track': 'reload'
+    -# = javascript_include_tag  'turbo', type: 'module'
+    = yield :head
+  %body
+    %main{ class: 'container mx-auto mt-28 px-5 flex' }
+    = yield
