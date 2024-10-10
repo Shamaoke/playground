@@ -1,8 +1,6 @@
 
 class SessionsController < ApplicationController
 
-  before_action :current_user, only: :new
-
   def new = ( )
 
   def create
@@ -15,5 +13,6 @@ class SessionsController < ApplicationController
       end
     end
   end
+
 end
 
