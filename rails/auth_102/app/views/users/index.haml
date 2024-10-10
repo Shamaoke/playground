@@ -1,0 +1,6 @@
+
+%ul
+  - @users.each do |u|
+    %li{ class: 'text-lg' }= u.login.capitalize
+  %li= link_to 'new user', users_new_path, class: 'ml-2 rounded-lg py-3 px-5 bg-green-400 text-white inline-block font-medium'
+
