@@ -41,3 +41,6 @@
 # Ignore tags file
 tags
 
+# Ignore master.key
+/config/master.key
+

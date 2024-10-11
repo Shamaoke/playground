@@ -6,8 +6,6 @@ gem 'sprockets-rails'
 gem 'sqlite3'
 gem 'puma'
 gem 'importmap-rails'
-gem 'turbo-rails'
-gem 'stimulus-rails'
 gem 'bcrypt'
 gem 'ostruct'
 gem 'haml-rails'
@@ -22,7 +20,6 @@ end
 
 group :development do
   gem 'foreman'
-  gem 'authentication-zero'
 end
 
 group :test do
