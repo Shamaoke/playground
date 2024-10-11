@@ -1,0 +1,9 @@
+
+= content_for :title, t('user').capitalize
+
+%h1{ class: 'text-4xl' }= t('user').capitalize
+%ul
+  %li
+    %h2 Ф. И. О.
+    %p= "#{@user.surname} #{@user.name} #{@user.patronymic}"
+
