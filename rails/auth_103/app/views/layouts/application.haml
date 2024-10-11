@@ -1,0 +1,15 @@
+
+!!!html
+%html
+  %head
+    %title= content_for :title or 'Title'
+    %link{ rel: 'icon', type: 'image/svg+xml', href: '/icon.svg' }
+    -# = csrf_meta_tags
+    -# = csp_meta_tag
+    = stylesheet_link_tag 'tailwind'
+    = stylesheet_link_tag 'application'
+    = yield :head
+  %body
+    %main
+    = yield
+
