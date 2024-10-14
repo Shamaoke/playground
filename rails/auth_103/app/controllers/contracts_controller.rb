@@ -1,5 +1,5 @@
 
 class ContractsController < ApplicationController
-  def index = ( )
+  def index = ( @contracts = Contract.all )
 end
 

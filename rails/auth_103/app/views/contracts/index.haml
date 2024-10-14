@@ -2,4 +2,7 @@
 = content_for :title, t('contracts').capitalize
 
 %h1{ class: 'text-4xl' }= t('contracts').capitalize
+%ul
+  - @contracts.each do |contract|
+    %li= link_to "#{contract.number}", contract_path(contract), class: 'anchor'
 

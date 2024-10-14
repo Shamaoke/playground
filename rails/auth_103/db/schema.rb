@@ -10,7 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_11_115512) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_14_103337) do
+  create_table "contracts", id: :string, force: :cascade do |t|
+    t.string "number"
+    t.date "date"
+    t.text "description"
+  end
+
   create_table "users", id: :string, force: :cascade do |t|
     t.string "login"
     t.string "password_digest"
