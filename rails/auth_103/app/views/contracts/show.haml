@@ -1,0 +1,15 @@
+
+= content_for :title, t('contract').capitalize
+
+%h1{ class: 'text-4xl' }= t('contract').capitalize
+%ul
+  %li
+    %h2 Номер
+    %p= "#{@contract.number}"
+  %li
+    %h2 Дата
+    %p= "#{@contract.date}"
+  %li
+    %h2 Описание
+    %p= "#{@contract.description}"
+
