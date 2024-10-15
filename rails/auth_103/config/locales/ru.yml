@@ -7,3 +7,9 @@ ru:
   contract: 'договор'
   specifications: 'спецификации'
 
+  specification:
+    number: 'номер'
+    date: 'дата'
+    description: 'описание'
+
+

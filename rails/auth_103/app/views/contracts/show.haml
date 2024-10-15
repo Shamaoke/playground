@@ -12,4 +12,12 @@
   %li
     %h2 Описание
     %p= "#{@contract.description}"
+%h1{ class: 'text-4xl' }= t('specifications').capitalize
+%ul
+  - @contract.specifications.each do |specification|
+    %li
+      %p= "#{t('specification.number').capitalize}: #{specification.number}"
+      %p= "#{t('specification.date').capitalize}: #{specification.date}"
+      %h2= "#{t('specification.description').capitalize}"
+      %p= "#{specification.description}"
 
