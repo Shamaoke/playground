@@ -12,4 +12,6 @@ ru:
     date: 'дата'
     description: 'описание'
 
+  messages:
+    unauthorized: 'пользователь не авторизован'
 

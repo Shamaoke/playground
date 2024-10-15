@@ -9,7 +9,13 @@
     = stylesheet_link_tag 'tailwind'
     = stylesheet_link_tag 'application'
     = yield :head
-  %body
-    %main
-    = yield
+  %body{ class: 'h-screen flex flex-col' }
+    %header{ class: 'basis-14 bg-green-400 grid grid-cols-6 gap-2' }
+      %div{ class: 'text-4xl bg-green-600' } ОТВСП
+      %div{ class: 'text bg-green-600 col-span-5' }
+        - if alert.present?
+          %div= alert
+    %main{ class: 'grow bg-green-200' }
+      = yield
+    %footer{ class: 'basis-36 bg-green-400' }
 
