@@ -1,0 +1,14 @@
+
+= form_with url: sessions_new_path do |form|
+  %div{ class: 'grid grid-rows-5 gap-y-2' }
+    %div
+      = form.label t('labels.login')
+    %div
+      = form.text_field :login
+    %div
+      = form.label t('labels.password')
+    %div
+      = form.password_field :password
+    %div
+      = form.submit t('buttons.login'), class: 'bg-green-400 text-white px-4 py-2 rounded'
+

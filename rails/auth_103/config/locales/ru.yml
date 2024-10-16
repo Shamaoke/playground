@@ -12,6 +12,19 @@ ru:
     date: 'дата'
     description: 'описание'
 
+  buttons:
+    login: 'войти'
+    logout: 'выйти'
+
+  labels:
+    login: 'логин'
+    password: 'пароль'
+
+  login:
+    success: 'вы вошли в систему'
+    fail: 'вход не удачен'
+    out: 'вы вышли из системы'
+
   messages:
-    unauthorized: 'пользователь не авторизован'
+    unauthorized: 'вы не авторизованы'
 
