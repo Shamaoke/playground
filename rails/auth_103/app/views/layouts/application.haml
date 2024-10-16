@@ -23,6 +23,8 @@
             = form_with url: sessions_new_path, method: :delete do |form|
               = "#{Current.user.name} #{Current.user.surname}"
               = form.submit t('buttons.logout'), class: 'bg-green-400 text-white px-4 py-2 rounded'
+        - else
+          %div= link_to t('links.sessions_new'), sessions_new_path
     %main{ class: 'grow bg-green-200' }
       = yield
     %footer{ class: 'basis-36 bg-green-400' }

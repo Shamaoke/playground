@@ -20,6 +20,9 @@ ru:
     login: 'логин'
     password: 'пароль'
 
+  links:
+    sessions_new: 'войти в систему'
+
   login:
     success: 'вы вошли в систему'
     fail: 'вход не удачен'
