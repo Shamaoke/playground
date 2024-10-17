@@ -1,7 +1,6 @@
 
 = content_for :title, t('users').capitalize
 
-%h1{ class: 'text-4xl' }= t('users').capitalize
 %ul
   - @users.each do |user|
     %li= link_to "#{user.surname} #{user.name} #{user.patronymic}", user_path(user), class: 'anchor'

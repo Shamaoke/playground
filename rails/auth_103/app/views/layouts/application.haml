@@ -10,18 +10,18 @@
     = stylesheet_link_tag 'application'
     = yield :head
   %body{ class: 'h-screen flex flex-col' }
-    %header{ class: 'basis-14 bg-green-400 grid grid-cols-6 gap-2' }
-      %div{ class: 'text-4xl bg-green-600' }= link_to 'ОТВСП', root_path
-      %div{ class: 'text bg-green-600 col-span-1' }
+    %header{ class: 'basis-14 bg-green-400 grid grid-cols-6 gap-0' }
+      %div{ class: 'text-4xl bg-green-600 col-span-2' }= link_to "ОТВСП | #{content_for :title}", root_path
+      %div{ class: 'text bg-green-600 col-span-2' }
         - if alert.present?
           %div= alert
         - if notice.present?
           %div= notice
-      %div{ class: 'text bg-green-600 col-span-4' }
+      %div{ class: 'text bg-green-600 col-span-2' }
         - if Current.user.id
           %div
             = form_with url: sessions_new_path, method: :delete do |form|
-              = "#{Current.user.name} #{Current.user.surname}"
+              = link_to "#{Current.user.name} #{Current.user.surname}", user_path(Current.user.id)
               = form.submit t('buttons.logout'), class: 'bg-green-400 text-white px-4 py-2 rounded'
         - else
           %div= link_to t('links.sessions_new'), sessions_new_path, class: 'bg-green-400 text-white px-4 py-2 rounded'

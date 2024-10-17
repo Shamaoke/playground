@@ -6,6 +6,8 @@ ru:
   contracts: 'договоры'
   contract: 'договор'
   specifications: 'спецификации'
+  headers:
+    login: 'вход в систему'
 
   specification:
     number: 'номер'

@@ -1,7 +1,6 @@
 
 = content_for :title, t('home').capitalize
 
-%h1{ class: 'text-4xl' }= t('home').capitalize
 %ul
   %li= link_to t('users'), users_path, class: 'anchor'
   %li= link_to t('contracts'), contracts_path, class: 'anchor'

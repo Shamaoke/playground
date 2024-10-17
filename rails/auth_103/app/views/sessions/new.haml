@@ -1,4 +1,6 @@
 
+- content_for :title, t('headers.login').capitalize
+
 = form_with url: sessions_new_path do |form|
   %div{ class: 'grid grid-rows-5 gap-y-2' }
     %div
