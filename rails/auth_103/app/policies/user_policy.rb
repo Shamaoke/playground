@@ -1,5 +1,7 @@
 
 class UserPolicy < ApplicationPolicy
-  def show? = false
+  def show?
+    user.login.eql? 'nikolai'
+  end
 end
 
