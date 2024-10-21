@@ -12,8 +12,15 @@ gem 'haml-rails'
 gem 'dartsass-sprockets'
 gem 'action_policy'
 
+gem 'debug', require: 'debug/prelude'
+
+# gem 'tailwindcss-rails'
+
+group :production do
+  gem 'tzinfo-data'
+end
+
 group :development, :test do
-  gem 'debug', require: 'debug/prelude'
   gem 'tailwindcss-rails'
   gem 'rspec-rails'
 end
