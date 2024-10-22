@@ -11,13 +11,13 @@ gem 'ostruct'
 gem 'haml-rails'
 gem 'dartsass-sprockets'
 gem 'action_policy'
+gem 'tzinfo-data'
 
 gem 'debug', require: 'debug/prelude'
 
 # gem 'tailwindcss-rails'
 
 group :production do
-  gem 'tzinfo-data'
 end
 
 group :development, :test do
