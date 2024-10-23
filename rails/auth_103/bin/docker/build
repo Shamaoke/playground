@@ -1,0 +1,92 @@
+#! /usr/bin/env zsh
+
+autoload throw
+autoload catch
+
+declare -a args=($@)
+declare repository=$(basename $PWD)
+
+##
+## ::: Utilities :::
+##
+
+function any; [[ ${${@:2}[(i)$1]} -le ${#@:2} ]]
+
+function usage {
+  echo \
+    'Usage:' \
+    "\n" \
+    "\n" \
+    'COMMAND' \
+    "\n" \
+    'build [OPTIONS] [DOCKER_DIR]' \
+    "\n" \
+    "\n" \
+    'OPTIONS' \
+    "\n" \
+    "-r|--repository|--repository= -- specify a repository (\`${repository}\` is the default)" \
+    "\n" \
+    '-t|--tag|--tag= -- specify a tag (`latest` is the default)' \
+    "\n" \
+    '-f|--dockerfile|--dockerfile= -- specify a Dockerfile (`Dockerfile` is the default)' \
+    "\n" \
+    '-g|--target -- specify the build interruption point' \
+    "\n" \
+    '-h|--help -- display this message'
+}
+
+##
+## ::: Entrypoint :::
+##
+
+function main TRAPEXIT {
+
+  { any $args '-h' || any $args '--help' } && usage && bye 1
+
+  {
+    [[ ${#args} -eq 0 ]] && throw 'ERR::ZERO_ARG'
+  } always {
+    catch 'ERR::ZERO_ARG' \
+      && echo 'ERROR: The working directory was not specified!' \
+      && usage \
+      && bye 101
+  }
+
+  local -a options=(${args:0:-1})
+  local    workdir=${args[-1]}
+
+  {
+    [[ ! -d $workdir ]] && throw 'ERR::NOT_DIR'
+  } always {
+    catch 'ERR::NOT_DIR' \
+      && echo "ERROR: ${workdir} is not a directory!" \
+      && usage \
+      && bye 102
+  }
+
+  {
+    [[ ! -f "$workdir/Dockerfile" ]] && throw 'ERR::NO_DOCKERFILE'
+  } always {
+    catch 'ERR::NO_DOCKERFILE' \
+      && echo "ERROR: ${workdir} doesn't contain a Dockerfile!" \
+      && usage \
+      && bye 103
+  }
+
+  local repository=${options[options[(i)-r|--repository] + 1]:-${${options[(r)--repository=*]#--repository=}:-$repository}}
+  local tag=${options[options[(i)-t|--tag] + 1]:-${${options[(r)--tag=*]#--tag=}:-latest}}
+  local dockerfile=${options[options[(i)-f|--dockerfile] + 1]:-${${options[(r)--dockerfile=*]#--dockerfile=}:-$workdir/Dockerfile}}
+  local target=${options[options[(i)-g|--target] + 1]:-${${options[(r)--target=*]#--dockerfile=}:-undefined}}
+
+  local -a docker_options=(
+    --progress plain
+    --tag $repository:$tag
+    --file $dockerfile
+    --network host
+  )
+
+  [[ $target != undefined ]] && docker_options+=(--target $target)
+
+  docker image build $docker_options $workdir
+}
+

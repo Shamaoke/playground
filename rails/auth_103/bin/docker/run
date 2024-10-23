@@ -1,0 +1,62 @@
+#! /usr/bin/env zsh
+
+declare -a args=($@)
+
+function usage {
+  echo \
+    'Usage:' \
+    "\n" \
+    '-r|--repository|--repository= -- specify a repository (`auth_103` is the default)' \
+    "\n" \
+    '-t|--tag|--tag= -- specify a tag (`latest` is the default)' \
+    "\n" \
+    '-i|--interactive -- run an interactive docker session' \
+    "\n" \
+    '-h|--help -- display this message'
+}
+
+function main TRAPEXIT {
+  local -a options=($args)
+
+  local is_help_needed=${${options[(r)-h|--help]:+true}:-false}
+
+  [[ $is_help_needed == true ]] && usage && exit 1
+
+  local is_interactive=${${options[(r)-i|--interactive]:+true}:-false}
+
+  local repository=${options[options[(i)-r|--repository] + 1]:-${${options[(r)--repository=*]#--repository=}:-auth_103}}
+  local tag=${options[options[(i)-t|--tag] + 1]:-${${options[(r)--tag=*]#--tag=}:-latest}}
+
+  local -A storage=(
+    [source]="${HOME}/.workspace/playground/rails/${repository}/storage/production.sqlite3"
+    [destination]="/home/${repository}/app/storage/production.sqlite3"
+  )
+
+  local -A log=(
+    [source]="${HOME}/.workspace/playground/rails/${repository}/log/production.log"
+    [destination]="/home/${repository}/app/log/production.log"
+  )
+
+  # --volume ${xsock}:${xsock}
+  # --rm
+
+  local -a docker_options=(
+    --rm
+    --privileged
+    --mount "type=bind,source=${storage[source]},destination=${storage[destination]}"
+    --mount "type=bind,source=${log[source]},destination=${log[destination]}"
+    --network host
+  )
+
+  case $is_interactive {
+    (false)
+      docker_options+=(--detach)
+      docker run $docker_options $repository:$tag
+    ;;
+    (true)
+      docker_options+=(--interactive --tty)
+      docker run $docker_options $repository:$tag sh
+    ;;
+  }
+}
+
