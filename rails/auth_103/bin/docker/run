@@ -37,15 +37,37 @@ function main TRAPEXIT {
     [destination]="/home/${repository}/app/log/production.log"
   )
 
-  # --volume ${xsock}:${xsock}
-  # --rm
+  local -A caddyfile=(
+    [source]="${HOME}/.workspace/playground/rails/auth_103/caddy/Caddyfile"
+    [destination]="/etc/caddy/Caddyfile"
+  )
 
+  # --volume ${xsock}:${xsock}
+  # --publish 192.168.0.10:44244:44244
+  # --publish 44244:44244
+
+  ###
+  ### ::: Rails :::
+  ###
+  # local -a docker_options=(
+  #   --rm
+  #   --privileged
+  #   --network auth_103
+  #   --mount "type=bind,source=${storage[source]},destination=${storage[destination]}"
+  #   --mount "type=bind,source=${log[source]},destination=${log[destination]}"
+  #   --ip 10.0.42.151
+  # )
+
+  ###
+  ### ::: Caddy :::
+  ###
   local -a docker_options=(
     --rm
     --privileged
-    --mount "type=bind,source=${storage[source]},destination=${storage[destination]}"
-    --mount "type=bind,source=${log[source]},destination=${log[destination]}"
-    --network host
+    --network auth_103
+    --mount "type=bind,source=${caddyfile[source]},destination=${caddyfile[destination]}"
+    --ip 10.0.42.141
+    --publish 80:2019
   )
 
   case $is_interactive {

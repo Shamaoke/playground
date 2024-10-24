@@ -38,5 +38,5 @@ ENV RAILS_ENV=production
 # RUN bundle exec rails db:seed
 RUN bundle exec rails assets:precompile
 
-ENTRYPOINT ["/bin/sh", "-c", "/home/auth_103/app/bin/rails server --port 8080"]
+ENTRYPOINT ["/bin/sh", "-c", "/home/auth_103/app/bin/rails server"]
 
