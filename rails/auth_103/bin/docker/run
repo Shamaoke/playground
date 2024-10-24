@@ -1,6 +1,22 @@
 #! /usr/bin/env zsh
 
+autoload throw
+autoload catch
+
 declare -a args=($@)
+declare -a targets=(nginx rails)
+declare -a docker_options
+
+##
+## ::: Utilities :::
+##
+
+# function any; [[ ${${@:2}[(i)$1]} -le ${#@:2} ]]
+
+##
+## none $element ($array) -> { true /* element is NOT present in the array */ | false /* otherwise */ }
+##
+function none; [[ ${${@:2}[(i)$1]} -gt ${#@:2} ]]
 
 function usage {
   echo \
@@ -12,10 +28,17 @@ function usage {
     "\n" \
     '-i|--interactive -- run an interactive docker session' \
     "\n" \
+    '-g|--target -- specify a target { nginx | rails }' \
+    "\n" \
     '-h|--help -- display this message'
 }
 
+##
+## ::: Entrypoint :::
+##
+
 function main TRAPEXIT {
+
   local -a options=($args)
 
   local is_help_needed=${${options[(r)-h|--help]:+true}:-false}
@@ -26,6 +49,15 @@ function main TRAPEXIT {
 
   local repository=${options[options[(i)-r|--repository] + 1]:-${${options[(r)--repository=*]#--repository=}:-auth_103}}
   local tag=${options[options[(i)-t|--tag] + 1]:-${${options[(r)--tag=*]#--tag=}:-latest}}
+  local target=${options[options[(i)-g|--target] + 1]:-${${options[(r)--target=*]#--target=}:-undefined}}
+
+  {
+    { none $target $targets } && throw 'ERR::NO_TARGET'
+  } always {
+    catch 'ERR::NO_TARGET' \
+      && echo 'ERROR: No valid target was specified!' \
+      && bye 101
+  }
 
   local -A storage=(
     [source]="${HOME}/.workspace/playground/rails/${repository}/storage/production.sqlite3"
@@ -37,38 +69,63 @@ function main TRAPEXIT {
     [destination]="/home/${repository}/app/log/production.log"
   )
 
-  local -A caddyfile=(
-    [source]="${HOME}/.workspace/playground/rails/auth_103/caddy/Caddyfile"
-    [destination]="/etc/caddy/Caddyfile"
+  # local -A caddyfile=(
+  #   [source]="${HOME}/.workspace/playground/rails/auth_103/caddy/Caddyfile"
+  #   [destination]="/etc/caddy/Caddyfile"
+  # )
+
+  local -A nginx_http=(
+    [source]="${HOME}/.workspace/playground/rails/auth_103/nginx/default.conf"
+    [destination]="/etc/nginx/http.d/default.conf"
+  )
+
+  local -A nginx_conf=(
+    [source]="${HOME}/.workspace/playground/rails/auth_103/nginx/nginx.conf"
+    [destination]="/etc/nginx/nginx.conf"
   )
 
   # --volume ${xsock}:${xsock}
   # --publish 192.168.0.10:44244:44244
   # --publish 44244:44244
 
-  ###
-  ### ::: Rails :::
-  ###
+  ##
+  ## ::: Rails :::
+  ##
+  local -a rails_docker_options=(
+    --rm
+    --network auth_103
+    --mount "type=bind,source=${storage[source]},destination=${storage[destination]}"
+    --mount "type=bind,source=${log[source]},destination=${log[destination]}"
+    --ip 10.0.42.151
+  )
+
+  ##
+  ## ::: Caddy :::
+  ##
   # local -a docker_options=(
   #   --rm
-  #   --privileged
-  #   --network auth_103
-  #   --mount "type=bind,source=${storage[source]},destination=${storage[destination]}"
-  #   --mount "type=bind,source=${log[source]},destination=${log[destination]}"
-  #   --ip 10.0.42.151
+  #   --network auth_102
+  #   --mount "type=bind,source=${caddyfile[source]},destination=${caddyfile[destination]}"
+  #   --ip 9.0.42.141
+  #   --publish 79:2019
   # )
 
-  ###
-  ### ::: Caddy :::
-  ###
-  local -a docker_options=(
+  ##
+  ## ::: Nginx :::
+  ##
+  local -a nginx_docker_options=(
     --rm
-    --privileged
     --network auth_103
-    --mount "type=bind,source=${caddyfile[source]},destination=${caddyfile[destination]}"
-    --ip 10.0.42.141
-    --publish 80:2019
+    --mount "type=bind,source=${nginx_conf[source]},destination=${nginx_conf[destination]}"
+    --mount "type=bind,source=${nginx_http[source]},destination=${nginx_http[destination]}"
+    --ip 10.0.42.142
+    --publish 80:80
   )
+
+  case $target {
+    ('nginx') docker_options=($nginx_docker_options) ;;
+    ('rails') docker_options=($rails_docker_options) ;;
+  }
 
   case $is_interactive {
     (false)

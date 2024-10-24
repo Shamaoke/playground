@@ -41,7 +41,7 @@ function usage {
 
 function main TRAPEXIT {
 
-  { any $args '-h' || any $args '--help' } && usage && bye 1
+  { any '-h' $args || any '--help' $args } && usage && bye 1
 
   {
     [[ ${#args} -eq 0 ]] && throw 'ERR::ZERO_ARG'

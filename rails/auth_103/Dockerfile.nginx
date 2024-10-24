@@ -1,0 +1,12 @@
+
+FROM alpine:3.20
+
+RUN apk --update-cache upgrade
+
+RUN apk add nginx
+
+RUN apk add vim
+RUN apk add vifm
+
+ENTRYPOINT ["/bin/sh", "-c", "/usr/sbin/nginx"]
+
