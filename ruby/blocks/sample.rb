@@ -36,3 +36,11 @@ def do_one(val) = val
 def index = do_one('ok!').then { puts _1 }
 =end
 
+flag = false
+
+value = begin
+  flag and 'ok!' or 'fail!'
+end
+
+puts value
+
