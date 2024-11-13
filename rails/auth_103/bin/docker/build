@@ -1,5 +1,9 @@
 #! /usr/bin/env zsh
 
+##
+## ::: Docker build script :::
+##
+
 autoload throw
 autoload catch
 
@@ -7,9 +11,61 @@ declare -a args=($@)
 declare repository=$(basename $PWD)
 
 ##
+## ::: Colors :::
+##
+
+function r red;     print "\x1b\x5b\x33\x31\x6d$1\x1b\x5b\x30\x6d"
+function g green;   print "\x1b\x5b\x33\x32\x6d$1\x1b\x5b\x30\x6d"
+function y yellow;  print "\x1b\x5b\x33\x33\x6d$1\x1b\x5b\x30\x6d"
+function b blue;    print "\x1b\x5b\x33\x34\x6d$1\x1b\x5b\x30\x6d"
+function m magenta; print "\x1b\x5b\x33\x35\x6d$1\x1b\x5b\x30\x6d"
+function c cyan;    print "\x1b\x5b\x33\x36\x6d$1\x1b\x5b\x30\x6d"
+
+function rr bright_red;     print "\x1b\x5b\x39\x31\x6d$1\x1b\x5b\x30\x6d"
+function gg bright_green;   print "\x1b\x5b\x39\x32\x6d$1\x1b\x5b\x30\x6d"
+function yy bright_yellow;  print "\x1b\x5b\x39\x33\x6d$1\x1b\x5b\x30\x6d"
+function bb bright_blue;    print "\x1b\x5b\x39\x34\x6d$1\x1b\x5b\x30\x6d"
+function mm bright_magenta; print "\x1b\x5b\x39\x35\x6d$1\x1b\x5b\x30\x6d"
+function cc bright_cyan;    print "\x1b\x5b\x39\x36\x6d$1\x1b\x5b\x30\x6d"
+
+##
+## ::: Colors | Legend :::
+##
+## \x1b\x5b ... \x6d -- SGR — Select Graphic Rendition presentation control function
+##
+## \x1b\x5b -- CSI — Control Sequence Introducer introducer control function
+## \x6d     -- SGR final byte
+##
+## \x33     -- italicized
+## \x34     -- singly underlined
+## \x37     -- negative image
+## \x39     -- crossed-out
+## \x32\x31 -- doubly underlined
+##
+## \x33\x3{0-7}     -- foreground color (`\x33\x31` — red foreground)
+## \x39\x3{0-7}     -- bright foreground color (`\x39\x31` — bright red foreground)
+## \x34\x3{0-7}     -- background color (`\x34\x32` — green background)
+## \x31\x30\x3{0-7} -- bright background color (`\x31\x30\x32` — bright green background)
+##
+## \x3b -- command separator (`\x33 \x3b \x33\x31 \x3b \x34\x32` — italic ; red foreground ; green background)
+## \x30 -- reset
+##
+## ::: Color | Details :::
+##
+## • [ECMA-48: 8.3.117 SGR — Select Graphic Rendition, p. 61](https://www.ecma-international.org/publications-and-standards/standards/ecma-48)
+##
+## • [ANSI escape code - Wikipedia](https://en.wikipedia.org/wiki/ANSI_escape_code)
+##
+## • [terminal - List of ANSI color escape sequences - Stack Overflow](https://stackoverflow.com/questions/4842424/list-of-ansi-color-escape-sequences)
+##
+
+##
 ## ::: Utilities :::
 ##
 
+##
+## any $element ($array) -> { true /* element is present in the array */ | false /* otherwise */ }
+##
 function any; [[ ${${@:2}[(i)$1]} -le ${#@:2} ]]
 
 function usage {
@@ -19,20 +75,20 @@ function usage {
     "\n" \
     'COMMAND' \
     "\n" \
-    'build [OPTIONS] [DOCKER_DIR]' \
+    "$(b build) [$(g OPTIONS)] [$(y DOCKER_DIR)]" \
     "\n" \
     "\n" \
     'OPTIONS' \
     "\n" \
-    "-r|--repository|--repository= -- specify a repository (\`${repository}\` is the default)" \
+    "$(g -r) | $(g --repository) | $(g --repository=) -- $(y "specify a repository (\`${repository}\` is the default)")" \
     "\n" \
-    '-t|--tag|--tag= -- specify a tag (`latest` is the default)' \
+    "$(g -t) | $(g --tag) | $(g --tag=)               -- $(y 'specify a tag (`latest` is the default)')" \
     "\n" \
-    '-f|--dockerfile|--dockerfile= -- specify a Dockerfile (`Dockerfile` is the default)' \
+    "$(g -f) | $(g --dockerfile) | $(g --dockerfile=) -- $(y 'specify a Dockerfile (`Dockerfile` is the default)')" \
     "\n" \
-    '-g|--target -- specify the build interruption point' \
+    "$(g -g) | $(g --target)                     -- $(y 'specify an interruption point for the build')" \
     "\n" \
-    '-h|--help -- display this message'
+    "$(g -h) | $(g --help)                       -- $(y 'display this message')"
 }
 
 ##
@@ -47,7 +103,7 @@ function main TRAPEXIT {
     [[ ${#args} -eq 0 ]] && throw 'ERR::ZERO_ARG'
   } always {
     catch 'ERR::ZERO_ARG' \
-      && echo 'ERROR: The working directory was not specified!' \
+      && echo "$(r ERROR): The working directory was not specified!\n" \
       && usage \
       && bye 101
   }
@@ -59,7 +115,7 @@ function main TRAPEXIT {
     [[ ! -d $workdir ]] && throw 'ERR::NOT_DIR'
   } always {
     catch 'ERR::NOT_DIR' \
-      && echo "ERROR: ${workdir} is not a directory!" \
+      && echo "$(r ERROR): $(y ${workdir}) is not a directory!\n" \
       && usage \
       && bye 102
   }
@@ -68,7 +124,7 @@ function main TRAPEXIT {
     [[ ! -f "$workdir/Dockerfile" ]] && throw 'ERR::NO_DOCKERFILE'
   } always {
     catch 'ERR::NO_DOCKERFILE' \
-      && echo "ERROR: ${workdir} doesn't contain a Dockerfile!" \
+      && echo "$(r ERROR): $(y ${workdir}) doesn't contain a Dockerfile!\n" \
       && usage \
       && bye 103
   }

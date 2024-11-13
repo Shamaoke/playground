@@ -1,5 +1,9 @@
 #! /usr/bin/env zsh
 
+##
+## ::: Docker startup script :::
+##
+
 autoload throw
 autoload catch
 
@@ -11,6 +15,9 @@ declare -a docker_options
 ## ::: Utilities :::
 ##
 
+##
+## any $element ($array) -> { true /* element is present in the array */ | false /* overwise */ }
+##
 # function any; [[ ${${@:2}[(i)$1]} -le ${#@:2} ]]
 
 ##
