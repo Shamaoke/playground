@@ -95,6 +95,24 @@ function usage {
 ## ::: Entrypoint :::
 ##
 
+function failwith {
+
+  setopt ERR_EXIT
+
+  local code=$1
+  local message
+
+  case $code {
+    (101) message="$(r ERROR): The working directory was not specified!\n" ;;
+    (102) message="$(r ERROR): $(y ${workdir}) is not a directory!\n" ;;
+    (103) message="$(r ERROR): $(y ${workdir}) doesn't contain a Dockerfile!\n" ;;
+  }
+
+  echo $message
+  usage
+  bye $code
+}
+
 function main TRAPEXIT {
 
   { any '-h' $args || any '--help' $args } && usage && bye 1
@@ -102,10 +120,7 @@ function main TRAPEXIT {
   {
     [[ ${#args} -eq 0 ]] && throw 'ERR::ZERO_ARG'
   } always {
-    catch 'ERR::ZERO_ARG' \
-      && echo "$(r ERROR): The working directory was not specified!\n" \
-      && usage \
-      && bye 101
+    catch 'ERR::ZERO_ARG' && failwith 101
   }
 
   local -a options=(${args:0:-1})
@@ -114,19 +129,13 @@ function main TRAPEXIT {
   {
     [[ ! -d $workdir ]] && throw 'ERR::NOT_DIR'
   } always {
-    catch 'ERR::NOT_DIR' \
-      && echo "$(r ERROR): $(y ${workdir}) is not a directory!\n" \
-      && usage \
-      && bye 102
+    catch 'ERR::NOT_DIR' && failwith 102
   }
 
   {
     [[ ! -f "$workdir/Dockerfile" ]] && throw 'ERR::NO_DOCKERFILE'
   } always {
-    catch 'ERR::NO_DOCKERFILE' \
-      && echo "$(r ERROR): $(y ${workdir}) doesn't contain a Dockerfile!\n" \
-      && usage \
-      && bye 103
+    catch 'ERR::NO_DOCKERFILE' && failwith 103
   }
 
   local repository=${options[options[(i)-r|--repository] + 1]:-${${options[(r)--repository=*]#--repository=}:-$repository}}
