@@ -28,6 +28,8 @@ function bb bright_blue;    print "\x1b\x5b\x39\x34\x6d$1\x1b\x5b\x30\x6d"
 function mm bright_magenta; print "\x1b\x5b\x39\x35\x6d$1\x1b\x5b\x30\x6d"
 function cc bright_cyan;    print "\x1b\x5b\x39\x36\x6d$1\x1b\x5b\x30\x6d"
 
+function bls slowly_blinking; print "\x1b\x5b\x35\x6d$1\x1b\x5b\x30\x6d"
+
 ##
 ## ::: Colors | Legend :::
 ##
@@ -38,6 +40,7 @@ function cc bright_cyan;    print "\x1b\x5b\x39\x36\x6d$1\x1b\x5b\x30\x6d"
 ##
 ## \x33     -- italicized
 ## \x34     -- singly underlined
+## \x35     -- slowly blinking
 ## \x37     -- negative image
 ## \x39     -- crossed-out
 ## \x32\x31 -- doubly underlined
@@ -75,7 +78,7 @@ function usage {
     "\n" \
     'COMMAND' \
     "\n" \
-    "$(b build) [$(g OPTIONS)] [$(y DOCKER_DIR)]" \
+    "$(b build) [$(g OPTIONS)] $(y DOCKER_DIR)" \
     "\n" \
     "\n" \
     'OPTIONS' \
@@ -91,10 +94,6 @@ function usage {
     "$(g -h) | $(g --help)                       -- $(y 'display this message')"
 }
 
-##
-## ::: Entrypoint :::
-##
-
 function failwith {
 
   setopt ERR_EXIT
@@ -103,15 +102,19 @@ function failwith {
   local message
 
   case $code {
-    (101) message="$(r ERROR): The working directory was not specified!\n" ;;
-    (102) message="$(r ERROR): $(y ${workdir}) is not a directory!\n" ;;
-    (103) message="$(r ERROR): $(y ${workdir}) doesn't contain a Dockerfile!\n" ;;
+    (101) message="$(bls $(r ERROR)): The working directory was not specified!\n" ;;
+    (102) message="$(bls $(r ERROR)): $(y ${workdir}) is not a directory!\n" ;;
+    (103) message="$(bls $(r ERROR)): $(y ${workdir}) doesn't contain a Dockerfile!\n" ;;
   }
 
   echo $message
   usage
   bye $code
 }
+
+##
+## ::: Entrypoint :::
+##
 
 function main TRAPEXIT {
 
