@@ -1,5 +1,6 @@
 
 module UuidGenerator
+
   extend ActiveSupport::Concern
 
   included do
