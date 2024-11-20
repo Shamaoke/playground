@@ -1,0 +1,7 @@
+
+%h1{ class: 'text-2xl text-orange-500' }= t('titles.users').capitalize
+
+%ul
+  - @users.each do |user|
+    %li= user.name
+
