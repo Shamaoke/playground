@@ -1,0 +1,30 @@
+
+source 'https://rubygems.org'
+
+gem 'rails', '~>8.0.0'
+gem 'propshaft'
+gem 'sqlite3'
+gem 'puma'
+gem 'importmap-rails'
+gem 'bcrypt'
+gem 'ostruct'
+gem 'haml-rails'
+gem 'action_policy'
+
+group :development, :test do
+  gem 'debug', require: 'debug/prelude'
+  gem 'tailwindcss-rails'
+  gem 'rspec-rails'
+end
+
+group :development do
+  gem 'foreman'
+end
+
+group :test do
+  gem 'cucumber-rails', require: false
+  gem 'database_cleaner'
+  gem 'capybara'
+  gem 'cuprite'
+end
+
