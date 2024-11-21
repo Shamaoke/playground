@@ -1,0 +1,28 @@
+#! /usr/bin/env zsh
+
+##
+## ::: Docker stop script :::
+##
+
+declare container_ids_path=$PWD/tmp/docker/container_ids
+
+##
+## ::: Utilities :::
+##
+
+##
+## each $function ($array) -> $new_array
+##
+function each; foreach e (${@:2}) { ${@:1:1} $e }
+
+function main TRAPEXIT {
+
+  read -r -d ' ' -A container_ids < $container_ids_path
+
+  f() { docker container stop $1 }
+
+  each f $container_ids
+
+  :>$container_ids_path
+}
+

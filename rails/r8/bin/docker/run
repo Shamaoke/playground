@@ -15,6 +15,8 @@ declare network=$(basename $PWD)
 declare -a args=($@)
 declare -a docker_options=( )
 
+declare container_ids=$PWD/tmp/docker/container_ids
+
 ##
 ## ::: Colors :::
 ##
@@ -161,23 +163,23 @@ function main TRAPEXIT {
   case $target {
     ('nginx')
       docker_options=($nginx_docker_options)
-      docker run $docker_options "${repository}-nginx:$tag"
+      docker run $docker_options "${repository}-nginx:$tag" >> $container_ids
       docker_options=( )
     ;;
 
     ('rails')
       docker_options=($rails_docker_options)
-      docker run $docker_options "${repository}-rails:$tag"
+      docker run $docker_options "${repository}-rails:$tag" >> $container_ids
       docker_options=( )
     ;;
 
     ('all')
       docker_options=($nginx_docker_options)
-      docker run $docker_options "${repository}-nginx:$tag"
+      docker run $docker_options "${repository}-nginx:$tag" >> $container_ids
       docker_options=( )
 
       docker_options=($rails_docker_options)
-      docker run $docker_options "${repository}-rails:$tag"
+      docker run $docker_options "${repository}-rails:$tag" >> $container_ids
       docker_options=( )
     ;;
   }
