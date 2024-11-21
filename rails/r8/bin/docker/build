@@ -1,0 +1,160 @@
+#! /usr/bin/env zsh
+
+##
+## ::: Docker build script :::
+##
+
+autoload throw
+autoload catch
+
+declare -a args=($@)
+declare repository=$(basename $PWD)
+
+##
+## ::: Colors :::
+##
+
+function r red;     print "\x1b\x5b\x33\x31\x6d$1\x1b\x5b\x30\x6d"
+function g green;   print "\x1b\x5b\x33\x32\x6d$1\x1b\x5b\x30\x6d"
+function y yellow;  print "\x1b\x5b\x33\x33\x6d$1\x1b\x5b\x30\x6d"
+function b blue;    print "\x1b\x5b\x33\x34\x6d$1\x1b\x5b\x30\x6d"
+function m magenta; print "\x1b\x5b\x33\x35\x6d$1\x1b\x5b\x30\x6d"
+function c cyan;    print "\x1b\x5b\x33\x36\x6d$1\x1b\x5b\x30\x6d"
+
+function rr bright_red;     print "\x1b\x5b\x39\x31\x6d$1\x1b\x5b\x30\x6d"
+function gg bright_green;   print "\x1b\x5b\x39\x32\x6d$1\x1b\x5b\x30\x6d"
+function yy bright_yellow;  print "\x1b\x5b\x39\x33\x6d$1\x1b\x5b\x30\x6d"
+function bb bright_blue;    print "\x1b\x5b\x39\x34\x6d$1\x1b\x5b\x30\x6d"
+function mm bright_magenta; print "\x1b\x5b\x39\x35\x6d$1\x1b\x5b\x30\x6d"
+function cc bright_cyan;    print "\x1b\x5b\x39\x36\x6d$1\x1b\x5b\x30\x6d"
+
+function bls slowly_blinking; print "\x1b\x5b\x35\x6d$1\x1b\x5b\x30\x6d"
+
+##
+## ::: Colors | Legend :::
+##
+## \x1b\x5b ... \x6d -- SGR — Select Graphic Rendition presentation control function
+##
+## \x1b\x5b -- CSI — Control Sequence Introducer introducer control function
+## \x6d     -- SGR final byte
+##
+## \x33     -- italicized
+## \x34     -- singly underlined
+## \x35     -- slowly blinking
+## \x37     -- negative image
+## \x39     -- crossed-out
+## \x32\x31 -- doubly underlined
+##
+## \x33\x3{0-7}     -- foreground color (`\x33\x31` — red foreground)
+## \x39\x3{0-7}     -- bright foreground color (`\x39\x31` — bright red foreground)
+## \x34\x3{0-7}     -- background color (`\x34\x32` — green background)
+## \x31\x30\x3{0-7} -- bright background color (`\x31\x30\x32` — bright green background)
+##
+## \x3b -- command separator (`\x33 \x3b \x33\x31 \x3b \x34\x32` — italic ; red foreground ; green background)
+## \x30 -- reset
+##
+## ::: Color | Details :::
+##
+## • [ECMA-48: 8.3.117 SGR — Select Graphic Rendition, p. 61](https://www.ecma-international.org/publications-and-standards/standards/ecma-48)
+##
+## • [ANSI escape code - Wikipedia](https://en.wikipedia.org/wiki/ANSI_escape_code)
+##
+## • [terminal - List of ANSI color escape sequences - Stack Overflow](https://stackoverflow.com/questions/4842424/list-of-ansi-color-escape-sequences)
+##
+
+##
+## ::: Utilities :::
+##
+
+##
+## any $element ($array) -> { true /* element is present in the array */ | false /* otherwise */ }
+##
+function any; [[ ${${@:2}[(i)$1]} -le ${#@:2} ]]
+
+function usage {
+  echo \
+    'Usage:' \
+    "\n" \
+    "\n" \
+    'COMMAND' \
+    "\n" \
+    "$(b build) [$(g OPTIONS)] $(y DOCKER_DIR)" \
+    "\n" \
+    "\n" \
+    'OPTIONS' \
+    "\n" \
+    "$(g -r) | $(g --repository) | $(g --repository=) -- $(y "specify a repository (\`${repository}\` is the default)")" \
+    "\n" \
+    "$(g -t) | $(g --tag) | $(g --tag=)               -- $(y 'specify a tag (`latest` is the default)')" \
+    "\n" \
+    "$(g -f) | $(g --dockerfile) | $(g --dockerfile=) -- $(y 'specify a Dockerfile (`Dockerfile` is the default)')" \
+    "\n" \
+    "$(g -g) | $(g --target)                     -- $(y 'specify an interruption point for the build')" \
+    "\n" \
+    "$(g -h) | $(g --help)                       -- $(y 'display this message')"
+}
+
+function failwith {
+
+  setopt ERR_EXIT
+
+  local code=$1
+  local message
+
+  case $code {
+    (101) message="$(bls $(r ERROR)): The working directory was not specified!\n" ;;
+    (102) message="$(bls $(r ERROR)): $(y ${workdir}) is not a directory!\n" ;;
+    (103) message="$(bls $(r ERROR)): $(y ${workdir}) doesn't contain a Dockerfile!\n" ;;
+  }
+
+  echo $message
+  usage
+  bye $code
+}
+
+##
+## ::: Entrypoint :::
+##
+
+function main TRAPEXIT {
+
+  { any '-h' $args || any '--help' $args } && usage && bye 1
+
+  {
+    [[ ${#args} -eq 0 ]] && throw 'ERR::ZERO_ARG'
+  } always {
+    catch 'ERR::ZERO_ARG' && failwith 101
+  }
+
+  local -a options=(${args:0:-1})
+  local    workdir=${args[-1]}
+
+  {
+    [[ ! -d $workdir ]] && throw 'ERR::NOT_DIR'
+  } always {
+    catch 'ERR::NOT_DIR' && failwith 102
+  }
+
+  {
+    [[ ! -f "$workdir/Dockerfile" ]] && throw 'ERR::NO_DOCKERFILE'
+  } always {
+    catch 'ERR::NO_DOCKERFILE' && failwith 103
+  }
+
+  local repository=${options[options[(i)-r|--repository] + 1]:-${${options[(r)--repository=*]#--repository=}:-$repository}}
+  local tag=${options[options[(i)-t|--tag] + 1]:-${${options[(r)--tag=*]#--tag=}:-latest}}
+  local dockerfile=${options[options[(i)-f|--dockerfile] + 1]:-${${options[(r)--dockerfile=*]#--dockerfile=}:-$workdir/Dockerfile}}
+  local target=${options[options[(i)-g|--target] + 1]:-${${options[(r)--target=*]#--dockerfile=}:-undefined}}
+
+  local -a docker_options=(
+    --progress plain
+    --tag $repository:$tag
+    --file $dockerfile
+    --network host
+  )
+
+  [[ $target != undefined ]] && docker_options+=(--target $target)
+
+  docker image build $docker_options $workdir
+}
+
