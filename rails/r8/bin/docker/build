@@ -4,6 +4,13 @@
 ## ::: Docker build script :::
 ##
 
+##
+## ::: Example :::
+##
+## `bin/docker/build -r r8-nginx -t latest -g nginx .`
+## `bin/docker/build -r r8-rails -t latest -g r8 .`
+##
+
 autoload throw
 autoload catch
 
