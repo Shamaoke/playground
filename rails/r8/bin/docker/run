@@ -8,6 +8,9 @@ autoload throw
 autoload catch
 
 declare repository=$(basename $PWD)
+declare tag=latest
+declare target=all
+declare network=$(basename $PWD)
 
 declare -a args=($@)
 declare -a targets=(nginx rails)
@@ -79,6 +82,8 @@ function any; [[ ${${@:2}[(i)$1]} -le ${#@:2} ]]
 ##
 ## none $element ($array) -> { true /* element is NOT present in the array */ | false /* otherwise */ }
 ##
+
+#[[maybe_unused]]
 function none; [[ ${${@:2}[(i)$1]} -gt ${#@:2} ]]
 
 function usage {
@@ -88,37 +93,21 @@ function usage {
     "\n" \
     'COMMAND' \
     "\n" \
-    "run [OPTIONS]" \
+    "$(b run) [$(g OPTIONS)]" \
     "\n" \
     "\n" \
     'OPTIONS' \
     "\n" \
-    '-r|--repository|--repository= -- specify a repository (`r8` is the default)' \
+    "$(g -r) | $(g --repository) | $(g --repository=) -- $(y "specify a repository (\`$repository\` is the default)")" \
     "\n" \
-    '-t|--tag|--tag= -- specify a tag (`latest` is the default)' \
+    "$(g -t) | $(g --tag) | $(g --tag=)               -- $(y "specify a tag (\`$tag\` is the default)")" \
     "\n" \
-    '-g|--target -- specify a target { nginx | rails }' \
+    "$(g -g) | $(g --target) | $(g --target=)         -- $(y 'specify an interruption point for the build')" \
     "\n" \
-    '-n|--network -- specify a network' \
+    "$(g -n) | $(g --network) | $(g --network=)       -- $(y "specify a network (\`$network\` is the default)")" \
     "\n" \
-    '-h|--help -- display this message'
+    "$(g -h) | $(g --help)                       -- $(y 'display this message')"
 }
-
-# function failwith {
-#
-#   setopt ERR_EXIT
-#
-#   local code=$1
-#   local message
-#
-#   case $code {
-#     (102) message="$(bls $(r ERROR)): no network was specified!\n" ;;
-#   }
-#
-#   echo $message
-#   usage
-#   bye $code
-# }
 
 ##
 ## ::: Entrypoint :::
@@ -132,10 +121,10 @@ function main TRAPEXIT {
 
   [[ $is_help_needed == true ]] && usage && bye 1
 
-  # local repository=${options[options[(i)-r|--repository] + 1]:-${${options[(r)--repository=*]#--repository=}:-$repository}}
-  local tag=${options[options[(i)-t|--tag] + 1]:-${${options[(r)--tag=*]#--tag=}:-latest}}
-  local target=${options[options[(i)-g|--target] + 1]:-${${options[(r)--target=*]#--target=}:-all}}
-  local network=${options[options[(i)-n|--network] + 1]:-${${options[(r)--network=*]#--network=}:-$repository}}
+  local repository=${options[options[(i)-r|--repository] + 1]:-${${options[(r)--repository=*]#--repository=}:-$repository}}
+  local tag=${options[options[(i)-t|--tag] + 1]:-${${options[(r)--tag=*]#--tag=}:-$tag}}
+  local target=${options[options[(i)-g|--target] + 1]:-${${options[(r)--target=*]#--target=}:-$target}}
+  local network=${options[options[(i)-n|--network] + 1]:-${${options[(r)--network=*]#--network=}:-$network}}
 
   local -A storage=(
     [source]="${HOME}/.workspace/playground/rails/${repository}/storage/production.sqlite3"
