@@ -313,6 +313,8 @@ GEM
     timeout (0.4.2)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
+    tzinfo-data (1.2024.2)
+      tzinfo (>= 1.0.0)
     uri (1.0.2)
     useragent (0.16.10)
     webrick (1.9.0)
@@ -356,6 +358,7 @@ DEPENDENCIES
   rspec-rails
   sqlite3
   tailwindcss-rails
+  tzinfo-data
 
 BUNDLED WITH
    2.5.16

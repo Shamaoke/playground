@@ -10,6 +10,7 @@ gem 'bcrypt'
 gem 'ostruct'
 gem 'haml-rails'
 gem 'action_policy'
+gem 'tzinfo-data'
 
 group :development, :test do
   gem 'debug', require: 'debug/prelude'
