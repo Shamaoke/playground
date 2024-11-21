@@ -13,7 +13,6 @@ declare target=all
 declare network=$(basename $PWD)
 
 declare -a args=($@)
-declare -a targets=(nginx rails)
 declare -a docker_options=( )
 
 ##
