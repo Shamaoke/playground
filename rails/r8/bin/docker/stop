@@ -4,7 +4,20 @@
 ## ::: Docker stop script :::
 ##
 
-declare container_ids_path=$PWD/tmp/docker/container_ids
+declare container_ids_path=$(realpath "${0:h:P}/../../tmp/docker/container_ids")
+
+##
+## `realpath` -- replace relative (`..` and `.`) components of a path with real components
+## `$0`       -- path to the current script, relative to `$PWD`
+## `${0:h}`   -- path to the directory of the current script (the [h]eader)
+## `${0:h:P}` -- the absolute [P]ath to directory of the current script
+##
+## Details
+## -------
+## • man realpath
+##
+## • [The Z Shell Manual: 14.1.4 Modifiers, p. 42]
+##
 
 ##
 ## ::: Utilities :::
