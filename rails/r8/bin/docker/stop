@@ -11,17 +11,17 @@ declare container_ids_path=$PWD/tmp/docker/container_ids
 ##
 
 ##
-## each $function ($array) -> $new_array
+## each ($array) $function -> $new_array
 ##
-function each; foreach e (${@:2}) { ${@:1:1} $e }
+function each; foreach e (${@[1,-2]}) { ${@[-1]} $e }
 
 function main TRAPEXIT {
 
-  read -r -d ' ' -A container_ids < $container_ids_path
+  read -r -d '' -A container_ids < $container_ids_path
 
   f() { docker container stop $1 }
 
-  each f $container_ids
+  each $container_ids f
 
   :>$container_ids_path
 }
