@@ -89,15 +89,15 @@ function main TRAPEXIT {
   #   [destination]="/etc/caddy/Caddyfile"
   # )
 
-  # local -A nginx_http=(
-  #   [source]="${HOME}/.workspace/playground/rails/auth_103/nginx/default.conf"
-  #   [destination]="/etc/nginx/http.d/default.conf"
-  # )
+  local -A nginx_http=(
+    [source]="${HOME}/.workspace/playground/rails/auth_103/nginx/default.conf"
+    [destination]="/etc/nginx/http.d/default.conf"
+  )
 
-  # local -A nginx_conf=(
-  #   [source]="${HOME}/.workspace/playground/rails/auth_103/nginx/nginx.conf"
-  #   [destination]="/etc/nginx/nginx.conf"
-  # )
+  local -A nginx_conf=(
+    [source]="${HOME}/.workspace/playground/rails/auth_103/nginx/nginx.conf"
+    [destination]="/etc/nginx/nginx.conf"
+  )
 
   # --volume ${xsock}:${xsock}
   # --publish 192.168.0.10:44244:44244
@@ -129,13 +129,13 @@ function main TRAPEXIT {
   ##
   ## ::: Nginx :::
   ##
-  # --mount "type=bind,source=${nginx_conf[source]},destination=${nginx_conf[destination]}"
-  # --mount "type=bind,source=${nginx_http[source]},destination=${nginx_http[destination]}"
   local -a nginx_docker_options=(
     --rm
     --network auth_103
     --ip 10.0.42.142
     --publish 80:80
+    --mount "type=bind,source=${nginx_conf[source]},destination=${nginx_conf[destination]}"
+    --mount "type=bind,source=${nginx_http[source]},destination=${nginx_http[destination]}"
   )
 
   case $target {
