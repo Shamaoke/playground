@@ -61,6 +61,8 @@ function bls slowly_blinking; print "\x1b\x5b\x35\x6d$1\x1b\x5b\x30\x6d"
 ##
 ## • [terminal - List of ANSI color escape sequences - Stack Overflow](https://stackoverflow.com/questions/4842424/list-of-ansi-color-escape-sequences)
 ##
+## • console_codes(4)
+##
 
 ##
 ## ::: Utilities :::
