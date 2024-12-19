@@ -15,13 +15,13 @@ gem 'tzinfo-data'
 
 gem 'debug', require: 'debug/prelude'
 
-# gem 'tailwindcss-rails'
+gem 'tailwindcss-rails'
 
 group :production do
 end
 
 group :development, :test do
-  gem 'tailwindcss-rails'
+# gem 'tailwindcss-rails'
   gem 'rspec-rails'
 end
 
