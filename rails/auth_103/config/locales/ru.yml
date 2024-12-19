@@ -23,7 +23,7 @@ ru:
     password: 'пароль'
 
   links:
-    sessions_new: 'войти в систему'
+    sessions_new: 'войти'
 
   login:
     success: 'вы вошли в систему'
