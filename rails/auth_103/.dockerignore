@@ -30,3 +30,5 @@ log/development.log
 storage/development.sqlite3
 storage/test.sqlite3
 
+public/assets
+
