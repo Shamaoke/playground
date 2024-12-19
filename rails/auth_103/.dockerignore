@@ -1,10 +1,11 @@
 
+.bundle
 .dockerignore
 .git
 .gitignore
 .rspec
 Gemfile.lock
-Dockerfile
+Dockerfile*
 Procfile
 features
 spec
