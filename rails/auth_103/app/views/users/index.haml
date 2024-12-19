@@ -1,7 +1,7 @@
 
 = content_for :title, t('users').capitalize
 
-%ul
+%ul{ class: 'col-span-6' }
   - @users.each do |user|
     %li= link_to "#{user.surname} #{user.name} #{user.patronymic}", user_path(user), class: 'anchor'
 

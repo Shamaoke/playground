@@ -1,16 +1,17 @@
 
 - content_for :title, t('headers.login').capitalize
 
-= form_with url: sessions_new_path do |form|
-  %div{ class: 'grid grid-rows-5 gap-y-2' }
-    %div
-      = form.label t('labels.login')
-    %div
-      = form.text_field :login
-    %div
-      = form.label t('labels.password')
-    %div
-      = form.password_field :password
-    %div
-      = form.submit t('buttons.login'), class: 'bg-green-400 text-white px-4 py-2 rounded'
+%div{ class: 'col-start-3 col-span-2 flex items-start justify-center' }
+  = form_with url: sessions_new_path do |form|
+    %div{ class: 'space-y-2' }
+      %div
+        = form.label t('labels.login')
+      %div
+        = form.text_field :login
+      %div
+        = form.label t('labels.password')
+      %div
+        = form.password_field :password
+      %div{ class: 'flex justify-center' }
+        = form.submit t('buttons.login'), class: 'bg-sky-400 text-white px-4 py-2 rounded'
 

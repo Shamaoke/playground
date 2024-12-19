@@ -9,25 +9,25 @@
     = stylesheet_link_tag 'tailwind'
     = stylesheet_link_tag 'application'
     = yield :head
-  %body{ class: 'h-screen flex flex-col' }
-    %header{ class: 'basis-14 bg-green-400 grid grid-cols-6 gap-0' }
-      %div{ class: 'text-4xl bg-green-600 col-span-2' }
+  %body{ class: 'w-screen h-screen flex flex-col' }
+    %header{ class: 'basis-14 bg-sky-600 grid grid-cols-8 gap-0 border-b-2 border-sky-900' }
+      %div{ class: 'text-2xl col-start-2 col-span-2 flex items-center justify-start' }
         = link_to root_path do
           = "#{image_tag 'logo.svg', width: '40px', height: '40px', class: 'inline-block'} | #{content_for :title}"
-      %div{ class: 'text bg-green-600 col-span-2' }
+      %div{ class: 'text-base col-start-4 col-span-2 flex items-center justify-center' }
         - if alert.present?
           %div= alert
         - if notice.present?
           %div= notice
-      %div{ class: 'text bg-green-600 col-span-2' }
+      %div{ class: 'text-base col-start-6 col-span-2 flex items-center justify-end' }
         - if Current.user.id
           %div
             = form_with url: sessions_new_path, method: :delete do |form|
               = link_to "#{Current.user.name} #{Current.user.surname}", user_path(Current.user.id)
-              = form.submit t('buttons.logout'), class: 'bg-green-400 text-white px-4 py-2 rounded'
+              = form.submit t('buttons.logout'), class: 'bg-sky-400 text-white px-4 py-2 rounded'
         - else
-          %div= link_to t('links.sessions_new'), sessions_new_path, class: 'bg-green-400 text-white px-4 py-2 rounded'
-    %main{ class: 'grow bg-green-200' }
-      = yield
-    %footer{ class: 'basis-36 bg-green-400' }
+          %div= link_to t('links.sessions_new'), sessions_new_path, class: 'bg-sky-400 text-white px-4 py-2 rounded'
+    %main{ class: 'grow bg-sky-300 grid grid-cols-8 gap-0' }
+      %div{ class: 'text-base col-start-2 col-span-6 grid grid-cols-6 gap-0' }= yield
+    %footer{ class: 'basis-0 bg-sky-600' }
 

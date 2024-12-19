@@ -21,7 +21,6 @@ group :production do
 end
 
 group :development, :test do
-# gem 'tailwindcss-rails'
   gem 'rspec-rails'
 end
 

@@ -1,7 +1,11 @@
 
 = content_for :title, t('home').capitalize
 
-%ul
-  %li= link_to t('users'), users_path, class: 'anchor'
-  %li= link_to t('contracts'), contracts_path, class: 'anchor'
+%ul{ class: 'col-span-6 space-y-4' }
+  %li
+    %p= link_to t('users').capitalize, users_path, class: 'anchor'
+    %p Отобразить пользователей Системы
+  %li
+    %p= link_to t('contracts').capitalize, contracts_path, class: 'anchor'
+    %p Вывести перечень договоров
 

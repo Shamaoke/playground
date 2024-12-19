@@ -8,6 +8,7 @@ class CreateUsers < ActiveRecord::Migration[7.2]
       t.string :name
       t.string :patronymic
       t.string :surname
+      t.string :position
     end
   end
 end

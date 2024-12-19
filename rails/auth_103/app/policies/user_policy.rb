@@ -2,11 +2,11 @@
 class UserPolicy < ApplicationPolicy
 
   def index?
-    user.login.eql? 'nikolai'
+    user.login.eql? 'arina'
   end
 
   def show?
-    user.login.eql? 'nikolai'
+    user.login.eql? 'arina'
   end
 end
 

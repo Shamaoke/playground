@@ -4,7 +4,7 @@
 
 @layer components {
   .anchor {
-    @apply text-2xl underline underline-offset-2 text-sky-400;
+    @apply text-2xl underline underline-offset-2 text-sky-900;
   }
 }
 

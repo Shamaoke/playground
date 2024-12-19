@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   authorize :user, through: :user_policy
 
   def index
-    @users = User.all
+    @users = User.all.order(:surname)
   end
 
   def show

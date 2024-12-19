@@ -1,23 +1,30 @@
 
 = content_for :title, t('contract').capitalize
 
-%h1{ class: 'text-4xl' }= t('contract').capitalize
-%ul
-  %li
-    %h2 Номер
-    %p= "#{@contract.number}"
-  %li
-    %h2 Дата
-    %p= "#{@contract.date}"
-  %li
-    %h2 Описание
-    %p= "#{@contract.description}"
-%h1{ class: 'text-4xl' }= t('specifications').capitalize
-%ul
-  - @contract.specifications.each do |specification|
+%div{ class: 'col-start-1 col-span-3' }
+  %h1{ class: 'text-2xl font-bold text-sky-900' }= t('contract').capitalize
+  %ul
     %li
-      %p= "#{t('specification.number').capitalize}: #{specification.number}"
-      %p= "#{t('specification.date').capitalize}: #{specification.date}"
-      %h2= "#{t('specification.description').capitalize}"
-      %p= "#{specification.description}"
+      %span{ class: 'font-bold text-sky-900' } Номер:
+      %span= @contract.number
+    %li
+      %span{ class: 'font-bold text-sky-900' } Дата:
+      %span= @contract.date
+    %li
+      %h1{ class: 'font-bold text-sky-900' } Описание
+      %p= @contract.description
+%div{ class: 'col-start-4 col-span-3' }
+  %h1{ class: 'text-2xl font-bold text-sky-900' }= t('specifications').capitalize
+  %ul{ class: 'space-y-4' }
+    - @contract.specifications.each do |specification|
+      %li
+        %p
+          %span{ class: 'font-bold text-sky-900' }= "#{t('specification.number').capitalize}:"
+          %span= specification.number
+        %p
+          %span{ class: 'font-bold text-sky-900' }= "#{t('specification.date').capitalize}:"
+          %span= specification.date
+        %p
+          %h1{ class: 'font-bold text-sky-900' }= t('specification.description').capitalize
+          %p= specification.description
 
