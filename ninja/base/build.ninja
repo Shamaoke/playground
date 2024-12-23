@@ -1,5 +1,7 @@
 
 cxxflags = --std=c++2b -Wunused-parameter
+exe  = _build/main
+link = bin/main
 
 rule COMPILE
   command = clang++ $cxxflags -o $out $in
@@ -10,7 +12,7 @@ rule RUN
   description = Running bin/main ...
 
 rule CREATE_LINK
-  command = ln --symbolic $path bin/main
+  command = ln --symbolic $exe_path $link_path
   description = Creating bin/main ...
 
 rule CREATE_BIN_DIR
@@ -28,7 +30,8 @@ rule CLEAN
 build run: RUN || bin/main
 
 build bin/main: CREATE_LINK || bin
-  path = $$(realpath _build/main)
+  exe_path  = $$(realpath $exe)
+  link_path = $$(realpath $link)
 
 build bin: CREATE_BIN_DIR || _build/main
 
