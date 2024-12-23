@@ -1,0 +1,9 @@
+
+cxxflags = --std=c++2b -Wunused-parameter
+
+rule cxx
+  command = clang++ $cxxflags -o build/$out $in
+  description = Compiling $in ...
+
+build main: cxx main.cpp
+
