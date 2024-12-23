@@ -1,5 +1,10 @@
 
 cxxflags = --std=c++2b -Wunused-parameter
+
+build_dir = _build
+bin_dir   = bin
+
+src  = main.cpp
 exe  = _build/main
 link = bin/main
 
@@ -8,41 +13,40 @@ rule COMPILE
   description = Compiling $in
 
 rule RUN
-  command = bin/main
-  description = Running bin/main ...
+  command = $in
+  description = Running $in ...
 
 rule CREATE_LINK
   command = ln --symbolic $exe_path $link_path
-  description = Creating bin/main ...
+  description = Creating $out ...
 
 rule CREATE_BIN_DIR
-  command = mkdir bin
-  description = Creating bin ...
+  command = mkdir $out
+  description = Creating $out ...
 
 rule CREATE_BUILD_DIR
-  command = mkdir _build
-  description = Creating _build ...
+  command = mkdir $out
+  description = Creating $out ...
 
 rule CLEAN
-  command = rm --force --recursive _build bin
-  description = Removing _build bin ...
+  command = rm --force --recursive $bin_dir $build_dir
+  description = Removing $bin_dir $build_dir ...
 
-build run: RUN || bin/main
+build run: RUN $link
 
-build bin/main: CREATE_LINK || bin
+build $link: CREATE_LINK || $bin_dir
   exe_path  = $$(realpath $exe)
   link_path = $$(realpath $link)
 
-build bin: CREATE_BIN_DIR || _build/main
+build $bin_dir: CREATE_BIN_DIR || $exe
 
-build _build/main: COMPILE main.cpp || _build
+build $exe: COMPILE $src || $build_dir
 
-build _build: CREATE_BUILD_DIR
+build $build_dir: CREATE_BUILD_DIR
 
 build clean: CLEAN
 
-# build all: phony run
-# default all
+build all: phony run
 
-default run
+default all
 
