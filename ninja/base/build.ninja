@@ -1,5 +1,31 @@
 
-cxxflags = --std=c++2b -Wunused-parameter
+##
+## Useful commands for running Ninja
+## ---------------------------------
+##
+## `ninja -f my_build.ninja`
+##   Use the specified input build file instead of the default one (i. e. `build.ninja`)
+##
+## `ninja -d explain run`
+##   Explain what caused a command to execute
+##
+## `ninja run`, `ninja clean`
+##   Run the specified targets
+##
+## `ninja`
+##   Run the default target
+##
+## `ninja -v|--verbose`
+##   Show all commands while building
+##
+## `ninja --quiet`
+##   Suppress output of progress status; show commands output only
+##
+
+cxxflags = $
+  --std=c++2b $
+  -Wunused-parameter $
+  -fdiagnostics-color
 
 build_dir = _build
 bin_dir   = bin
@@ -29,8 +55,9 @@ rule CREATE_BUILD_DIR
   description = Creating $out ...
 
 rule CLEAN
-  command = rm --force --recursive $bin_dir $build_dir
-  description = Removing $bin_dir $build_dir ...
+  command = [[ -d $build_dir || -d $bin_dir ]] $
+              && rm --force --recursive $build_dir $bin_dir
+  description = Removing $build_dir $bin_dir ...
 
 build run: RUN $link
 
