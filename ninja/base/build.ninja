@@ -10,7 +10,7 @@ rule RUN
   description = Running bin/main ...
 
 rule CREATE_LINK
-  command = ln --symbolic ../_build/main bin/main
+  command = ln --symbolic $path bin/main
   description = Creating bin/main ...
 
 rule CREATE_BIN_DIR
@@ -28,6 +28,7 @@ rule CLEAN
 build run: RUN || bin/main
 
 build bin/main: CREATE_LINK || bin
+  path = $$(realpath _build/main)
 
 build bin: CREATE_BIN_DIR || _build/main
 
