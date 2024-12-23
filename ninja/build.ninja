@@ -1,32 +1,43 @@
 
-build_dir = build
+cxxflags = --std=c++2b -Wunused-parameter
 
-rule ONE
-  command = touch $build_dir/one.txt
+rule COMPILE
+  command = clang++ $cxxflags -o $out $in
+  description = Compiling $in
 
-rule TWO
-  command = touch $build_dir/two.txt
+rule RUN
+  command = bin/main
+  description = Running bin/main ...
 
-rule THREE
-  command = touch $build_dir/$out
+rule CREATE_LINK
+  command = ln --symbolic ../_build/main bin/main
+  description = Creating bin/main ...
 
-rule MK_BUILD
-  command = mkdir $build_dir
+rule CREATE_BIN_DIR
+  command = mkdir bin
+  description = Creating bin ...
+
+rule CREATE_BUILD_DIR
+  command = mkdir _build
+  description = Creating _build ...
 
 rule CLEAN
-  command = rm --force --recursive $build_dir
+  command = rm --force --recursive _build bin
+  description = Removing _build bin ...
 
-build one.txt: ONE || two.txt
+build run: RUN || bin/main
 
-build two.txt: TWO || three.txt
+build bin/main: CREATE_LINK || bin
 
-build three.txt: THREE || $build_dir
+build bin: CREATE_BIN_DIR || _build/main
 
-build $build_dir: MK_BUILD
+build _build/main: COMPILE main.cpp || _build
 
-build clean: CLEAN $build_dir
+build _build: CREATE_BUILD_DIR
 
-build all: phony $build_dir three.txt two.txt one.txt
+build clean: CLEAN
+
+build all: phony run
 
 default all
 
