@@ -1,61 +1,79 @@
 
 ##
-## ::: Constructors build file :::
+## Useful commands for running Ninja
+## ---------------------------------
+##
+## `ninja -f my_build.ninja`
+##   Use the specified input build file instead of the default one (i. e. `build.ninja`)
+##
+## `ninja -d explain run`
+##   Explain what caused a command to execute
+##
+## `ninja run`, `ninja clean`
+##   Run the specified targets
+##
+## `ninja`
+##   Run the default target
+##
+## `ninja -v|--verbose`
+##   Show all commands while building
+##
+## `ninja --quiet`
+##   Suppress output of progress status; show commands output only
 ##
 
-cxxflags  = --std=c++2b -Wunused-parameter
-src_file  = main.cpp
+cxxflags = $
+  --std=c++2b $
+  -Wunused-parameter $
+  -fdiagnostics-color
+
 build_dir = _build
 bin_dir   = bin
-exe       = main
-link      = $bin_dir/$exe
 
-rule RUN
-  command = $bin_dir/$exe
-  description = Running main ...
-
-# rule COMPILE
-#   command = clang++ $cxxflags -o $build_dir/$out $in
-#   description = Compiling $in ...
+src  = main.cpp
+exe  = _build/main
+link = bin/main
 
 rule COMPILE
   command = clang++ $cxxflags -o $out $in
-  description = Compiling $in ...
+  description = Compiling $in
 
-rule CREATE_BUILD_DIR
-  command = mkdir $build_dir
-  description = Creating $build_dir ...
-
-rule CREATE_BIN_DIR
-  command = mkdir $bin_dir
-  description = Creating $bin_dir ...
+rule RUN
+  command = $in
+  description = Running $in ...
 
 rule CREATE_LINK
-  command = ln --symbolic ../$build_dir/$exe $out
-  description = Creating link ...
+  command = ln --symbolic $exe_path $link_path
+  description = Creating $out ...
+
+rule CREATE_BIN_DIR
+  command = mkdir $out
+  description = Creating $out ...
+
+rule CREATE_BUILD_DIR
+  command = mkdir $out
+  description = Creating $out ...
 
 rule CLEAN
-  command = rm --force --recursive $build_dir $bin_dir
+  command = [[ -d $build_dir || -d $bin_dir ]] $
+              && rm --force --recursive $build_dir $bin_dir
   description = Removing $build_dir $bin_dir ...
 
-# build run: RUN || $link
+build run: RUN $link
 
-# build $link: CREATE_LINK || $bin_dir
+build $link: CREATE_LINK || $bin_dir
+  exe_path  = $$(realpath $exe)
+  link_path = $$(realpath $link)
 
-# build $bin_dir: CREATE_BIN_DIR || $exe
+build $bin_dir: CREATE_BIN_DIR || $exe
 
-# build $exe: COMPILE $src_file || $build_dir
+build $exe: COMPILE $src || $build_dir
 
-build $exe: COMPILE $src_file
-
-# build $build_dir: CREATE_BUILD_DIR
+build $build_dir: CREATE_BUILD_DIR
 
 build clean: CLEAN
 
-# build all: phony $build_dir $exe $bin_dir $link run
-# build all: phony $build_dir $exe $bin_dir $link
-# build all: phony $build_dir $exe
-build all: phony $exe
+build all: phony run
 
 default all
 

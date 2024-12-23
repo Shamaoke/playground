@@ -1,9 +1,8 @@
 
-#include <atomic>
-#include <string>
 #include <iostream>
 
 struct Sample {
+
   Sample( ) { std::cout << "Default constructor was called!\n"; }
 
   Sample([[maybe_unused]] Sample& s) { std::cout << "Copy constructor was called!\n"; }
@@ -25,10 +24,6 @@ auto main( ) -> int {
   Sample s3 { };
 
   s3 = s;
-
-  // std::atomic<std::string> str1_a { "ok!" };
-
-  // std::atomic<std::string> str2_a = str1_a;
 
   return 0;
 }
