@@ -1,0 +1,32 @@
+
+build_dir = build
+
+rule ONE
+  command = touch $build_dir/one.txt
+
+rule TWO
+  command = touch $build_dir/two.txt
+
+rule THREE
+  command = touch $build_dir/$out
+
+rule MK_BUILD
+  command = mkdir $build_dir
+
+rule CLEAN
+  command = rm --force --recursive $build_dir
+
+build one.txt: ONE || two.txt
+
+build two.txt: TWO || three.txt
+
+build three.txt: THREE || $build_dir
+
+build $build_dir: MK_BUILD
+
+build clean: CLEAN $build_dir
+
+build all: phony $build_dir three.txt two.txt one.txt
+
+default all
+
