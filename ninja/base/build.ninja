@@ -41,7 +41,8 @@ build _build: CREATE_BUILD_DIR
 
 build clean: CLEAN
 
-build all: phony run
+# build all: phony run
+# default all
 
-default all
+default run
 
