@@ -1,36 +1,41 @@
 
+##
+## ::: Constructors build file :::
+##
+
 cxxflags  = --std=c++2b -Wunused-parameter
 build_dir = _build
 bin_dir   = bin
 exe       = main
+link      = $bin_dir/$exe
 
 rule RUN
-  command = $$(pwd)/$bin_dir/$exe
+  command = $bin_dir/$exe
   description = Running main ...
 
 rule COMPILE
-  command = clang++ $cxxflags -o $$(pwd)/$build_dir/$out $in
+  command = clang++ $cxxflags -o $build_dir/$out $in
   description = Compiling $in ...
 
 rule CREATE_BUILD_DIR
-  command = mkdir $$(pwd)/$build_dir
+  command = mkdir $build_dir
   description = Creating $build_dir ...
 
 rule CREATE_BIN_DIR
-  command = mkdir $$(pwd)/$bin_dir
+  command = mkdir $bin_dir
   description = Creating $bin_dir ...
 
 rule CREATE_LINK
-  command = ln --symbolic $$(pwd)/$build_dir/$exe $$(pwd)/$bin_dir/$exe
+  command = ln --symbolic ../$build_dir/$exe $out
   description = Creating link ...
 
 rule CLEAN
-  command = rm --force --recursive $$(pwd)/$build_dir $$(pwd)/$bin_dir
+  command = rm --force --recursive $build_dir $bin_dir
   description = Removing $build_dir $bin_dir ...
 
-build run: RUN || link
+build run: RUN || $link
 
-build link: CREATE_LINK || $bin_dir
+build $link: CREATE_LINK || $bin_dir
 
 build $bin_dir: CREATE_BIN_DIR || $exe
 
@@ -40,7 +45,7 @@ build $build_dir: CREATE_BUILD_DIR
 
 build clean: CLEAN
 
-build all: phony $build_dir $exe $bin_dir link run
+build all: phony $build_dir $exe $bin_dir $link run
 
 default all
 
