@@ -34,10 +34,6 @@ src  = main.cpp
 exe  = _build/main
 link = bin/main
 
-rule COMPILE
-  command = clang++ $cxxflags -o $out $in
-  description = Compiling $in
-
 rule RUN
   command = $in
   description = Running $in ...
@@ -46,13 +42,9 @@ rule CREATE_LINK
   command = ln --symbolic $exe_path $link_path
   description = Creating $out ...
 
-rule CREATE_BIN_DIR
-  command = mkdir $out
-  description = Creating $out ...
-
-rule CREATE_BUILD_DIR
-  command = mkdir $out
-  description = Creating $out ...
+rule COMPILE
+  command = clang++ $cxxflags -o $out $in
+  description = Compiling $in
 
 rule CLEAN
   command = [[ -d $build_dir || -d $bin_dir ]] $
@@ -61,18 +53,15 @@ rule CLEAN
 
 build run: RUN $link
 
-build $link: CREATE_LINK || $bin_dir
+build $link: CREATE_LINK || $exe
   exe_path  = $$(realpath $exe)
   link_path = $$(realpath $link)
 
-build $bin_dir: CREATE_BIN_DIR || $exe
-
-build $exe: COMPILE $src || $build_dir
-
-build $build_dir: CREATE_BUILD_DIR
+build $exe: COMPILE $src
 
 build clean: CLEAN
 
+build build: phony $link
 build all: phony run
 
 default all

@@ -4,14 +4,18 @@
 #include <format>
 
 namespace esc {
+
   auto csi( ) -> std::string { return "\x{1b}\x{5b}"; }
+
   auto bkg(std::string color) -> std::string { return std::format("\x{34}\x{38}\x{3b}\x{35}\x{3b}{0}", color); }
+
   auto clear( ) -> std::string { return "\x{1b}\x{5b}\x{30}"; }
+
   auto final_byte( ) -> std::string { return "\x{6d}"; }
 }
 
 namespace colors {
-  auto orange( ) -> std::string { return "\x{32}\x{30}\x{32}"; }
+  auto c_202( ) -> std::string { return "\x{32}\x{30}\x{32}"; }
 }
 
 auto main( ) -> int {
@@ -24,7 +28,7 @@ auto main( ) -> int {
       "{0}{2}{4}{1}{3}{4}",
       esc::csi(),
       " ACTION ",
-      esc::bkg(colors::orange()),
+      esc::bkg(colors::c_202()),
       esc::clear(),
       esc::final_byte()
     )
