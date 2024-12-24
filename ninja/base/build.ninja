@@ -21,6 +21,13 @@
 ## `ninja --quiet`
 ##   Suppress output of progress status; show commands output only
 ##
+## `ninja -t graph run > build.gv`
+##   Create Graphviz dot code for targets; output to the specified file
+##
+## `dot -T {png|pdf} -o build.{png|pdf} build.gv`
+##   Generate an image out of Graphviz dot code from the specified file
+##   * The `dot` command is a part of the `graphviz` package.
+##
 
 cxxflags = $
   --std=c++23 $
