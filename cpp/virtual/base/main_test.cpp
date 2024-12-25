@@ -1,5 +1,5 @@
 
-#include <gtest/gtest.h>
+#include <gmock/gmock.h>
 
 #include "main.hpp"
 
@@ -42,7 +42,8 @@ TEST_F(DerivedTest, do_three) {
   expected = "ok free!";
   actual   = derived.do_three();
 
-  EXPECT_EQ(actual, expected);
+  // EXPECT_EQ(actual, expected);
+  EXPECT_THAT(actual, Eq(expected));
 }
 
 // TEST(DerivedTest, do_one) {
