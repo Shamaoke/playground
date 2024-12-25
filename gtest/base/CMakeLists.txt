@@ -67,6 +67,11 @@ if(BUILD_TESTING)
 
   ## This command will generate the `CTestTestfile.cmake` in the `${CMAKE_SOURCE_DIR}/_build` directory.
   ## It is automatically executed when including CTest module by the command `include(CTest)`.
+  ##
+  ## Details
+  ## -------
+  ## [enable_testing — CMake 3.31.3 Documentation](https://cmake.org/cmake/help/latest/command/enable_testing.html)
+  ##
   # enable_testing()
 
   ## This command will add a test to the `CTestTestfile.cmake` test configuration file.
