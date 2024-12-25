@@ -7,25 +7,43 @@ using namespace testing;
 
 class DerivedTest : public Test {
 
-  private:
-    std::string expected { };
-    std::string actual   { };
-
   public:
-    auto SetUp( ) -> void override {
+    std::string expected { };
+    std::string actual { };
+    Derived derived { };
 
-      auto derived { Derived { } };
+    static auto SetUpTestSuite( ) -> void { std::cout << "Setting up test suite" << "\n"; }
 
-      this->expected = "ok!";
-      this->actual = derived.do_one();
-    }
+    static auto TearDownTestSuite( ) -> void { std::cout << "Tearing down test suite" << "\n"; }
 
-    auto get_actual( ) -> decltype(this->actual) { return this->actual; }
+    auto SetUp( ) -> void override { std::cout << "Seting up" << "\n"; }
 
-    auto get_expected( ) -> decltype(this->expected) { return this->expected; }
+    auto TearDown( ) -> void override { std::cout << "Tearing down" << "\n"; }
 };
 
-TEST_F(DerivedTest, do_one) { EXPECT_EQ(get_actual(), get_expected()); }
+TEST_F(DerivedTest, do_one) {
+
+  expected = "ok!";
+  actual   = derived.do_one();
+
+  EXPECT_EQ(actual, expected);
+}
+
+TEST_F(DerivedTest, do_two) {
+
+  expected = "ok too!";
+  actual   = derived.do_two();
+
+  EXPECT_EQ(actual, expected);
+}
+
+TEST_F(DerivedTest, do_three) {
+
+  expected = "ok free!";
+  actual   = derived.do_three();
+
+  EXPECT_EQ(actual, expected);
+}
 
 // TEST(DerivedTest, do_one) {
 //
