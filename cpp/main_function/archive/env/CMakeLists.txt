@@ -15,9 +15,9 @@ add_compile_options(-std=c++23)
 
 add_executable(main main.cpp)
 
-set_target_properties(
-  main
-  PROPERTIES
-    RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}
-)
+# set_target_properties(
+#   main
+#   PROPERTIES
+#     RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}
+# )
 
