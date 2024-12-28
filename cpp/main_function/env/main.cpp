@@ -11,10 +11,12 @@
 /// As it turned out, if the argument passed to the `main` function is an array,
 /// then it undergoes the so-called “decay”, i. e. decomposition to its components,
 /// and is then represented in the body of the function not as an array, but as
-/// a pointer to its first element.
+/// a pointer to its first element. Since the array is represented in memory as
+/// a contiguous sequence, it is possible to move through the elements of the
+/// decomposed array by incrementaly increasing the pointer value by one.
 ///
 
-// #include <algorithm>
+#include <algorithm>
 // #include <format>
 #include <iostream>
 // #include <string>
@@ -27,7 +29,7 @@ namespace my {
   auto iterate(char* ary[ ]) -> void {
 
     // for (auto& e : ary) std::cout << e << '\x{a}';
-    /// Won't work for arrays.
+    /// Won't work for decomposed arrays.
     ///
     /// With `auto iterate(char** ary) -> void` it will result with the following.
     /// ````
@@ -51,7 +53,11 @@ namespace my {
   template<int N>
   auto iterate_ref(char* (&ary)[N]) -> void {
 
-    for (auto& e : ary) std::cout << e << '\x{a}';
+    // for (auto& e : ary) std::cout << e << '\x{a}';
+    /// or
+    auto f { [ ] (auto& e) { std::cout << e << '\x{a}'; } };
+
+    std::ranges::for_each(ary, f);
 
     return void();
   }
