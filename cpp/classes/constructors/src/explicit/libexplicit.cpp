@@ -1,12 +1,38 @@
 
 #include <iostream>
+#include <string>
 
 #include <libexplicit/libexplicit.hpp>
 
-auto my_explicit::say_hello( ) -> void {
+namespace my_explicit {
 
-  std::cout << "Hello, Explicit!" << '\x{a}';
+  SampleOne::SampleOne(std::string data) {
 
-  return void();
-}
+    std::cout << "SampleOne::SampleOne(std::string data) is called." << '\x{a}';
+
+    this->data = data;
+  }
+
+  auto SampleOne::get_data( ) -> decltype(this->data) { return this->data; }
+
+  SampleTwo::SampleTwo(std::string data) {
+
+    std::cout << "SampleTwo::SampleTwo(std::string data) is called." << '\x{a}';
+
+    this->data = data;
+  }
+
+  auto SampleTwo::get_data( ) -> decltype(this->data) { return this->data; }
+
+  SampleTwo::operator std::string( ) const { return this->data; }
+
+  // template<>
+  // auto print_data<SampleOne>(SampleOne& sample_one) -> void {
+
+  //   std::cout << sample_one.get_data() << '\x{a}';
+
+  //   return void();
+  // }
+};
+
 
