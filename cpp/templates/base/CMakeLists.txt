@@ -5,14 +5,16 @@
 
 cmake_minimum_required(VERSION 3.31)
 
-project(cpp_arrays LANGUAGES CXX)
-
 # set(CMAKE_CXX_COMPILER /usr/bin/g++)
 # set(CMAKE_CXX_STANDARD 23)
 
-set(CMAKE_CXX_COMPILER /usr/bin/clang++)
+set(CMAKE_CXX_COMPILER clang++)
 
 add_compile_options(-std=c++23)
+
+add_link_options(-fuse-ld=lld)
+
+project(title_subtitle LANGUAGES CXX)
 
 add_executable(main main.cpp)
 
