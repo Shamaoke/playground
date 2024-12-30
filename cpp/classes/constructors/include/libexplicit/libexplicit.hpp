@@ -3,6 +3,14 @@
 
 #include <string>
 
+///
+/// Details
+/// -------
+/// • [explicit specifier - cppreference.com](https://en.cppreference.com/w/cpp/language/explicit)
+///
+/// • [Copy-initialization - cppreference.com](https://en.cppreference.com/w/cpp/language/copy_initialization)
+///
+
 namespace my_explicit {
 
   class SampleOne {
