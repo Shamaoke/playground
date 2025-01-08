@@ -1,6 +1,6 @@
 
 ##
-## ::: Classes | Constructors  build management file :::
+## ::: Classes | Constructors build management file :::
 ##
 
 cmake_minimum_required(VERSION 3.31)
