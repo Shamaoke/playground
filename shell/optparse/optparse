@@ -1,0 +1,141 @@
+#! /usr/bin/env zsh
+
+autoload zcalc
+
+# function succ next; echo -n $(zcalc -e "$1 + 1")
+# function add; echo -n $(zcalc -e "$1 + $2")
+# function sub; echo -n $(zcalc -e "$1 - $2")
+# function div; echo -n $(zcalc -e "$1 / $2")
+
+# function add; echo -n $(zcalc -e "$(<&0) + $1")
+# function sub; echo -n $(zcalc -e "$1 - $2")
+# function div; echo -n $(zcalc -e "$(<&0) / $1")
+
+function succ next; [[ -z "$1" ]] && echo -n $(zcalc -e "$(<&0) + 1") || echo -n $(zcalc -e "$1 + 1")
+
+function add; [[ -z "$2" ]] && echo -n $(zcalc -e "$(<&0) + $1") || echo -n $(zcalc -e "$1 + $2")
+function sub; [[ -z "$2" ]] && echo -n $(zcalc -e "$(<&0) - $1") || echo -n $(zcalc -e "$1 - $2")
+function div; [[ -z "$2" ]] && echo -n $(zcalc -e "$(<&0) / $1") || echo -n $(zcalc -e "$1 / $2")
+
+##
+# function pipe1; echo -n $(<&0)
+# function pipe2; echo -n $(cat)
+#
+# Details:
+# --------
+# • [zsh: 14 Expansion | 14.4 Command Substitution](https://zsh.sourceforge.io/Doc/Release/Expansion.html#Command-Substitution)
+#
+# • [bash - What's wrong with var=$(</dev/stdin) to read stdin into a variable? - Unix & Linux Stack Exchange](https://unix.stackexchange.com/questions/716438/whats-wrong-with-var-dev-stdin-to-read-stdin-into-a-variable)
+#
+
+function main {
+  local -a params=("${@}")
+
+  local -a options=(${params[1, -1]})
+
+  # local -a files
+  # local files=(${~options[options[(i)--files] + 1]})
+  # local files=(${~options[$(next $options[(i)--files])]})
+  # printf "%s\n" "${(@)files:t}"
+
+  # local page_title=${options[$(next $options[(i)-p:t])]}
+  # local page_number=${options[$(next $options[(i)-p:n])]}
+  # local page_width=${options[$(next $options[(i)-p:w])]}
+  # local page_height=${options[$(next $options[(i)-p:h])]}
+  # local text_width=${options[$(next $options[(i)-t:w])]}
+  # local text_height=${options[$(next $options[(i)-t:h])]}
+
+  local debug=${options[options[(i)-d]]}
+
+  # [[ -n $debug ]] && printf "%s\n" 'Debug mode on!' || printf "%s\n" 'Debug mode off!'
+
+  [[ -n $debug ]] && \
+    printf "\x1b\x5b\x33\x3b\x33\x32\x6d%s\x1b\x5b\x30\x6d\xa%s" 'Debug mode is on!' || \
+    printf "\x1b\x5b\x33\x3b\x33\x31\x6d%s\x1b\x5b\x30\x6d\xa%s" 'Debug mode is off!'
+
+  local page_title=${options[$(echo $options[(i)-p:t] | next)]}
+  local page_number=${options[$(echo $options[(i)-p:n] | next)]}
+  local page_width=${options[$(echo $options[(i)-p:w] | next)]}
+  local page_height=${options[$(echo $options[(i)-p:h] | next)]}
+  local text_width=${options[$(echo $options[(i)-t:w] | next)]}
+  local text_height=${options[$(echo $options[(i)-t:h] | next)]}
+
+  # local margin_top=$(zcalc -e "($page_height - $text_height) / 2.0")
+  # local margin_right=$(zcalc -e "($page_width - $text_width) / 2.0 + $text_width")
+  # local margin_bottom=$(zcalc -e "($page_height - $text_height) / 2.0 + $text_height")
+  # local margin_left=$(zcalc -e "($page_width - $text_width) / 2.0")
+
+  # local margin_top=$(div $(sub $page_height $text_height) 2.0)
+  # local margin_right=$(add $(div $(sub $page_width $text_width) 2.0) $text_width)
+  # local margin_bottom=$(add $(div $(sub $page_height $text_height) 2.0) $text_height)
+  # local margin_left=$(div $(sub $page_width $text_width) 2.0)
+
+  local margin_top=$(sub $page_height $text_height | div 2.0)
+  local margin_right=$(sub $page_width $text_width | div 2.0 | add $text_width)
+  local margin_bottom=$(sub $page_height $text_height | div 2.0 | add $text_height)
+  local margin_left=$(sub $page_width $text_width | div 2.0)
+
+  printf "„%s“, с. %s\nШирина: %s мм\nВысота: %s мм\n----\nВерхняя: %s мм\nПравая: %s мм\nНижняя: %s мм\nЛевая: %s мм\n" \
+    $page_title \
+    $page_number \
+    $page_width \
+    $page_height \
+    $margin_top \
+    $margin_right \
+    $margin_bottom \
+    $margin_left \
+      | tee >(xclip -selection 'clipboard' -i)
+
+  ##
+  # local one='ok!'
+  #
+  # local -a params=($@)
+  #
+  # printf " <%s> \n" "${(@)params}"
+  # printf " <%s> \n" "${(@e)params}"
+  # printf " <%s> \n" "${params[@]}"
+  # printf " <%s> \n" "${(e)params[@]}"
+  #
+
+  # local arguments=$* #<= one two three
+  # printf "%s\n" $arguments[1] #=> o
+
+  ##
+  # local -a array_data=(one two three)
+  #
+  # printf -v data "%s\n" "${(@)array_data}"
+  # echo -n $data
+  #
+  # printf '"${(@)array_data" in double quotes\n'
+  # printf "%s\n" "${(@)array_data}" #=> one\ntwo\nthree
+  # printf "\n"
+  #
+  # printf '"${array_data}" in double quotes\n'
+  # printf "%s\n" "${array_data}" #=> one two three
+  # printf "\n"
+  #
+  # printf '${(@)array_data} in no quotes\n'
+  # printf "%s\n" ${(@)array_data} #=> one\ntwo\nthree
+  # printf "\n"
+  #
+  # printf '${array_data} in no quotes\n'
+  # printf "%s\n" ${array_data} #=> one\ntwo\nthree
+  # printf "\n"
+  #
+
+  ##
+  # local one='ok!'
+  # local two='ok too!'
+  # local three='ok three!'
+  #
+  # local -a data=('$one' '$two' '$three')
+  #
+  # printf "%s\n" ${(e)data} #=> ok!\nok two!\nok three!
+  #
+  # printf "%s\n" ${data} #=> $one\n$two\n$three
+  #
+}
+
+main "$*[@]" #=> the same as "$argv[@]" and "$@"
+
+# vim: textwidth=80 colorcolumn=80:
