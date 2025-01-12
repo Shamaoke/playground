@@ -1,0 +1,133 @@
+#! /usr/bin/env zsh
+
+autoload zcalc
+
+#
+# ::: Utilities ::
+#
+function add; [[ -z "$2" ]] && echo -n $(zcalc -e "$(<&0) + $1") || echo -n $(zcalc -e "$1 + $2")
+function sub; [[ -z "$2" ]] && echo -n $(zcalc -e "$(<&0) - $1") || echo -n $(zcalc -e "$1 - $2")
+function div; [[ -z "$2" ]] && echo -n $(zcalc -e "$(<&0) / $1") || echo -n $(zcalc -e "$1 / $2")
+
+function next; [[ -z "$1" ]] && echo -n $(add $(<&0) 1) || echo -n $(add $1 1)
+function half; [[ -z "$1" ]] && echo -n $(div $(<&0) 2.0) || echo -n $(div $1 2.0)
+function zero; echo -n 0.0
+
+#
+# ::: Main :::
+#
+function main {
+  local -a params=("$@")
+  local -a options=(${params[1, -1]})
+
+  local page_title=${options[$(echo $options[(i)-p:t] | next)]}
+  local page_number=${options[$(echo $options[(i)-p:n] | next)]}
+  local page_width=${options[$(echo $options[(i)-p:w] | next)]}
+  local page_height=${options[$(echo $options[(i)-p:h] | next)]}
+
+  local text_width=${options[$(echo $options[(i)-t:w] | next)]}
+  local text_height=${options[$(echo $options[(i)-t:h] | next)]}
+
+  local margin_top=$(sub $page_height $text_height | half)
+  local margin_right=$(sub $page_width $text_width | half | add $text_width)
+  local margin_bottom=$(sub $page_height $text_height | half | add $text_height)
+  local margin_left=$(sub $page_width $text_width | half)
+
+  local margin_header_top=${options[$(echo $options[(i)-m:h:t] | next)]:-0.0}
+  local margin_header_bottom=${options[$(echo $options[(i)-m:h:b] | next)]:-0.0}
+
+  local margin_footer_top=${options[$(echo $options[(i)-m:f:t] | next)]:-0.0}
+  local margin_footer_bottom=${options[$(echo $options[(i)-m:f:b] | next)]:-0.0}
+
+  local cut_size=${options[$(echo $options[(i)-c:s] | next)]}
+
+  local cut_top=$(sub $margin_top $cut_size)
+  local cut_right=$(add $margin_right $cut_size)
+  local cut_right_from_right=$(sub $page_width $cut_right)
+  local cut_bottom=$(add $margin_bottom $cut_size)
+  local cut_bottom_from_bottom=$(sub $page_height $cut_bottom)
+  local cut_left=$(sub $margin_left $cut_size)
+
+  local cut_header_top=$([[ $margin_header_top -ne 0.0 ]] && sub $margin_header_top $cut_size || zero)
+  local cut_footer_bottom=$([[ $margin_footer_bottom -ne 0.0 ]] && add $margin_footer_bottom $cut_size || zero)
+  local cut_footer_bottom_from_bottom=$(sub $page_height $cut_footer_bottom)
+
+read -d '' format <<DOC
+%s, %s
+  ----
+  Страница
+  ----
+  Ширина: %6.2f мм
+  Высота: %6.2f мм
+  ----
+  Текст
+  ----
+  Ширина: %5.2f мм
+  Высота: %5.2f мм
+  ----
+  Границы текст
+  ----
+  Верхняя: %6.2f мм
+  Правая: %7.2f мм
+  Нижняя: %7.2f мм
+  Левая: %8.2f мм
+  ----
+  Размер обрезки: %.2f мм
+  ----
+  Границы обрезка текст
+  ----
+  Верхняя: %6.2f мм
+  Правая: %7.2f мм (%6.2f мм)
+  Нижняя: %7.2f мм (%6.2f мм)
+  Левая: %8.2f мм
+  ----
+  Границы верхний колонтитул
+  ----
+  Верхняя: %6.2f мм
+  Нижняя: %7.2f мм
+  ----
+  Границы нижний колонтитул
+  ----
+  Верхняя: %6.2f мм
+  Нижняя: %7.2f мм
+  ----
+  Границы обрезка верхний колонтитул
+  ----
+  Верхняя: %6.2f мм
+  ----
+  Границы обрезка нижний колонтитул
+  ---
+  Нижняя: %6.2f мм (%6.2f мм)
+DOC
+
+printf "$format\n" \
+  $page_title \
+  $page_number \
+  $page_width \
+  $page_height \
+  $text_width \
+  $text_height \
+  $margin_top \
+  $margin_right \
+  $margin_bottom \
+  $margin_left \
+  $cut_size \
+  $cut_top \
+  $cut_right \
+  $cut_right_from_right \
+  $cut_bottom \
+  $cut_bottom_from_bottom \
+  $cut_left \
+  $margin_header_top \
+  $margin_header_bottom \
+  $margin_footer_top \
+  $margin_footer_bottom \
+  $cut_header_top \
+  $cut_footer_bottom \
+  $cut_footer_bottom_from_bottom \
+    | tee >(xclip -selection 'clipboard' -in)
+}
+
+main "$@"
+
+# vim: set textwidth=80 colorcolumn=80:
