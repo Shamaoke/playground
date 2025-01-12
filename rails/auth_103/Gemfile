@@ -9,7 +9,7 @@ gem 'importmap-rails'
 gem 'bcrypt'
 gem 'ostruct'
 gem 'haml-rails'
-gem 'dartsass-sprockets'
+# gem 'dartsass-sprockets'
 gem 'action_policy'
 gem 'tzinfo-data'
 
