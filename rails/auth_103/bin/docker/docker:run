@@ -7,10 +7,10 @@
 ##
 ## Typical usage
 ## -------------
-## `bin/docker/run -r auth_103-nginx -g nginx`
+## `bin/docker/run -r otvsp.ru:5000/otvsp/auth_103-nginx -g nginx`
 ##   Run an Nginx container
 ##
-## `bin/docker/run -r auth_103-rails -g rails`
+## `bin/docker/run -r otvsp.ru:5000/otvsp/auth_103-rails -g rails`
 ##   Run a Rails container
 ##
 
@@ -49,13 +49,25 @@ function usage {
     "\n" \
     '-r|--repository|--repository= -- specify a repository (`auth_103` is the default)' \
     "\n" \
-    '-t|--tag|--tag= -- specify a tag (`latest` is the default)' \
+    '-t|--tag|--tag=               -- specify a tag (`latest` is the default)' \
     "\n" \
-    '-i|--interactive -- run an interactive docker session' \
+    '-i|--interactive              -- run an interactive docker session' \
     "\n" \
-    '-g|--target -- specify a target { nginx | rails }' \
+    '-g|--target                   -- specify a target { nginx | rails }' \
     "\n" \
-    '-h|--help -- display this message'
+    '-h|--help                     -- display this message' \
+    "\n" \
+    "\n" \
+    'EXAMPLES' \
+    "\n" \
+    '`bin/docker/run -r otvsp.ru:5000/otvsp/auth_103-nginx -g nginx`' \
+    "\n" \
+    "Run an Nginx container" \
+    "\n" \
+    "\n" \
+    '`bin/docker/run -r otvsp.ru:5000/otvsp/auth_103-rails -g rails`' \
+    "\n" \
+    'Run a Rails container'
 }
 
 ##
