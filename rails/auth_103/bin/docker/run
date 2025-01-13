@@ -4,6 +4,16 @@
 ## ::: Docker startup script :::
 ##
 
+##
+## Typical usage
+## -------------
+## `bin/docker/run -r auth_103-nginx -g nginx`
+##   Run an Nginx container
+##
+## `bin/docker/run -r auth_103-rails -g rails`
+##   Run a Rails container
+##
+
 autoload throw
 autoload catch
 

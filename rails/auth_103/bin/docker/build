@@ -4,6 +4,14 @@
 ## ::: Docker build script :::
 ##
 
+##
+## `bin/docker/build -r auth_103-nginx -f Dockerfile.nginx .`
+##   Build an Nginx image
+##
+## `bin/docker/build -r auth_103-rails -f Dockerfile .`
+##   Build a Rails image
+##
+
 autoload throw
 autoload catch
 
