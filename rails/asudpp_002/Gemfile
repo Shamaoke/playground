@@ -12,6 +12,7 @@ gem 'puma'
 gem 'rails', '~>8.0.0'
 gem 'sqlite3'
 gem 'tailwindcss-rails'
+gem 'tzinfo-data'
 
 group :production do
 end
