@@ -4,8 +4,16 @@
 # instead of editing this one. Cucumber will automatically load all features/**/*.rb
 # files.
 
-
 require 'cucumber/rails'
+require 'capybara/cuprite'
+
+Capybara.register_driver(:cuprite) do |app|
+  Capybara::Cuprite::Driver.new(app, headless: false, slowmo: 0.2, window_size: [1200, 800])
+end
+
+Capybara.javascript_driver = :cuprite
+
+singleton_class.alias_method :define, :register_rb_step_definition
 
 # By default, any exception happening in your Rails application will bubble up
 # to Cucumber so that your scenario will fail. This is a different from how
@@ -23,6 +31,12 @@ require 'cucumber/rails'
 # recommended as it will mask a lot of errors for you!
 #
 ActionController::Base.allow_rescue = false
+
+Capybara.configure do |config|
+  # :rack_test (default), :selenium, :selenium_headless, :selenium_chrome, :selenium_chrome_headless
+  config.default_driver = :rack_test
+  config.server = :puma, { Silent: true }
+end
 
 # Remove/comment out the lines below if your app doesn't have a database.
 # For some databases (like MongoDB and CouchDB) you may need to use :truncation instead.
@@ -51,3 +65,4 @@ end
 # The :transaction strategy is faster, but might give you threading problems.
 # See https://github.com/cucumber/cucumber-rails/blob/master/features/choose_javascript_database_strategy.feature
 Cucumber::Rails::Database.javascript_strategy = :truncation
+
