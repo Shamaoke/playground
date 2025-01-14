@@ -1,0 +1,10 @@
+
+services:
+  main:
+    image: "otvsp.ru:5000/otvsp/asudpp_002-main"
+    build:
+      context: .
+      network: host
+    ports:
+      - "44244:44244"
+
