@@ -3,7 +3,16 @@ FROM alpine:3.21 AS base
 
 RUN apk --update-cache upgrade
 
-FROM base AS asudpp_002
+FROM base AS proxy
+
+RUN apk add nginx
+
+COPY --chown=root:root ./nginx/nginx.conf /etc/nginx/nginx.conf
+COPY --chown=root:root ./nginx/default.conf /etc/nginx/http.d/default.conf
+
+ENTRYPOINT ["/bin/sh", "-c", "/usr/sbin/nginx"]
+
+FROM base AS main
 
 RUN apk add build-base
 RUN apk add make

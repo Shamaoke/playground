@@ -5,6 +5,47 @@ services:
     build:
       context: .
       network: host
+      target: main
+    networks:
+      # - "main"
+      main:
+        ipv4_address: "10.0.44.151"
+    # ports:
+    #   - "44244:44244"
+    volumes:
+      - type: bind
+        source: "/home/user/.workspace/playground/rails/asudpp_002/storage/production.sqlite3"
+        target: "/home/asudpp_002/app/storage/production.sqlite3"
+
+  proxy:
+    image: "otvsp.ru:5000/otvsp/asudpp_002-proxy"
+    build:
+      context: .
+      network: host
+      target: proxy
+    networks:
+      # - main
+      main:
+        ipv4_address: "10.0.44.141"
     ports:
-      - "44244:44244"
+      - "80:80"
+    volumes:
+      - type: bind
+        source: "/home/user/.workspace/playground/rails/asudpp_002/nginx/default.conf"
+        target: "/etc/nginx/http.d/default.conf"
+      - type: bind
+        source: "/home/user/.workspace/playground/rails/asudpp_002/nginx/nginx.conf"
+        target: "/etc/nginx/nginx.conf"
+
+networks:
+  main:
+    name: asudpp_002
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: "docker_002"
+    ipam:
+      config:
+        - subnet: "10.0.44.0/24"
+          ip_range: "10.0.44.128/25"
+          gateway: "10.0.44.1"
 
