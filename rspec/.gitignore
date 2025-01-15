@@ -1,0 +1,4 @@
+
+## Ignore vendored gems
+vendor
+
