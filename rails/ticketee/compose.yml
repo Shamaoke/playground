@@ -1,0 +1,47 @@
+
+services:
+  main:
+    image: "ticketee.ru:5000/ticketee-main"
+    build:
+      context: .
+      network: host
+      target: main
+    networks:
+      main:
+        ipv4_address: "10.0.45.151"
+    volumes:
+      - type: bind
+        source: "/home/user/.workspace/playground/rails/ticketee/production.sqlite3"
+        target: "/home/ticketee/app/storage/production.sqlite3"
+
+  proxy:
+    image: "ticketee.ru:5000/ticketee-proxy"
+    build:
+      context: .
+      network: host
+      target: proxy
+    networks:
+      main:
+        ipv4_address: "10.0.45.141"
+    ports:
+      - "80:80"
+    volumes:
+      - type: bind
+        source: "/home/user/.workspace/playground/rails/ticketee/nginx/default.conf"
+        target: "/etc/nginx/http.d/default.conf"
+      - type: bind
+        source: "/home/user/.workspace/playground/rails/ticketee/nginx/nginx.conf"
+        target: "/etc/nginx/nginx.conf"
+
+networks:
+  main:
+    name: ticketee.net
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: "docker-ticketee"
+    ipam:
+      config:
+        - subnet: "10.0.45.0/24"
+          ip_range: "10.0.45.128/25"
+          gateway: "10.0.45.1"
+
