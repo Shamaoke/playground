@@ -11,8 +11,15 @@ services:
         ipv4_address: "10.0.45.151"
     volumes:
       - type: bind
-        source: "/home/user/.workspace/playground/rails/ticketee/production.sqlite3"
+        source: "/home/user/.workspace/playground/rails/ticketee/storage/production.sqlite3"
         target: "/home/ticketee/app/storage/production.sqlite3"
+        # bind:
+        #   propagation: shared
+      - type: bind
+        source: "/home/user/.workspace/playground/rails/ticketee/log/production.log"
+        target: "/home/ticketee/app/log/production.log"
+        # bind:
+        #   propagation: shared
 
   proxy:
     image: "ticketee.ru:5000/ticketee-proxy"
@@ -25,13 +32,6 @@ services:
         ipv4_address: "10.0.45.141"
     ports:
       - "80:80"
-    volumes:
-      - type: bind
-        source: "/home/user/.workspace/playground/rails/ticketee/nginx/default.conf"
-        target: "/etc/nginx/http.d/default.conf"
-      - type: bind
-        source: "/home/user/.workspace/playground/rails/ticketee/nginx/nginx.conf"
-        target: "/etc/nginx/nginx.conf"
 
 networks:
   main:

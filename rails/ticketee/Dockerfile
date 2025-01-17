@@ -19,12 +19,15 @@ RUN apk add make
 RUN apk add ruby
 RUN apk add ruby-dev
 RUN apk add yaml-dev
+RUN apk add sqlite
 
 RUN gem install bundler
 
 RUN adduser -D -u 1000 -g 1000 ticketee
 
 USER ticketee
+
+ENV RAILS_ENV=production
 
 WORKDIR /home/ticketee/app
 
@@ -35,8 +38,6 @@ RUN bundle config set --local path 'vendor/bundle'
 RUN bundle config set --local without 'development test'
 
 RUN bundle install
-
-ENV RAILS_ENV=production
 
 RUN bundle exec rails assets:precompile
 

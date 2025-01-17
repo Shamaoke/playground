@@ -19,8 +19,6 @@ vendor
 
 assets/builds
 
-bin/docker
-
 config/environments/development.rb
 config/environments/test.rb
 
@@ -29,9 +27,12 @@ config/cucumber.yml
 lib/tasks/cucumber.rake
 
 log/development.log
+log/production.log
+log/test.log
 
 public/assets
 
 storage/development.sqlite3
+storage/production.sqlite3
 storage/test.sqlite3
 
