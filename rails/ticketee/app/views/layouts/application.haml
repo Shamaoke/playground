@@ -11,5 +11,8 @@
     = yield :head
   %body
     %main
+    %div
+      - flash.each do |key, message|
+        %div= message
     = yield
 
