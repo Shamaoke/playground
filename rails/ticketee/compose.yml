@@ -10,9 +10,13 @@ services:
       main:
         ipv4_address: "10.0.45.151"
     volumes:
-      - type: bind
-        source: "/home/user/.workspace/playground/rails/ticketee/storage/production.sqlite3"
-        target: "/home/ticketee/app/storage/production.sqlite3"
+      - type: volume
+        source: ticketee-db
+        target: "/home/ticketee/app/storage/"
+        # target: "/home/ticketee/app/storage/production.sqlite3"
+      # - type: bind
+      #   source: "/home/user/.workspace/playground/rails/ticketee/storage/production.sqlite3"
+      #   target: "/home/ticketee/app/storage/production.sqlite3"
         # bind:
         #   propagation: shared
       - type: bind
@@ -32,6 +36,10 @@ services:
         ipv4_address: "10.0.45.141"
     ports:
       - "80:80"
+
+volumes:
+  ticketee-db:
+    name: ticketee.db
 
 networks:
   main:

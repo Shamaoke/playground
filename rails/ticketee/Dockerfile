@@ -39,6 +39,7 @@ RUN bundle config set --local without 'development test'
 
 RUN bundle install
 
+RUN bundle exec rails db:create db:migrate
 RUN bundle exec rails assets:precompile
 
 ENTRYPOINT ["/bin/sh", "-c", "/home/ticketee/app/bin/rails server"]
