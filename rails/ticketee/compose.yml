@@ -13,17 +13,9 @@ services:
       - type: volume
         source: ticketee-db
         target: "/home/ticketee/app/storage/"
-        # target: "/home/ticketee/app/storage/production.sqlite3"
-      # - type: bind
-      #   source: "/home/user/.workspace/playground/rails/ticketee/storage/production.sqlite3"
-      #   target: "/home/ticketee/app/storage/production.sqlite3"
-        # bind:
-        #   propagation: shared
       - type: bind
         source: "/home/user/.workspace/playground/rails/ticketee/log/production.log"
         target: "/home/ticketee/app/log/production.log"
-        # bind:
-        #   propagation: shared
 
   proxy:
     image: "ticketee.ru:5000/ticketee-proxy"
@@ -40,6 +32,7 @@ services:
 volumes:
   ticketee-db:
     name: ticketee.db
+    external: true
 
 networks:
   main:

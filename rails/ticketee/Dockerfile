@@ -19,7 +19,6 @@ RUN apk add make
 RUN apk add ruby
 RUN apk add ruby-dev
 RUN apk add yaml-dev
-RUN apk add sqlite
 
 RUN gem install bundler
 
@@ -39,7 +38,6 @@ RUN bundle config set --local without 'development test'
 
 RUN bundle install
 
-RUN bundle exec rails db:create db:migrate
 RUN bundle exec rails assets:precompile
 
 ENTRYPOINT ["/bin/sh", "-c", "/home/ticketee/app/bin/rails server"]
