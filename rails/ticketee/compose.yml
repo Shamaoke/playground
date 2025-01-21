@@ -2,6 +2,7 @@
 services:
   main:
     image: "ticketee.ru:5000/ticketee-main"
+    container_name: ticketee-main
     build:
       context: .
       network: host
@@ -19,6 +20,7 @@ services:
 
   proxy:
     image: "ticketee.ru:5000/ticketee-proxy"
+    container_name: ticketee-proxy
     build:
       context: .
       network: host
