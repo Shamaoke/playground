@@ -13,4 +13,10 @@
         = f.text_field :description
       %div
         = f.submit 'Create project'
+%div
+  - if @project.errors.any?
+    %ul
+      - @project.errors.full_messages.each do |message|
+        %li
+          = message
 
