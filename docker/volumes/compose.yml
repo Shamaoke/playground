@@ -1,0 +1,17 @@
+
+services:
+  main:
+    image: "volumes/main"
+    build:
+      context: .
+      network: host
+    volumes:
+      - type: volume
+        source: ticketee-db
+        target: "/tmp/ticketee/storage"
+
+volumes:
+  ticketee-db:
+    name: ticketee.db
+    external: true
+
