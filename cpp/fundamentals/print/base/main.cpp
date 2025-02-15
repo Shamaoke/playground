@@ -11,6 +11,8 @@
 // #include <string>
 // #include <vector>
 
+#include "person.hpp"
+
 ///
 /// Details:
 /// --------
@@ -24,31 +26,11 @@
 /// • [std::literals::string_literals::operator""s - cppreference.com](https://en.cppreference.com/w/cpp/string/basic_string/operator""s)
 ///
 
-namespace {
-
-  class Person {
-
-    private:
-      const std::string name { };
-      const std::string surname { };
-
-    public:
-      Person(const std::string name, const std::string surname) :
-        name { name },
-        surname { surname }
-      { }
-
-      auto get_full_name( ) const -> std::string {
-        return std::format("{0} {1}", this->name, this->surname);
-      }
-  };
-}
-
 auto main(int argc, char** argv, char** env) -> int {
 
   using namespace std::string_literals;
 
-  const auto person { Person { "Pavel"s, "Alekhin"s } };
+  auto person { Person { "Pavel"s, "Alekhin"s } };
 
   std::println(stderr, "{0:*^21}", person.get_full_name());
 
