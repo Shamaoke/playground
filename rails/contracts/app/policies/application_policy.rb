@@ -2,10 +2,17 @@
 class ApplicationPolicy < ActionPolicy::Base
 
   ##
-  ## `ActionPolicy::AuthorizationContextMissing`
+  ## Remove an authorization subject which was previously added. The following
+  ## methods can be used for the purpose.
   ##
   ## authorization_targets.delete(:user)
   ## authorize :user, optional: true
+  ##
+  ## In the case of the default authorization subject, — `user`, this must be done
+  ## when disabling the default authorization subject assign method, by setting
+  ## `config.action_policy.controller_authorize_current_user = false` in the
+  ## `config/application.rb` file, to prevent the `ActionPolicy::AuthorizationContextMissing`
+  ## exception from rising.
   ##
 
   ##
