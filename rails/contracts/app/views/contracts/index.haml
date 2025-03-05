@@ -1,0 +1,8 @@
+
+= content_for :title, 'Contracts | Index'
+
+%ul
+  - @contracts.each do |contract|
+    %li
+      = link_to contract.number, contract
+

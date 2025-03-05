@@ -38,5 +38,25 @@ module Contracts
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    # config.action_policy.auto_inject_into_controller = false
+
+    ##
+    ## By default, the `current_user` method will be used to assign the default
+    ## authorization subject, — `user`. To prevent this behaviour we should use
+    ## the following method.
+    ##
+    config.action_policy.controller_authorize_current_user = false
   end
 end
+
+##
+## An authorization subject is configured in *two places*: in the policy class
+## (through the `authorize` method) and in the controller class where we perform
+## authorization (through another method with the same name — `authorize`).
+##
+## To prevent the default authorization subject, — `user`, to be used in policy
+## classes, we should use the following method.
+##
+ActionPolicy::Base.authorization_targets.delete(:user)
+

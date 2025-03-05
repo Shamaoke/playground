@@ -1,0 +1,16 @@
+
+= content_for :title, 'Session | New'
+
+%div
+  = form_with url: sessions_path do |form|
+    %div
+      = form.label :login
+    %div
+      = form.text_field :login
+    %div
+      = form.label :password
+    %div
+      = form.password_field :password
+    %div
+      = form.submit
+
