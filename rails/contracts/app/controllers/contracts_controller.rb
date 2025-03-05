@@ -46,11 +46,6 @@ class ContractsController < ApplicationController
 
   def show
     @contract = Contract.find_by_id(params[:id])
-
-    ## Can the `current_user` has the right to `show` the `Contract` resource
-    # authorize! @contract
-    # authorize!
   end
-
 end
 
