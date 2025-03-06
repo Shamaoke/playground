@@ -1,7 +1,7 @@
 
 class ApplicationController < ActionController::Base
 
-  include Authenticator
+  include Identificator
 
   # before_action :current_user
 
