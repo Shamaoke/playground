@@ -1,7 +1,9 @@
 
 class ApplicationController < ActionController::Base
 
-  before_action :current_user
+  include Authenticator
+
+  # before_action :current_user
 
   ##
   ## rescue_from ActionPolicy::Unauthorized do |e|
@@ -29,11 +31,11 @@ class ApplicationController < ActionController::Base
       ##
     end
 
-    def current_user
-      Current.user = begin
-        cookies[:user_id] and User.find_by_id(cookies[:user_id]) or User.new
-      end
-    end
+    # def current_user
+    #   Current.user = begin
+    #     cookies[:user_id] and User.find_by_id(cookies[:user_id]) or User.new
+    #   end
+    # end
 
     def authorization_subject
       Current.user
