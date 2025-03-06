@@ -1,6 +1,10 @@
 
 class ContractPolicy < ApplicationPolicy
 
+  def index?
+    employee.capabilities.map { it.name.to_sym }.any? :show_contracts
+  end
+
   def show?
     ##
     ## Specify the properties an authorization subject should have in order

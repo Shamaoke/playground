@@ -16,7 +16,22 @@ class ContractsController < ApplicationController
   ## `ActionPolicy::Base.authorization_targets.delete(:user)` for deleting the
   ## default authorization subject.
   ##
-  before_action :authorize!, only: [:show]
+  ## As the first argument for the `authorize!` method either a model class or
+  ## a model instance should be provided in order to infer the corresponding
+  ## policy class from them. If none is provided, the model class is infered
+  ## from the controller class (by using `controller_name.classify.save_constantize`)
+  ## and from the inferred model the corresponding policy class is inferred.
+  ##
+  ## A policy action should be provided as `to` named argument of the `authorize!`
+  ## method. If it's not provided, it's inferred from a controller action
+  ## (by using `action_name`).
+  ##
+  before_action :authorize!, only: [:index, :show]
+  ##
+  ## Details:
+  ##
+  ## [Module: ActionPolicy::Controller — Documentation for action_policy (0.7.3)](https://rubydoc.info/gems/action_policy/ActionPolicy/Controller#authorize!-instance_method)
+  ##
 
   ##
   ## Specify what method will be used to assign the authorization subject.
