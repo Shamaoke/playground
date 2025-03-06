@@ -3,17 +3,30 @@ class ApplicationController < ActionController::Base
 
   before_action :current_user
 
+  ##
   ## rescue_from ActionPolicy::Unauthorized do |e|
   ##   ## 401 Unauthorized
   ##   self.status = :unauthorized
   ##   self.response_body = '401 Unauthorized'
   ## end
-
+  ##
   rescue_from ActionPolicy::Unauthorized, with: :unauthorized
 
   private
     def unauthorized
-      render plain: '401 Unauthorized', status: 401
+      ## render plain: '401 Unauthorized', status: 401
+      render file: "#{Rails.public_path}/401.html", status: 401
+      ##
+      ## Details:
+      ##
+      ## • [ActionController::Rendering](https://api.rubyonrails.org/classes/ActionController/Rendering.html#method-i-render)
+      ##
+      ## • [Rails](https://api.rubyonrails.org/classes/Rails.html#method-c-public_path)
+      ##
+      ## • [Class: Pathname — Documentation for pathname (3.0.2)](https://rubydoc.info/stdlib/pathname/Pathname)
+      ##
+      ## • [Pathname](https://api.rubyonrails.org/classes/Pathname.html)
+      ##
     end
 
     def current_user

@@ -1,13 +1,12 @@
 
 class ContractsController < ApplicationController
-
   ##
   ## The `authorize!` method performs the actual authorization. The method will
   ## assign the authorization subject by calling the method which was set for
   ## its assignment (`authorization_subject` in our case).
   ##
   ## By default the method will always use the `user` authorization subject with
-  ## the `current_user` assignment method along with those which manually set.
+  ## the `current_user` assignment method along with those which was manually set.
   ## This is set in `action_policy-M.N.P/lib/action_policy/railtie.rb` file of
   ## the Action Policy gem.
   ##
@@ -15,7 +14,7 @@ class ContractsController < ApplicationController
   ## `config.action_policy.controller_authorize_current_user = false` option
   ## in the `config/application.rb` file and performing
   ## `ActionPolicy::Base.authorization_targets.delete(:user)` for deleting the
-  ## default authorization subject along with
+  ## default authorization subject.
   ##
   before_action :authorize!, only: [:show]
 
@@ -24,7 +23,7 @@ class ContractsController < ApplicationController
   ## It can be expressed as `assign :employee, as: authorization_subject`.
   ## In this case, the `authorization_subject` method can be read as “Set
   ## the authorization subject”. `employee` now is what this method returns.
-  ## Typically it's the model class. In our case this is `User`.
+  ## Typically it's the model object. In our case this is an instance of `User`.
   ##
   ## Note, that when calling the `authorize` method without the `through` option
   ## the method with the same name as the authorization subject will be used,
@@ -38,6 +37,7 @@ class ContractsController < ApplicationController
   ## method will be called from the `ContractPolicy` class.
   ##
   authorize :employee, through: :authorization_subject
+  ## authorize :employee
   ## authorize :user, through: :authorization_subject
 
   def index
