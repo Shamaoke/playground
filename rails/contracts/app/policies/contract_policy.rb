@@ -1,9 +1,11 @@
 
 class ContractPolicy < ApplicationPolicy
 
-  def index?
-    employee.capabilities.map { it.name.to_sym }.any? :show_contracts
-  end
+  # def index?
+  #   employee.capable? :show_contracts
+  # end
+
+  def index? = employee.capable? :show_contracts
 
   def show?
     ##
@@ -12,8 +14,7 @@ class ContractPolicy < ApplicationPolicy
     ## resource `Contract`. The authorization subject is assigned in the controller
     ## for the resource: `ContractsController`, through the `authorize` method.`
     ##
-    employee.capabilities.map { it.name.to_sym }.any? :show_contracts
+    employee.capable? :show_contracts
   end
-
 end
 
