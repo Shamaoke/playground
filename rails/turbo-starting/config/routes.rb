@@ -1,10 +1,10 @@
 
 Rails.application.routes.draw do
 
-  get 'welcome', to: 'welcome#index'
+  get 'sample', to: 'sample#index'
 
-  get 'one', to: 'welcome#one'
-  get 'two', to: 'welcome#two'
+  get 'one', to: 'sample#one'
+  get 'two', to: 'sample#two'
 
 end
 
