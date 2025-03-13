@@ -1,0 +1,33 @@
+
+%div{ 'data-controller': 'clipboard' }
+  PIN:
+  %input{ type: 'text', value: 'ok!', readonly: 'true', class: 'border border-sky-400 rounded', 'data-clipboard-target': 'source' }
+  %button{ class: 'bg-sky-400 text-white px-4 py-2 rounded', 'data-action': 'click->clipboard#copy' } Copy to clipboard
+
+%div{ 'data-controller': 'clipboard' }
+  PIN:
+  %input{ type: 'text', value: 'ok too!', readonly: 'true', class: 'border border-sky-400 rounded', 'data-clipboard-target': 'source' }
+  %button{ class: 'bg-sky-400 text-white px-4 py-2 rounded', 'data-action': 'click->clipboard#copy' } Copy to clipboard
+
+%div{ 'data-controller': 'clipboard' }
+  PIN:
+  %input{ type: 'text', value: 'ok free!', readonly: 'true', class: 'border border-sky-400 rounded', 'data-clipboard-target': 'source' }
+  %a{ href: '#', class: 'text-sky-400', 'data-action': 'clipboard#copy' } Copy to clipboard
+
+  -# %button{ class: 'bg-sky-400 text-white px-4 py-2 rounded', 'data-action': 'clipboard#copy' } Copy to clipboard
+  -#
+  -# The `click->` part can be omitted from the action descriptor. That's because
+  -# Stimulus defines click as the default event for actions on `button` elements.
+  -#
+  -# Certain other elements have default events, too. Here’s the full list:
+  -#
+  -# `a` -> `click`
+  -# `button` -> `click`
+  -# `details` -> `toggle`
+  -# `form` -> `submit`
+  -# `input` -> `input`
+  -# `input type=submit` `click`
+  -# `select` -> `change`
+  -# `textarea` -> `input`
+  -#
+

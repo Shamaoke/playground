@@ -1,0 +1,19 @@
+
+!!!html
+%html
+  %head
+    %title= content_for :title or 'Title'
+    %link{ rel: 'icon', type: 'image/svg+xml', href: '/icon.svg' }
+    %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1' }
+    = csrf_meta_tags
+    = csp_meta_tag
+    -# = stylesheet_link_tag 'tailwind'
+    -# = stylesheet_link_tag 'application'
+    = stylesheet_link_tag 'tailwind', 'inter-font', 'data-turbo-track': 'reload'
+    = stylesheet_link_tag :app, 'data-turbo-track': 'reload'
+    = javascript_importmap_tags
+    = yield :head
+  %body
+    %main
+      = yield
+
