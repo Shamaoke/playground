@@ -7,6 +7,6 @@ Feature: Updating a quote
     When I visit the Quotes index page
     And I click on "Edit"
     And I fill in "Name" with "First quote updated"
-    And I click on "Submit"
+    And I click on "Update quote"
     Then I should see "First quote updated"
 
