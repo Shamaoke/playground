@@ -7,8 +7,15 @@
     %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1' }
     = csrf_meta_tags
     = csp_meta_tag
-    -# = stylesheet_link_tag 'tailwind'
-    -# = stylesheet_link_tag 'application'
+    -#
+    -# The `data-turbo-track': 'reload'` attribute forces Turbo Drive to compare
+    -# the element with this attribute on every new request with the head of the
+    -# response and if there are differences, Turbo Drive will reload the whole page.
+    -#
+    -# Details:
+    -#
+    -# [Learn what role Turbo Drive plays in Hotwire and Rails](https://www.hotrails.dev/turbo-rails/turbo-drive)
+    -#
     = stylesheet_link_tag 'tailwind', 'inter-font', 'data-turbo-track': 'reload'
     = stylesheet_link_tag :app, 'data-turbo-track': 'reload'
     = javascript_importmap_tags
