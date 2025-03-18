@@ -1,4 +1,7 @@
 
+## Cancel ignoring files which was set at the parent level
+!_*
+
 # Ignore bundler config
 /.bundle
 
