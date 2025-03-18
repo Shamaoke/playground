@@ -38,5 +38,29 @@ module QuotesEditor
 
     # Don't generate system test files.
     config.generators.system_tests = nil
+
+    ##
+    ## When validating Rails models and the validation is unsuccessful the framework
+    ## will add `<div class='field_with_errors'>` element around both the label
+    ## of the invalid element and the field itself. Here's the configuration of
+    ## what will be added.
+    ##
+    ## In order to style the element add the following to `app/assets/stylesheets/application.tailwind.css`.
+    ##
+    ## ````
+    ## div[class='field_with_errors'] {
+    ##   @apply bg-red-600
+    ## }
+    ## ````
+    ##
+    ## Details
+    ##
+    ## • [Configuring Rails Applications — Ruby on Rails Guides](https://guides.rubyonrails.org/configuring.html#config-action-view-field-error-proc)
+    ##
+    ## • [ruby on rails - field_with_error not triggering Tailwind CSS style - Stack Overflow](https://stackoverflow.com/questions/72988324/field-with-error-not-triggering-tailwind-css-style)
+    ##
+    config.action_view.field_error_proc = -> (tag, instance) {
+      content_tag :div, tag, class: 'field_with_errors'
+    }
   end
 end
