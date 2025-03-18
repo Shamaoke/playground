@@ -18,7 +18,7 @@ class QuotesController < ApplicationController
     @quote = Quote.new(quote_params)
 
     if @quote.save
-      redirect_to quotes_path
+      redirect_to quotes_path, notice: 'Quote was successfully created.'
     else
       render :new
     end
@@ -29,7 +29,7 @@ class QuotesController < ApplicationController
 
   def update
     if @quote.update(quote_params)
-      redirect_to quotes_path
+      redirect_to quotes_path, notice: 'Quote was successfully updated.'
     else
       render :edit
     end
@@ -37,7 +37,7 @@ class QuotesController < ApplicationController
 
   def destroy
     @quote.destroy
-    redirect_to quotes_path
+    redirect_to quotes_path, notice: 'Quote was successfully deleted.'
   end
 
   private
