@@ -20,13 +20,15 @@ class QuotesController < ApplicationController
     if @quote.save
       redirect_to quotes_path, notice: 'Quote was successfully created.'
     else
-      ## The `status: :unprocessable_entity` part is needed to prevent the
+      ## The `status: :unprocessable_entity` or `status: 422` part is needed to prevent the
       ## `Form responses must redirect to another location` error when
       ## trying to submit the form with an empty field.
       ##
       ## Details:
       ##
       ## • [Learn how to make a simple CRUD controller with Rails](https://www.hotrails.dev/turbo-rails/crud-controller-ruby-on-rails)
+      ##
+      ## • [Learn what role Turbo Drive plays in Hotwire and Rails](https://www.hotrails.dev/turbo-rails/turbo-drive)
       ##
       render :new, status: :unprocessable_entity
     end
@@ -39,14 +41,6 @@ class QuotesController < ApplicationController
     if @quote.update(quote_params)
       redirect_to quotes_path, notice: 'Quote was successfully updated.'
     else
-      ## The `status: :unprocessable_entity` part is needed to prevent the
-      ## `Form responses must redirect to another location` error when
-      ## trying to submit the form with an empty field.
-      ##
-      ## Details:
-      ##
-      ## • [Learn how to make a simple CRUD controller with Rails](https://www.hotrails.dev/turbo-rails/crud-controller-ruby-on-rails)
-      ##
       render :edit, status: :unprocessable_entity
     end
   end
