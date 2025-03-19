@@ -10,3 +10,10 @@ import '@hotwired/turbo-rails'
 /// Turbo.session.drive = false
 ///
 
+///
+/// Set the delay after which the progress bar will appear during navigation.
+///
+/// [Turbo Reference | Turbo.config.drive.progressBarDelay](https://turbo.hotwired.dev/reference/drive#turbo.config.drive.progressbardelay)
+///
+Turbo.config.drive.progressBarDelay = 0
+

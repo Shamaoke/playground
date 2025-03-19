@@ -17,5 +17,8 @@
     %div
       = form.text_field :name
     %div
+      = link_to 'Cancel', quotes_path
+    %div
+      -# = form.submit t('helpers.submit.quote'), data: { turbo_frame: '_top' }
       = form.submit t('helpers.submit.quote')
 

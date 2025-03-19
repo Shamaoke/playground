@@ -1,8 +1,11 @@
 
-%div
-  = link_to quote.name, quote_path(quote)
-%div
-  = link_to 'Edit', edit_quote_path(quote)
-%div
-  = link_to 'Delete', quote_path(quote), data: { turbo_method: :delete }
+-# %turbo-frame{ id: "quote_#{quote.id}" }
+%turbo-frame{ id: dom_id(quote) }
+  %div
+    = link_to quote.name, quote_path(quote), data: { turbo_frame: '_top' }
+  %div
+    = link_to 'Edit', edit_quote_path(quote)
+  %div
+    -# = link_to 'Delete', quote_path(quote), data: { turbo_method: :delete, turbo_frame: '_top' }
+    = link_to 'Delete', quote_path(quote), data: { turbo_method: :delete }
 

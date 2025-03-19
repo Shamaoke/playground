@@ -18,7 +18,25 @@ class QuotesController < ApplicationController
     @quote = Quote.new(quote_params)
 
     if @quote.save
-      redirect_to quotes_path, notice: 'Quote was successfully created.'
+      ## redirect_to quotes_path, notice: 'Quote was successfully created.'
+      respond_to do |format|
+        format.turbo_stream {
+          ##
+          ## Render updates inline
+          ##
+          ## Reference
+          ##
+          ## • [Module: Turbo::Streams::TurboStreamsTagBuilder — Documentation for hotwired/turbo-rails (main)](https://rubydoc.info/github/hotwired/turbo-rails/main/Turbo/Streams/TurboStreamsTagBuilder)
+          ##
+          ## • [Class: Turbo::Streams::TagBuilder — Documentation for hotwired/turbo-rails (main)](https://rubydoc.info/github/hotwired/turbo-rails/main/Turbo/Streams/TagBuilder)
+          ##
+          ## render turbo_stream: turbo_stream.append('quotes', @quote)
+          render turbo_stream: [
+            turbo_stream.append('quotes', @quote),
+            turbo_stream.update('new_quote', '')
+          ]
+        }
+      end
     else
       ## The `status: :unprocessable_entity` or `status: 422` part is needed to prevent the
       ## `Form responses must redirect to another location` error when
@@ -47,7 +65,13 @@ class QuotesController < ApplicationController
 
   def destroy
     @quote.destroy
-    redirect_to quotes_path, notice: 'Quote was successfully deleted.'
+    ## redirect_to quotes_path, notice: 'Quote was successfully deleted.'
+    ## respond_to do |format|
+    ##   format.turbo_stream { render :destroy }
+    ## end
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.remove(@quote) }
+    end
   end
 
   private

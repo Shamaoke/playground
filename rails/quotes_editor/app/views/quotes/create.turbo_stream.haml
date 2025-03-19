@@ -1,0 +1,5 @@
+
+-# = turbo_stream.append 'quotes', partial: 'quotes/quote', locals: { quote: @quote }
+= turbo_stream.append 'quotes', @quote
+= turbo_stream.update 'new_quote', ''
+

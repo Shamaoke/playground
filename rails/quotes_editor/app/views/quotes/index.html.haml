@@ -1,7 +1,16 @@
 
+-## = turbo_frame_tag 'first_turbo_frame' do
+-##   %h1 Quotes
+-##   %div
+-##     = link_to 'New quote', new_quote_path
 %h1 Quotes
 %div
-  = link_to 'New quote', new_quote_path
-%div
-  = render @quotes
+  = link_to 'New quote', new_quote_path, data: { 'turbo-frame': 'new_quote' }
+%turbo-frame{ id: 'new_quote' }
+-#  %div
+-#    -## = link_to 'New quote', new_quote_path, data: { 'turbo-frame': 'new_quote' }
+-#    = link_to 'New quote', new_quote_path
+%turbo-frame{ id: 'quotes' }
+  %div
+    = render @quotes
 

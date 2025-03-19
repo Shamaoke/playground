@@ -1,6 +1,7 @@
 
-%h1 Edit quote
-
-%div
-  = render 'form', quote: @quote
+-# %turbo-frame{ id: "quote_#{@quote.id}" }
+%turbo-frame{ id: dom_id(@quote) }
+  %h1 Edit quote
+  %div
+    = render 'form', quote: @quote
 

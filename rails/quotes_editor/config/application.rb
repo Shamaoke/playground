@@ -59,6 +59,8 @@ module QuotesEditor
     ##
     ## • [ruby on rails - field_with_error not triggering Tailwind CSS style - Stack Overflow](https://stackoverflow.com/questions/72988324/field-with-error-not-triggering-tailwind-css-style)
     ##
+    ## • [rails/actionview/lib/action_view/base.rb at main · rails/rails](https://github.com/rails/rails/blob/main/actionview/lib/action_view/base.rb#L161)
+    ##
     config.action_view.field_error_proc = -> (tag, instance) {
       content_tag :div, tag, class: 'field_with_errors'
     }

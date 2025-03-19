@@ -1,17 +1,23 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/**
+ ** Set style for invalid form fields
+ **
+ **/
 div[class='field_with_errors'] {
   @apply bg-red-600;
 }
 
-/*
-
-@layer components {
-  .btn-primary {
-    @apply py-2 px-4 bg-blue-200;
-  }
+/**
+ ** Set the Turbo progress bar styles
+ **
+ ** [Turbo Handbook | Displaying Progress](https://turbo.hotwired.dev/handbook/drive#displaying-progress)
+ **
+ **/
+div[class='turbo-progress-bar'] {
+  @apply bg-green-600;
 }
 
-*/
