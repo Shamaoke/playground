@@ -1,0 +1,16 @@
+
+%h1 Quotes
+%div
+  = link_to 'New quote', new_quote_path
+%div
+  = render partial: 'quote', collection: @quotes
+  -##
+  -## = render @quotes
+  -##
+  -## This is the same as `render partial: 'quote', collection: @quotes`.
+  -##
+  -## See the following guide for details.
+  -##
+  -## [Layouts and Rendering in Rails — Ruby on Rails Guides](https://guides.rubyonrails.org/layouts_and_rendering.html#rendering-collections)
+  -##
+
