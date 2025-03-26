@@ -1,5 +1,5 @@
 
-server: bundle exec rails server --port 4444
+server: bundle exec rails server --port 4455
 css: bundle exec rails tailwindcss:watch
 tags: /usr/bin/zsh -c "while ( inotifywait --recursive --include='.*rb|.*js' --event=modify,create $PWD ) { ctags --recurse --languages=Ruby,JavaScript --exclude=vendor --excmd=number --fields=Kzn }"
 
