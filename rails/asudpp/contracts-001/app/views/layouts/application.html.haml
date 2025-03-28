@@ -11,7 +11,13 @@
     = stylesheet_link_tag :app, 'data-turbo-track': 'reload'
     = javascript_importmap_tags
     = yield :head
-  %body
-    %main
-      = yield
+  %body{ class: 'w-screen h-screen flex flex-col' }
+    %header{ class: 'basis-14 bg-gray-300 grid grid-cols-8 gap-0' }
+      %div{ class: 'col-start-2 col-span-2' }
+        = content_for :title
+    %main{ class: 'bg-gray-100 grid grid-cols-8 gap-0 grow' }
+      %div{ class: 'col-start-2 col-span-2' }
+        = yield
+    %footer{ class: 'basis-28 bg-gray-400 grid grid-cols-8 gap-0' }
+      %div{ class: 'col-start-2 col-span-2' }
 

@@ -1,9 +1,7 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+
+
+Contract.create(name: 'Договор поставки №11/20', date: '2020-11-20', content: 'Акционерное общество «Научно-исследовательский и конструкторско-технологический институт подвижного состава» (АО «ВНИКТИ»), именуемое в дальнейшем «Поставщик»...')
+Contract.create(name: 'Договор поставки №11/21', date: '2020-11-21', content: 'Акционерное общество «Научно-исследовательский и конструкторско-технологический институт подвижного состава» (АО «ВНИКТИ»), именуемое в дальнейшем «Поставщик»...')
+Contract.create(name: 'Договор поставки №11/22', date: '2020-11-22', content: 'Акционерное общество «Научно-исследовательский и конструкторско-технологический институт подвижного состава» (АО «ВНИКТИ»), именуемое в дальнейшем «Поставщик»...')
+Contract.create(name: 'Договор поставки №11/23', date: '2020-11-23', content: 'Акционерное общество «Научно-исследовательский и конструкторско-технологический институт подвижного состава» (АО «ВНИКТИ»), именуемое в дальнейшем «Поставщик»...')
+

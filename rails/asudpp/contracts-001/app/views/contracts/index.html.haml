@@ -1,0 +1,9 @@
+
+= content_for :title, t('contract').capitalize
+
+%section
+  = link_to t('new_contract').capitalize, new_contract_path
+%section
+  %ul
+    = render partial: 'contract', collection: @contracts
+
