@@ -1,5 +1,5 @@
 
-= content_for :title, t('contract').capitalize
+= content_for :title, t('contract').pluralize.capitalize
 
 %section
   = link_to t('new_contract').capitalize, new_contract_path
