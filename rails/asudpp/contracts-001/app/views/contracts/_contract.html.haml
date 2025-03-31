@@ -1,0 +1,9 @@
+
+%li{ class: 'flex flex-row justify-between' }
+  %div
+    = link_to contract.name, contract_path(contract)
+  %div
+    %div
+      = link_to t('edit'), edit_contract_path(contract)
+      = link_to t('delete'), contract_path(contract), data: { turbo_method: :delete }
+

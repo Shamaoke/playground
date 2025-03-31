@@ -1,0 +1,21 @@
+
+= form_with model: contract do |form|
+  %div{ class: 'mb-4' }
+    %div
+      = form.label :name, t('activerecord.attributes.contract.name').capitalize
+    %div
+      = form.text_field :name, size: 40
+  %div{ class: 'mb-4' }
+    %div
+      = form.label :date, t('activerecord.attributes.contract.date').capitalize
+    %div
+      = form.date_field :date
+  %div{ class: 'mb-4' }
+    %div
+      = form.label :content, t('activerecord.attributes.contract.content').capitalize
+    %div
+      = form.text_area :content, cols:40, rows: 10
+  %div{ class: 'mb-4' }
+    = form.submit t('helpers.submit.contract')
+    = link_to t('helpers.cancel'), contracts_path
+
