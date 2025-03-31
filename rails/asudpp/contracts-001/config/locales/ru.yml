@@ -1,6 +1,16 @@
 
 ru:
+  edit: 'редактировать'
+
   contract: 'договор'
   contracts: 'договоры'
   new_contract: 'новый договор'
+  edit_contract: 'редактировать договор'
+
+  helpers:
+    cancel: 'отменить'
+    submit:
+      contract:
+        create: 'создать договор'
+        update: 'обновить договор'
 

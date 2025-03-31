@@ -1,0 +1,7 @@
+
+= content_for :title, t('new_contract').capitalize
+
+-## = render 'form', contract: @contract
+-## is the same as
+= render partial: 'form', locals: { contract: @contract }
+
