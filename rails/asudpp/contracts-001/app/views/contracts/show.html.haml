@@ -1,5 +1,12 @@
 
 = content_for :title, t('contract').capitalize
 
-= @contract.name
+= "#{@contract.name} от #{l(@contract.date)}"
+-##
+-## Details
+-##
+-## • [`ActionView::Helpers::TranslationHelper#localize`](https://api.rubyonrails.org/classes/ActionView/Helpers/TranslationHelper.html#method-i-localize)
+-##
+-## • [`Method: I18n::Backend::Base#localize — Documentation for i18n (1.14.7)`](https://www.rubydoc.info/gems/i18n/I18n/Backend/Base:localize)
+-##
 

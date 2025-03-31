@@ -7,6 +7,10 @@ ru:
         date: 'дата'
         content: 'содержание'
 
+  date:
+    formats:
+      default: '%d.%m.%Y'
+
   edit: 'редактировать'
   delete: 'удалить'
 
