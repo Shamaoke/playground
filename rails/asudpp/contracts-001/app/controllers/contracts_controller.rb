@@ -5,6 +5,10 @@ class ContractsController < ApplicationController
     @contracts = Contract.all
   end
 
+  def show
+    @contract = Contract.find_by(id: params[:id])
+  end
+
   def new
     @contract = Contract.new
   end
