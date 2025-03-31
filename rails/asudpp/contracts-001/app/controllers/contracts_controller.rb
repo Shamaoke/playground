@@ -23,7 +23,7 @@ class ContractsController < ApplicationController
         end
       end
     else
-      render :new
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -41,7 +41,7 @@ class ContractsController < ApplicationController
         end
       end
     else
-      render :edit
+      render :edit, status: :unprocessable_entity
     end
   end
 
