@@ -44,5 +44,11 @@ class ContractsController < ApplicationController
       render :edit
     end
   end
+
+  def destroy
+    @contract = Contract.find_by(id: params[:id])
+    @contract.destroy
+    redirect_to contracts_path
+  end
 end
 
