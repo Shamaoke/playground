@@ -1,5 +1,12 @@
 
 ru:
+  activerecord:
+    attributes:
+      contract:
+        name: 'название'
+        date: 'дата'
+        content: 'содержание'
+
   edit: 'редактировать'
   delete: 'удалить'
 
