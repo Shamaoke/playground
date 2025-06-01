@@ -15,4 +15,6 @@ project(classes_constructors LANGUAGES CXX)
 
 add_subdirectory(src/explicit)
 add_subdirectory(explicit)
+add_subdirectory(src/members_initialization)
+add_subdirectory(members_initialization)
 
