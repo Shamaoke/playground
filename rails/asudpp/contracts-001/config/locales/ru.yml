@@ -3,7 +3,7 @@ ru:
   activerecord:
     attributes:
       contract:
-        name: 'название'
+        name: 'наименование'
         date: 'дата'
         content: 'содержание'
 
