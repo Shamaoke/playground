@@ -2,7 +2,7 @@ FROM node
 
 CMD ["node", "/web-ping/app.mjs"]
 
-ENV TARGET="anidb.net"
+ENV TARGET="otvsp.ru"
 ENV METHOD="HEAD"
 ENV INTERVAL="3000"
 
