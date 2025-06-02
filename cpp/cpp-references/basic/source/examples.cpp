@@ -3,6 +3,8 @@
 /// ::: A | Implementation :::
 ///
 
+#include <iostream>
+
 #include "examples.hpp"
 
 namespace examples {
