@@ -85,12 +85,12 @@ function main TRAPEXIT {
   }
 
   local -A storage=(
-    [source]="${HOME}/.workspace/playground/rails/auth_103/storage/production.sqlite3"
+    [source]="${HOME}/.workspace/playground/rails/archive/auth_103/storage/production.sqlite3"
     [destination]="/home/auth_103/app/storage/production.sqlite3"
   )
 
   local -A log=(
-    [source]="${HOME}/.workspace/playground/rails/auth_103/log/production.log"
+    [source]="${HOME}/.workspace/playground/rails/archive/auth_103/log/production.log"
     [destination]="/home/auth_103/app/log/production.log"
   )
 
@@ -100,12 +100,12 @@ function main TRAPEXIT {
   # )
 
   local -A nginx_http=(
-    [source]="${HOME}/.workspace/playground/rails/auth_103/nginx/default.conf"
+    [source]="${HOME}/.workspace/playground/rails/archive/auth_103/nginx/default.conf"
     [destination]="/etc/nginx/http.d/default.conf"
   )
 
   local -A nginx_conf=(
-    [source]="${HOME}/.workspace/playground/rails/auth_103/nginx/nginx.conf"
+    [source]="${HOME}/.workspace/playground/rails/archive/auth_103/nginx/nginx.conf"
     [destination]="/etc/nginx/nginx.conf"
   )
 
