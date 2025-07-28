@@ -16,6 +16,15 @@ add_link_options(-fuse-ld=lld)
 
 project(print_base LANGUAGES CXX)
 
+##
+## Создавать файл `compile_commands.json` в каталоге сборки, содержащий перечень
+## вызовов компилятора для всех единиц трансляции. Файл может быть использован
+## в системах автодополнения текстовых редакторов исходного кода.
+##
+## ВАЖНО! Переменная добавлена в CMake версии 3.5.
+##
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 set(
   HEADERS
     person.hpp
