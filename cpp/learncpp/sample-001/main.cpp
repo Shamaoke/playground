@@ -50,17 +50,19 @@ auto main( ) -> decltype(SUCCESS) {
 
   /// delete[] hostname;
 
-  int i { 0 };
+  auto build_configuration { "" };
 
-/// Use `-DDEBUG` compiler option to set the implicit define will be read before
-/// preprocessing.
+/// Use `-DDEBUG` or `-DRELEASE` compiler options to set the implicit definition
+/// that will be read before preprocessing the source file.
 #ifdef DEBUG
-  i = 10;
+  build_configuration = "DEBUG";
+#elif RELEASE
+  build_configuration = "RELEASE";
 #else
-  i = 20;
+  build_configuration = "UNDEFINED";
 #endif
 
-  std::println("i = {0}", i);
+  std::println("build_configuration = {0}", build_configuration);
 
   return SUCCESS;
 }
