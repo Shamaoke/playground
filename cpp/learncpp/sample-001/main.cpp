@@ -17,7 +17,7 @@
 //
 //   constexpr auto SUCCESS( ) -> int { return 0; }
 //
-//   constexpr auto FAIL( ) -> int { return 0; }
+//   constexpr auto FAIL( ) -> int { return 1; }
 //
 // }
 
