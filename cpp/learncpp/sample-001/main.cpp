@@ -13,6 +13,19 @@
 
 // #define SUCCESS 0
 
+// namespace Status {
+//
+//   constexpr auto SUCCESS( ) -> int { return 0; }
+//
+//   constexpr auto FAIL( ) -> int { return 0; }
+//
+// }
+
+enum class Status {
+  SUCCESS,
+  FAIL,
+};
+
 namespace Color {
 
   auto green(std::string str) -> decltype(str) {
@@ -25,7 +38,8 @@ namespace Color {
 
 };
 
-auto main( ) -> decltype(SUCCESS) {
+// auto main( ) -> decltype(static_cast<int>(Status::SUCCESS)) {
+auto main( ) -> int {
 
   using namespace Color; // green(std::string)
 
@@ -73,6 +87,8 @@ auto main( ) -> decltype(SUCCESS) {
 
   std::println("build_configuration = {0}", build_configuration);
 
-  return SUCCESS;
+  auto result { static_cast<int>(Status::SUCCESS) };
+
+  return result;
 }
 
