@@ -1,12 +1,17 @@
 
 #include <format>
 #include <print>
-#include <unistd.h>
+
+// #include <unistd.h>
+%:include <unistd.h>
+/// Details about the `%:` syntax:
+/// [Alternative operator representations - cppreference.com](https://en.cppreference.com/w/cpp/language/operator_alternative.html#Alternative_tokens)
+
 // #include <memory>
 // #include <vector>
 // #include <array>
 
-#define SUCCESS 0
+// #define SUCCESS 0
 
 namespace Color {
 
@@ -50,7 +55,11 @@ auto main( ) -> decltype(SUCCESS) {
 
   /// delete[] hostname;
 
-  auto build_configuration { "" };
+  // auto build_configuration { "" };
+
+  auto build_configuration <% "" %>;
+  /// Details about the `<% %>` syntax:
+  /// [Alternative operator representations - cppreference.com](https://en.cppreference.com/w/cpp/language/operator_alternative.html#Alternative_tokens)
 
 /// Use `-DDEBUG` or `-DRELEASE` compiler options to set the implicit definition
 /// that will be read before preprocessing the source file.
