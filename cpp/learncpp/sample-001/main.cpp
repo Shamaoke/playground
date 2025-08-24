@@ -26,12 +26,16 @@ enum class Status {
   FAIL,
 };
 
+
+/// The namespace contain functions which color text strings.
 namespace Color {
 
+  /// Color a text string green.
   auto green(std::string str) -> decltype(str) {
     return std::format("\x{1b}\x{5b}\x{33}\x{32}\x{6d}{0}\x{1b}\x{5b}\x{30}\x{6d}", str);
   }
 
+  /// Color a text string yellow.
   auto yellow(std::string str) -> decltype(str) {
     return std::format("\x{1b}\x{5b}\x{33}\x{33}\x{6d}{0}\x{1b}\x{5b}\x{30}\x{6d}", str);
   }
@@ -48,7 +52,7 @@ auto main( ) -> int {
 
   /// std::string hostname { };
   /// or
-  /// char hostname[256] { };
+  char hostname[256] { };
   /// or
   /// auto hostname { new char[255] }; // then `delete[] hostname` when the object is no longer needed
   /// or
@@ -61,7 +65,7 @@ auto main( ) -> int {
   /// or
   /// std::array<char, 256> hostname { };
 
-  // gethostname(hostname, sizeof hostname);
+  gethostname(hostname, sizeof(hostname));
 
   // std::println("{0}", green(str));
   // std::println("{0}", path);
