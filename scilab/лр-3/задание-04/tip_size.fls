@@ -1,0 +1,58 @@
+# sciFLT scilab Fuzzy Logic Toolbox
+<REVISION>
+ <revision>@REV@
+
+<DESCRIPTION>
+ <name>Tip size
+ <comment>
+ <type>m
+ <SNorm>max
+ <SNormPar>0
+ <TNorm>min
+ <TNormPar>0
+ <Comp>one
+ <CompPar>0
+ <ImpMethod>prod
+ <AggMethod>max
+ <defuzzMethod>centroide
+
+<INPUT>
+ <name>food
+ <range>0 10
+  <mf_name>rancid
+   <mf_type>trapmf
+   <mf_par>-1.0 0.0 0.0 7.0
+  <mf_name>delicious
+   <mf_type>trapmf
+   <mf_par>3.0 10.0 10.0 11.0
+
+ <name>service
+ <range>0 10
+  <mf_name>poor
+   <mf_type>trapmf
+   <mf_par>-1.0 0.0 0.0 5.0
+  <mf_name>good
+   <mf_type>trimf
+   <mf_par>0.0 5.0 10.0
+  <mf_name>excellent
+   <mf_type>trapmf
+   <mf_par>5.0 10.0 10.0 11.0
+
+<OUTPUT>
+ <name>tip
+ <range>0 0.25
+  <mf_name>cheap
+   <mf_type>trapmf
+   <mf_par>-1 0.0 0.0 0.125
+  <mf_name>average
+   <mf_type>trimf
+   <mf_par>0.0 0.125 0.25
+  <mf_name>generous
+   <mf_type>trapmf
+   <mf_par>0.125 0.25 0.25 0.26
+
+<RULE>
+1 1 1 0 1.0
+0 2 2 1 1.0
+2 3 3 0 1.0
+
