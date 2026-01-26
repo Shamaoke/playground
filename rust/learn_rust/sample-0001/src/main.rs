@@ -1,7 +1,7 @@
 
-use std::io::stdin;
+use std::io::{stdin, Result};
 
-fn main() {
+fn main() -> Result<()> {
 
   println!("Guess the number!");
 
@@ -13,5 +13,6 @@ fn main() {
 
   print!("You guessed: {guess}");
 
+  Ok(())
 }
 
