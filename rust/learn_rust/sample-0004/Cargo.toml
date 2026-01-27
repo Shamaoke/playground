@@ -1,0 +1,14 @@
+
+[package]
+name = "sample-0004"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+# slint = { version = "1.14.1", default-features = false, features = [ "backend-linuxkms-noseat", "renderer-skia", "compat-1-2" ] }
+# slint = { version = "1.14.1", default-features = false, features = [ "backend-winit", "renderer-femtovg", "compat-1-2" ] }
+slint = { version = "1.14.1", default-features = false, features = [ "backend-winit", "backend-linuxkms-noseat", "renderer-femtovg", "renderer-skia", "compat-1-2" ] }
+
+[build-dependencies]
+slint-build = "1.14.1"
+
