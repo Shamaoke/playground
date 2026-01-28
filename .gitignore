@@ -2,7 +2,7 @@
 _*
 
 .bundle
-build*
+build
 node_modules
 target
 
