@@ -1,0 +1,22 @@
+
+export component Main inherits Window {
+
+  property <int> val: 0;
+
+  width: 400px;
+  height: 300px;
+
+  Timer {
+
+    interval: 1s;
+    running: true;
+
+    triggered( ) => { val = val + 1; }
+  }
+
+  Text {
+    font-size: 32pt;
+    text: val;
+  }
+}
+
