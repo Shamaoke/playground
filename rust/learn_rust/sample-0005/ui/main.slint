@@ -1,0 +1,27 @@
+
+export component Main inherits Window {
+
+  width: 400px;
+  height: 300px;
+
+  forward-focus: my-key-handler;
+
+  my-key-handler := FocusScope {
+
+    key-pressed(event) => {
+
+      debug(event.text);
+
+      if (event.modifiers.control) {
+        debug("The Control key was pressed during this event.");
+      }
+
+      if (event.text == Key.F1) {
+        debug("The F1 key was pressed.");
+      }
+
+      accept
+    }
+  }
+}
+
