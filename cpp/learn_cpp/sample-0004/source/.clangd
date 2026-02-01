@@ -1,0 +1,35 @@
+
+CompileFlags:
+  CompilationDatabase: ../build-debug/
+
+Diagnostics:
+  Suppress:
+    ##
+    ## Suppress warning about unterminated #pragma pack. See the following for details.
+    ##
+    ## [c++ - Why does clang give a warning: unterminated ‘#pragma pack (push, …)’ at end of file? - Stack Overflow](https://stackoverflow.com/questions/72456118/why-does-clang-give-a-warning-unterminated-pragma-pack-push-at-end-of-f)
+    ##
+    - 'pragma-pack'
+
+    ##
+    ## Do not warn about uses of functions, variables, and types marked as deprecated by using the deprecated attribute.
+    ##
+    ## [Warning Options (Using the GNU Compiler Collection (GCC))](https://gcc.gnu.org/onlinedocs/gcc/Warning-Options.html#index-Wno-deprecated-declarations)
+    ##
+    - 'deprecated-declarations'
+
+Completion:
+  ##
+  ## Add `#include` directives when accepting code completions. Config equivalent
+  ## of the CLI option `--header-insertion`. Valid values are:
+  ##
+  ## • IWYU: Include what you use. Insert the owning header for top-level
+  ##   symbols, unless the header is already directly included or the symbol is
+  ##   forward-declared. This is the default.
+  ##
+  ## • Never: Never insert headers.
+  ##
+  ## [Clangd. Configuration | Completion → HeaderInsertion](https://clangd.llvm.org/config.html#headerinsertion)
+  ##
+  HeaderInsertion: Never
+
