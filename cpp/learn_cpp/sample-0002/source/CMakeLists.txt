@@ -1,6 +1,6 @@
 
 ##
-## ::: Learn C++ | Sample 0001 :::
+## ::: Learn C++ | Sample 0002 :::
 ##
 
 cmake_minimum_required(VERSION 4.2)
