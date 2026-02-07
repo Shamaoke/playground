@@ -18,9 +18,9 @@ namespace my {
       int m { 99 };
 
     public:
-      Child( );
+      // Child( );
 
-      Child(int n);
+      Child(int n = 77);
 
       auto get_m( ) -> decltype(this->m);
   };

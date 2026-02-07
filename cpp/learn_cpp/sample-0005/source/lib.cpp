@@ -8,7 +8,7 @@ namespace my {
 
   auto Parent::get_n( ) -> decltype(this->n) { return this->n; }
 
-  Child::Child( ) : Parent { } {}
+  // Child::Child( ) : Parent { } {}
 
   Child::Child(int n) : Parent { n } {}
 
