@@ -1,6 +1,3 @@
 
-An example program showing the implementation of the [`Deref`][0] trait and the usage of
-values of types which implement it
-
-[0]: https://doc.rust-lang.org/std/ops/trait.Deref.html
+An example program showing the usage of a struct type and the [`From`][0] trait implementation for the type
 
