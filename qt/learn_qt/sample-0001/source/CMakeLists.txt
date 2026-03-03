@@ -1,4 +1,8 @@
 
+##
+## ::: Learn Qt | Sample 0001 :::
+##
+
 cmake_minimum_required(VERSION 4.2)
 
 set(CMAKE_CXX_COMPILER /usr/bin/clang++)
