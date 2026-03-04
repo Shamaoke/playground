@@ -30,7 +30,7 @@ FROM alpine:3.23 AS production
 
   RUN apk --update-cache upgrade
 
-  RUN apk add qt5-qtbase
+  RUN apk add qt6-qtbase
 
   WORKDIR /home/sample-0001
 
