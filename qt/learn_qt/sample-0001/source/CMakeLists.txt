@@ -22,7 +22,7 @@
 ## ````
 ##
 
-cmake_minimum_required(VERSION 4.2)
+cmake_minimum_required(VERSION 4.1)
 
 set(CMAKE_CXX_COMPILER /usr/bin/clang++)
 set(CMAKE_CXX_STANDARD 23)
