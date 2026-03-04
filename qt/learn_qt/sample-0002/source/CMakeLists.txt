@@ -1,6 +1,6 @@
 
 ##
-## ::: Learn Qt | Sample 0001 :::
+## ::: Learn Qt | Sample 0002 :::
 ##
 
 ##
@@ -29,7 +29,7 @@ set(CMAKE_CXX_STANDARD 23)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-project(sample-0001 VERSION 0.0.0 LANGUAGES CXX)
+project(sample-0002 VERSION 0.0.0 LANGUAGES CXX)
 
 find_package(Qt6 REQUIRED COMPONENTS Core)
 
@@ -40,18 +40,21 @@ find_package(Qt6 REQUIRED COMPONENTS Core)
 ## The following command should be called after `find_package(Qt6 REQUIRED COMPONENTS Core)`.
 ## qt_standard_project_setup( )
 ##
+## The last command makes more then the first one, but for this project it is
+## not required. See [Details][0].
+##
+## [0]: https://doc.qt.io/qt-6/qt-standard-project-setup.html
+##
 set(CMAKE_AUTOMOC ON)
 
-set(SOURCES main.cc sample.cc)
-
-set(HEADERS sample.hh)
+set(SOURCES main.cc)
 
 if(CMAKE_GENERATOR MATCHES "Ninja")
   message(STATUS "Using Ninja build system")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fcolor-diagnostics")
 endif( )
 
-add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES})
+add_executable(${PROJECT_NAME} ${SOURCES})
 
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt6::Core)
 

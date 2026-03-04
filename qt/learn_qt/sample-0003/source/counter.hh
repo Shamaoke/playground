@@ -12,7 +12,7 @@ class Counter : public QObject {
     QTimer* timer { };
     int count { };
     const int maxCount { };
-    int timeout { };
+    const int timeout { };
 
     Q_SLOT void onStart( );
     Q_SLOT void onQTimerTimeout( );

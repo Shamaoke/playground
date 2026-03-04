@@ -1,3 +1,3 @@
 
-A Qt sample without GUI showing the usage of QTimer with Qt signals and slots.
+A Qt sample showing the usage of QTimer along with Qt signals and slots.
 

@@ -1,6 +1,6 @@
 
 ##
-## ::: Learn Qt | Sample 0001 :::
+## ::: Learn Qt | Sample 0003 :::
 ##
 
 ##
@@ -29,7 +29,7 @@ set(CMAKE_CXX_STANDARD 23)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-project(sample-0001 VERSION 0.0.0 LANGUAGES CXX)
+project(sample-0003 VERSION 0.0.0 LANGUAGES CXX)
 
 find_package(Qt6 REQUIRED COMPONENTS Core)
 
@@ -42,9 +42,9 @@ find_package(Qt6 REQUIRED COMPONENTS Core)
 ##
 set(CMAKE_AUTOMOC ON)
 
-set(SOURCES main.cc sample.cc)
+set(SOURCES main.cc counter.cc)
 
-set(HEADERS sample.hh)
+set(HEADERS counter.hh)
 
 if(CMAKE_GENERATOR MATCHES "Ninja")
   message(STATUS "Using Ninja build system")
