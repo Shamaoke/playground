@@ -21,7 +21,7 @@ FROM install AS build
 
   RUN mkdir build
 
-  RUN cmake -G Ninja -S source -B build
+  RUN cmake -S source -B build --preset docker
   RUN cmake --build build
 
 FROM alpine:3.23 AS production

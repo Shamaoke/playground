@@ -16,6 +16,17 @@
 ##   -S ../source
 ## ````
 ##
+## The project can also be prepared with the following command:
+##
+## ````
+## cmake -B . -S ../source --preset PRESET
+## ````
+##
+## See the available presets in the `CMakePresets.json` file.
+##
+## The `--fresh` option will result in build controll files being regenerated.
+## This can be useful when changing the build tool which was used previously.
+##
 ## Build the project with the following command:
 ##
 ## ````
@@ -27,6 +38,7 @@ cmake_minimum_required(VERSION 4.1)
 
 set(CMAKE_CXX_COMPILER /usr/bin/clang++)
 set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fcolor-diagnostics")
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
@@ -49,7 +61,10 @@ set(HEADERS sample.hh)
 
 if(CMAKE_GENERATOR MATCHES "Ninja")
   message(STATUS "Using Ninja build system")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fcolor-diagnostics")
+elseif(CMAKE_GENERATOR MATCHES "Unix Makefiles")
+  message(STATUS "Using Make build system")
+else( )
+  ## Do Nothing
 endif( )
 
 add_executable(${PROJECT_NAME} ${HEADERS} ${SOURCES})

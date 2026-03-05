@@ -1,0 +1,37 @@
+{
+  "version": 10,
+  "configurePresets": [
+    {
+      "name": "base",
+      "displayName": "Base",
+      "description": "The base for other presets.",
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "default-ninja",
+      "inherits": "base",
+      "displayName": "Default configuration with Ninja",
+      "description": "Default build in the Debug mode using the Ninja build tool.",
+      "generator": "Ninja"
+    },
+    {
+      "name": "default-makefiles",
+      "inherits": "base",
+      "displayName": "Default configuration with Make",
+      "description": "Default build in the Debug mode using the Make build tool.",
+      "generator": "Unix Makefiles"
+    },
+    {
+      "name": "docker",
+      "displayName": "Docker configuration",
+      "description": "Docker build in the Release mode using the Ninja build tool.",
+      "generator": "Ninja",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    }
+  ]
+}
