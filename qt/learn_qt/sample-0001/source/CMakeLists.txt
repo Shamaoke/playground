@@ -12,6 +12,7 @@
 ##   -DCMAKE_TOOLCHAIN_FILE=~/.local/share/vcpkg/scripts/buildsystems/vcpkg.cmake \
 ##   -DCMAKE_BUILD_TYPE=Debug \
 ##   -G Ninja \
+##   -B . \
 ##   -S ../source
 ## ````
 ##
