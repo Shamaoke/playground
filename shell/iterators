@@ -45,18 +45,26 @@ function main TRAPEXIT {
   local -a list=(1 1 1)
   local val=1
 
-  local f() { [[ $1 -le $val ]] }
+  f() { [[ $1 -le $val ]] }
 
-  if { every $val $list } {
-    echo "All values in the list is equal to $val."
-  } else {
-    echo "Some values in the list is not equal to $val."
-  }
+  # if { every $val $list } {
+  #   echo "All values in the list is equal to $val."
+  # } else {
+  #   echo "Some values in the list is not equal to $val."
+  # }
 
-  if { all f $list } {
-    echo "All values in the list is less then or equal to $val."
-  } else {
-    echo "Some values in the list is not less then or equal to $val."
-  }
+  # if { all f $list } {
+  #   echo "All values in the list is less then or equal to $val."
+  # } else {
+  #   echo "Some values in the list is not less then or equal to $val."
+  # }
+
+  every $val $list \
+    && echo "All values in the list is equal to $val." \
+    || echo "Some values in the list is not equal to $val."
+
+  all f $list \
+    && echo "All values in the list is less then or equal to $val." \
+    || echo "Some values in the list is not less then or equal to $val."
 }
 
