@@ -24,11 +24,11 @@ Use the following commands in the GDB debugger:
 ````
 file main — load the `main` file into the debugging session
 b[reak] NUMBER — set a breakpoint at the NUMBER line; the NUBMER should be `4` and `14` for this sample
-info b[reakpoints] — display all breakpoints
+i[nfo] b[reakpoints] — display all breakpoints
 r[un] — run the program; the program will stop at the first breakpoint
-info locals — show the local variables and their values at the current breakpoint or the selected stack frame
+i[nfo] lo[cals] — show the local variables and their values at the current breakpoint or the selected stack frame
 bt|backtrace — show the call stack
-info frame 2 — show the description of the selected stack frame (`2`)
+i[nfo] f[rame] 2 — show the description of the selected stack frame (`2`)
 f[rame] 3 — select the specified stack frame (`3`)
 ````
 
