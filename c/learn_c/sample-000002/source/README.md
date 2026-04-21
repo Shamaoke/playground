@@ -8,13 +8,19 @@ The program intended for learning how to work with the stack in a debugger.
 Compile with the following command:
 
 ````
-gcc -O0 -g3 -o main ../source/main.c
+gcc \
+  -std=c23 \
+  -O0 \
+  -g3 \
+  -o main \
+   ../source/main.c
 ````
 
 where
 
 ````
--g3 — add maximum debug info (includes macro definitions)
+-std=c23 — specify the C language standard (by default GCC uses `-std=gnu17` — C17 with GNU extensions enabled)
+-g3 — add maximum debug info (including macro definitions)
 -O0 — disable optimizations (recommended for debugging, so variables/lines aren't optimized away)
 -o FILENAME — place the output into a file with FILENAME
 ````
