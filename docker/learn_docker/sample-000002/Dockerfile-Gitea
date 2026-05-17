@@ -1,0 +1,19 @@
+
+FROM alpine:3.23
+
+  RUN apk --update-cache upgrade
+
+  RUN apk add gitea
+
+  RUN adduser -D -u 1000 -g 1000 git
+
+  USER git
+
+  ENV GITEA_WORK_DIR="/home/git/gitea"
+  ENV GITEA_CUSTOM="/home/git/gitea"
+
+  RUN mkdir "/home/git/gitea"
+  RUN mkdir "/home/git/gitea/conf"
+
+  ENTRYPOINT ["/usr/bin/gitea"]
+

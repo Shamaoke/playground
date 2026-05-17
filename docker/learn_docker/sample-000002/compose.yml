@@ -1,0 +1,45 @@
+
+services:
+  nginx:
+    image: nginx
+    container_name: nginx
+    # tty: true
+    # stdin_open: true
+    build:
+      context: .
+      dockerfile: Dockerfile-Nginx
+      network: host
+    networks:
+      sample:
+        ipv4_address: "10.0.45.141"
+    volumes:
+      - ./nginx:/etc/nginx
+
+  gitea:
+    image: gitea
+    container_name: gitea
+    # tty: true
+    # stdin_open: true
+    build:
+      context: .
+      dockerfile: Dockerfile-Gitea
+      network: host
+    networks:
+      sample:
+        ipv4_address: "10.0.45.151"
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./gitea:/home/git/gitea
+    command: [ "web", "--config", "/home/git/gitea/conf/app.ini" ]
+
+networks:
+  sample:
+    name: sample.net
+    driver: bridge
+    ipam:
+      config:
+        - subnet: "10.0.45.0/24"
+          ip_range: "10.0.45.128/25"
+          gateway: "10.0.45.1"
+

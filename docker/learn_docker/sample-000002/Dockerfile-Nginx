@@ -1,0 +1,9 @@
+
+FROM alpine:3.23
+
+  RUN apk --update-cache upgrade
+
+  RUN apk add nginx
+
+  ENTRYPOINT ["/bin/sh", "-c", "/usr/sbin/nginx"]
+
