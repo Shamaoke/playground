@@ -1,4 +1,6 @@
 
+#pragma once
+
 #include <string>
 
 class Messenger {
@@ -7,6 +9,6 @@ class Messenger {
     const std::string message { "Welcome to Sample 0008!" };
 
   public:
-    auto get_message( ) const -> std::string;
+    auto get_message() const -> std::string;
 };
 

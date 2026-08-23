@@ -10,7 +10,7 @@
 
 #include "include/messenger.hh"
 
-auto main(int argc, char** argv, char** env) -> int {
+auto main() -> int {
 
   using namespace std::literals::string_view_literals;
   using namespace std::views;
@@ -23,12 +23,14 @@ auto main(int argc, char** argv, char** env) -> int {
 
   auto messenger { std::make_unique<Messenger>() };
 
-  auto message { messenger->get_message( ) };
+  auto message { messenger->get_message() };
 
+  /// Лямбда-функция для преобразования символа в прописной
   auto g {
-    [ ](unsigned char c) { return toupper(c); }
+    [](unsigned char c) { return toupper(c); }
   };
 
+  /// Лямбда-функция для применения трансформации к каждому слову
   auto f {
     [&g](auto w) { return w | transform(g); }
   };
@@ -55,10 +57,10 @@ auto main(int argc, char** argv, char** env) -> int {
       | split(' ')
       | transform(f)
       | join_with(" ~> "sv)
-      | to<std::string>( )
+      | to<std::string>()
   };
 
-  print("{} ~> \n", result);
+  print("{}\n", result);
 
   // delete messenger;
 
