@@ -1,0 +1,441 @@
+---
+##
+## Run formatting with the following command.
+##
+## `clang-format -i <file>{.cc,.hh,.cpp,.h,.hpp}`
+##
+## Formatter settings are stored in the `.clang-format` file.
+##
+## A simple way to generate a `.clang-format` file with all the formatting
+## settings of one of the predefined styles is the following command.
+##
+## `clang-format --style=llvm --dump-config > .clang-format`
+##
+## The list of available styles can be obtained with the `clang-format --help`
+## command (see the `--style` option).
+##
+## Details
+## -------
+## [Clang-Format Style Options — Clang 21.0.0git documentation](https://clang.llvm.org/docs/ClangFormatStyleOptions.html)
+##
+
+Language: Cpp
+AccessModifierOffset: -2
+AlignAfterOpenBracket: Align
+AlignArrayOfStructures: None
+AlignConsecutiveAssignments:
+  Enabled: false
+  AcrossEmptyLines: false
+  AcrossComments: false
+  AlignCompound: false
+  AlignFunctionPointers: false
+  PadOperators: true
+AlignConsecutiveBitFields:
+  Enabled: false
+  AcrossEmptyLines: false
+  AcrossComments: false
+  AlignCompound: false
+  AlignFunctionPointers: false
+  PadOperators: false
+AlignConsecutiveDeclarations:
+  Enabled: false
+  AcrossEmptyLines: false
+  AcrossComments: false
+  AlignCompound: false
+  AlignFunctionPointers: false
+  PadOperators: false
+AlignConsecutiveMacros:
+  Enabled: false
+  AcrossEmptyLines: false
+  AcrossComments: false
+  AlignCompound: false
+  AlignFunctionPointers: false
+  PadOperators: false
+AlignConsecutiveShortCaseStatements:
+  Enabled: false
+  AcrossEmptyLines: false
+  AcrossComments: false
+  AlignCaseArrows: false
+  AlignCaseColons: false
+AlignConsecutiveTableGenBreakingDAGArgColons:
+  Enabled: false
+  AcrossEmptyLines: false
+  AcrossComments: false
+  AlignCompound: false
+  AlignFunctionPointers: false
+  PadOperators: false
+AlignConsecutiveTableGenCondOperatorColons:
+  Enabled: false
+  AcrossEmptyLines: false
+  AcrossComments: false
+  AlignCompound: false
+  AlignFunctionPointers: false
+  PadOperators: false
+AlignConsecutiveTableGenDefinitionColons:
+  Enabled: false
+  AcrossEmptyLines: false
+  AcrossComments: false
+  AlignCompound: false
+  AlignFunctionPointers: false
+  PadOperators: false
+AlignEscapedNewlines: Right
+AlignOperands: Align
+AlignTrailingComments:
+  Kind: Always
+  OverEmptyLines:  0
+AllowAllArgumentsOnNextLine: true
+AllowAllParametersOfDeclarationOnNextLine: true
+AllowBreakBeforeNoexceptSpecifier: Never
+AllowShortBlocksOnASingleLine: Never
+AllowShortCaseExpressionOnASingleLine: true
+AllowShortCaseLabelsOnASingleLine: false
+AllowShortCompoundRequirementOnASingleLine: true
+AllowShortEnumsOnASingleLine: true
+##
+## `AllowShortFunctionsOnASingleLine` { None | InlineOnly | Empty | Inline | All }
+##
+## Whether to format functions with a single/no statement on one line.
+##
+## Details
+## -------
+## [Clang-Format Style Options — Clang 21.0.0git documentation \| AllowShortFunctionsOnASingleLine](https://clang.llvm.org/docs/ClangFormatStyleOptions.html#allowshortfunctionsonasingleline)
+##
+AllowShortFunctionsOnASingleLine: All
+AllowShortIfStatementsOnASingleLine: Never
+AllowShortLambdasOnASingleLine: All
+AllowShortLoopsOnASingleLine: false
+AlwaysBreakAfterDefinitionReturnType: None
+AlwaysBreakBeforeMultilineStrings: false
+AttributeMacros:
+  - __capability
+BinPackArguments: true
+BinPackParameters: true
+BitFieldColonSpacing: Both
+BraceWrapping:
+  AfterCaseLabel:  false
+  AfterClass: false
+  AfterControlStatement: Never
+  AfterEnum: false
+  AfterExternBlock: false
+  AfterFunction: false
+  AfterNamespace: false
+  AfterObjCDeclaration: false
+  AfterStruct: false
+  AfterUnion: false
+  BeforeCatch: false
+  BeforeElse: false
+  BeforeLambdaBody: false
+  BeforeWhile: false
+  IndentBraces: false
+  SplitEmptyFunction: true
+  SplitEmptyRecord: true
+  SplitEmptyNamespace: true
+BreakAdjacentStringLiterals: true
+BreakAfterAttributes: Leave
+BreakAfterJavaFieldAnnotations: false
+BreakAfterReturnType: None
+BreakArrays: true
+BreakBeforeBinaryOperators: None
+BreakBeforeConceptDeclarations: Always
+BreakBeforeBraces: Attach
+BreakBeforeInlineASMColon: OnlyMultiline
+BreakBeforeTernaryOperators: true
+BreakConstructorInitializers: BeforeColon
+BreakFunctionDefinitionParameters: false
+BreakInheritanceList: BeforeColon
+BreakStringLiterals: true
+BreakTemplateDeclarations: MultiLine
+##
+## `ColumnLimit` { unsigned }
+##
+## The column limit — a hint for the maximum line length. A value of `0`
+## means there is no column limit; in that case, clang-format respects the
+## line breaks already present in the input, unless they contradict other
+## rules.
+##
+## Details
+## -------
+## [Clang-Format Style Options — Clang 21.0.0git documentation \| ColumnLimit](https://clang.llvm.org/docs/ClangFormatStyleOptions.html#columnlimit)
+##
+ColumnLimit: 80
+CommentPragmas: '^ IWYU pragma:'
+CompactNamespaces: false
+ConstructorInitializerIndentWidth: 4
+ContinuationIndentWidth: 4
+##
+## `Cpp11BracedListStyle` { true | false }
+##
+## If `true`, format braced lists as best suited for C++11 braced lists —
+## no spaces inside the braces, no line break before the closing brace, and
+## indentation using the continuation indent rather than the block indent.
+## The braced list is then formatted exactly as a function call's argument
+## list would be (as if the `{}` were `()`).
+##
+## If `false`, braced lists follow the ordinary spacing/indentation rules
+## instead — this is what pairs naturally with `SpaceBeforeCpp11BracedList:
+## true` below, and with the uniform-initialization style used throughout
+## this project, e.g. `auto app { QGuiApplication { argc, argv } };`.
+##
+##   true:                          false:
+##   vector<int> x{1, 2, 3, 4};     vector<int> x{ 1, 2, 3, 4 };
+##
+## Details
+## -------
+## [Clang-Format Style Options — Clang 21.0.0git documentation \| Cpp11BracedListStyle](https://clang.llvm.org/docs/ClangFormatStyleOptions.html#cpp11bracedliststyle)
+##
+Cpp11BracedListStyle: false
+DerivePointerAlignment: false
+DisableFormat: false
+EmptyLineAfterAccessModifier: Never
+EmptyLineBeforeAccessModifier: LogicalBlock
+ExperimentalAutoDetectBinPacking: false
+FixNamespaceComments: true
+ForEachMacros:
+  - foreach
+  - Q_FOREACH
+  - BOOST_FOREACH
+IfMacros:
+  - KJ_IF_MAYBE
+IncludeBlocks: Preserve
+IncludeCategories:
+  - Regex: '^"(llvm|llvm-c|clang|clang-c)/'
+    Priority: 2
+    SortPriority: 0
+    CaseSensitive: false
+  - Regex: '^(<|"(gtest|gmock|isl|json)/)'
+    Priority: 3
+    SortPriority: 0
+    CaseSensitive: false
+  - Regex: '.*'
+    Priority: 1
+    SortPriority: 0
+    CaseSensitive: false
+IncludeIsMainRegex: '(Test)?$'
+IncludeIsMainSourceRegex: ''
+##
+## `IndentAccessModifiers` { true | false }
+##
+## Specify whether access modifiers should have their own indentation level.
+##
+## Details
+## -------
+## [Clang-Format Style Options — Clang 23.0.0git documentation \| IndentAccessModifiers](https://clang.llvm.org/docs/ClangFormatStyleOptions.html#indentaccessmodifiers)
+##
+IndentAccessModifiers: true
+IndentCaseBlocks: false
+IndentCaseLabels: false
+IndentExternBlock: AfterExternBlock
+IndentGotoLabels: true
+IndentPPDirectives: None
+IndentRequiresClause: true
+IndentWidth: 2
+IndentWrappedFunctionNames: false
+##
+## `InsertBraces` { true | false }
+##
+## Insert braces after control statements (`if`, `else`, `for`, `do`, and
+## `while`) in C++, except when the control statement is inside a macro
+## definition, or when the resulting braces would enclose preprocessor
+## directives.
+##
+## Details
+## -------
+## [Clang-Format Style Options — Clang 21.0.0git documentation \| InsertBraces](https://clang.llvm.org/docs/ClangFormatStyleOptions.html#insertbraces)
+##
+InsertBraces: true
+InsertNewlineAtEOF: false
+InsertTrailingCommas: None
+IntegerLiteralSeparator:
+  Binary: 0
+  BinaryMinDigits: 0
+  Decimal: 0
+  DecimalMinDigits: 0
+  Hex: 0
+  HexMinDigits: 0
+JavaScriptQuotes: Leave
+JavaScriptWrapImports: true
+KeepEmptyLines:
+  AtEndOfFile: false
+  AtStartOfBlock: true
+  AtStartOfFile: true
+LambdaBodyIndentation: Signature
+LineEnding: DeriveLF
+MacroBlockBegin: ''
+MacroBlockEnd: ''
+MainIncludeChar: Quote
+MaxEmptyLinesToKeep: 1
+##
+## `NamespaceIndentation` { None | Inner | All }
+##
+## Sets the indentation style used for namespace contents.
+##
+## • `None`
+##
+##   Don't indent the content of namespaces.
+##
+## • `Inner`
+##
+##   Indent only the content of nested namespaces.
+##
+## • `All`
+##
+##   Always indent.
+##
+## Details
+## -------
+## [Clang-Format Style Options — Clang 23.0.0git documentation \| NamespaceIndentation](https://clang.llvm.org/docs/ClangFormatStyleOptions.html#namespaceindentation)
+##
+NamespaceIndentation: All
+ObjCBinPackProtocolList: Auto
+ObjCBlockIndentWidth: 2
+ObjCBreakBeforeNestedBlockParam: true
+ObjCSpaceAfterProperty: false
+ObjCSpaceBeforeProtocolList: true
+PackConstructorInitializers: BinPack
+PenaltyBreakAssignment: 2
+PenaltyBreakBeforeFirstCallParameter: 19
+PenaltyBreakComment: 300
+PenaltyBreakFirstLessLess: 120
+PenaltyBreakOpenParenthesis: 0
+PenaltyBreakScopeResolution: 500
+PenaltyBreakString: 1000
+PenaltyBreakTemplateDeclaration: 10
+PenaltyExcessCharacter: 1000000
+PenaltyIndentedWhitespace: 0
+PenaltyReturnTypeOnItsOwnLine: 60
+##
+## `PointerAlignment` { Left | Right | Middle }
+##
+## Pointer and reference alignment style.
+##
+## • `Left`
+##
+##   Align the pointer/reference to the left — `int* a;`
+##
+## • `Right`
+##
+##   Align the pointer/reference to the right — `int *a;`
+##
+## • `Middle`
+##
+##   Align the pointer/reference in the middle — `int * a;`
+##
+## Note: `DerivePointerAlignment` is set to `false` in this file, so this
+## setting is always honored as-is and never overridden by detecting the
+## dominant style already used in the input file.
+##
+## Details
+## -------
+## [Clang-Format Style Options — Clang 21.0.0git documentation \| PointerAlignment](https://clang.llvm.org/docs/ClangFormatStyleOptions.html#pointeralignment)
+##
+PointerAlignment: Left
+PPIndentWidth: -1
+QualifierAlignment: Leave
+ReferenceAlignment: Pointer
+ReflowComments: true
+RemoveBracesLLVM: false
+RemoveParentheses: Leave
+RemoveSemicolon: false
+RequiresClausePosition: OwnLine
+RequiresExpressionIndentation: OuterScope
+SeparateDefinitionBlocks: Leave
+ShortNamespaceLines: 1
+SkipMacroDefinitionBody: false
+SortIncludes: CaseSensitive
+SortJavaStaticImport: Before
+SortUsingDeclarations: LexicographicNumeric
+SpaceAfterCStyleCast: false
+SpaceAfterLogicalNot: false
+SpaceAfterTemplateKeyword: true
+SpaceAroundPointerQualifiers: Default
+SpaceBeforeAssignmentOperators: true
+SpaceBeforeCaseColon: false
+##
+## `SpaceBeforeCpp11BracedList` { true | false }
+##
+## If `true`, a space is inserted before a C++11 braced list used to
+## initialize an object — i.e. between the preceding type/variable name (or
+## function name) and the opening `{`.
+##
+## If `false`, no such space is inserted.
+##
+##   true:                       false:
+##   Foo foo { bar };            Foo foo{ bar };
+##
+## This is what produces the uniform-initialization style used throughout
+## this project, e.g. `auto app { QGuiApplication { argc, argv } };` — note
+## the space before each opening brace.
+##
+## Details
+## -------
+## [Clang-Format Style Options — Clang 21.0.0git documentation \| SpaceBeforeCpp11BracedList](https://clang.llvm.org/docs/ClangFormatStyleOptions.html#spacebeforecpp11bracedlist)
+##
+SpaceBeforeCpp11BracedList: true
+SpaceBeforeCtorInitializerColon: true
+SpaceBeforeInheritanceColon: true
+SpaceBeforeJsonColon: false
+SpaceBeforeParens: ControlStatements
+SpaceBeforeParensOptions:
+  AfterControlStatements: true
+  AfterForeachMacros: true
+  AfterFunctionDefinitionName: false
+  AfterFunctionDeclarationName: false
+  AfterIfMacros: true
+  AfterOverloadedOperator: false
+  AfterPlacementOperator: true
+  AfterRequiresInClause: false
+  AfterRequiresInExpression: false
+  BeforeNonEmptyParentheses: false
+SpaceBeforeRangeBasedForLoopColon: true
+SpaceBeforeSquareBrackets: false
+SpaceInEmptyBlock: false
+SpacesBeforeTrailingComments: 1
+SpacesInAngles: Never
+SpacesInContainerLiterals: true
+SpacesInLineCommentPrefix:
+  Minimum: 1
+  Maximum: -1
+##
+## `SpacesInParens` { Never | Custom }
+##
+## Defines in which cases spaces will be inserted after `(` and before `)`.
+##
+## Details
+## -------
+## [Clang-Format Documentation \| SpacesInParens](https://clang.llvm.org/docs/ClangFormatStyleOptions.html#spacesinparens)
+##
+SpacesInParens: Custom
+##
+## `SpacesInParensOptions`
+##
+## Control of individual spaces in parentheses.
+##
+## Details
+## -------
+## [Clang-Format Documentation \| SpacesInParensOptions](https://clang.llvm.org/docs/ClangFormatStyleOptions.html#spacesinparensoptions)
+##
+SpacesInParensOptions:
+  ExceptDoubleParentheses: false
+  InCStyleCasts: false
+  InConditionalStatements: false
+  InEmptyParentheses: true
+  Other: false
+SpacesInSquareBrackets: false
+Standard: Latest
+StatementAttributeLikeMacros:
+  - Q_EMIT
+StatementMacros:
+  - Q_UNUSED
+  - QT_REQUIRE_VERSION
+TableGenBreakInsideDAGArg: DontBreak
+TabWidth: 8
+UseTab: Never
+VerilogBreakBetweenInstancePorts: true
+WhitespaceSensitiveMacros:
+  - BOOST_PP_STRINGIZE
+  - CF_SWIFT_NAME
+  - NS_SWIFT_NAME
+  - PP_STRINGIZE
+  - STRINGIZE
+...
+
