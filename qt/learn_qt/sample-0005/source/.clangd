@@ -1,0 +1,19 @@
+
+CompileFlags:
+  CompilationDatabase: ../build-debug
+
+Completion:
+  ##
+  ## Add `#include` directives when accepting code completions. Config equivalent
+  ## of the CLI option `--header-insertion`. Valid values are:
+  ##
+  ## • IWYU: Include what you use. Insert the owning header for top-level
+  ##   symbols, unless the header is already directly included or the symbol is
+  ##   forward-declared. This is the default.
+  ##
+  ## • Never: Never insert headers.
+  ##
+  ## [Clangd. Configuration | Completion → HeaderInsertion](https://clangd.llvm.org/config.html#headerinsertion)
+  ##
+  HeaderInsertion: Never
+
