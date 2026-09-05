@@ -23,5 +23,19 @@ add_executable(sample-0005 ${SOURCES})
 
 target_compile_features(sample-0005 PRIVATE cxx_std_23)
 
-target_link_libraries(sample-0005 PRIVATE Qt::Gui Qt::Qml)
+qt_add_qml_module(
+  sample-0005
+  URI learn_qt.sample_0005
+  RESOURCE_PREFIX "/"
+  QML_FILES
+    views/Application.qml
+)
+
+target_link_libraries(
+  sample-0005
+
+  PRIVATE
+    Qt::Gui
+    Qt::Qml
+)
 
