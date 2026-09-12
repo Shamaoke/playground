@@ -3,7 +3,7 @@
   "version": 10,
   "configurePresets": [
     {
-      "name": "default",
+      "name": "debug",
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/../build-debug",
       "cacheVariables": {
