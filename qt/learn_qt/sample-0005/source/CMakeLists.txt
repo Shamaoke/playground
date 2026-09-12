@@ -38,7 +38,6 @@ target_include_directories(sample-0005 PRIVATE include)
 qt_add_qml_module(
   sample-0005
   URI learn_qt.sample_0005
-  RESOURCE_PREFIX "/"
   QML_FILES
     views/Application.qml
 )
