@@ -25,13 +25,14 @@ qt_standard_project_setup(REQUIRES 6.11)
 
 # file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS "*.cc")
 
+file(GLOB HEADERS CONFIGURE_DEPENDS "include/*.hh")
 file(GLOB SOURCES CONFIGURE_DEPENDS "*.cc")
 
 add_executable(sample-0005)
 
 target_compile_features(sample-0005 PRIVATE cxx_std_23)
 
-target_sources(sample-0005 PRIVATE ${SOURCES})
+target_sources(sample-0005 PRIVATE ${HEADERS} ${SOURCES})
 
 target_include_directories(sample-0005 PRIVATE include)
 
@@ -40,6 +41,7 @@ qt_add_qml_module(
   URI learn_qt.sample_0005
   QML_FILES
     views/Application.qml
+    views/Users.qml
 )
 
 target_link_libraries(

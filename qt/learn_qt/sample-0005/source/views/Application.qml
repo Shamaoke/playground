@@ -7,5 +7,9 @@ Window {
   height: 600
 
   visible: true
+
+  Users {
+    anchors.fill: parent
+  }
 }
 
