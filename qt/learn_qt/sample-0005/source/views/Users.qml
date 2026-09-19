@@ -13,7 +13,12 @@ Item {
     anchors.fill: parent
 
     delegate: Text {
-      text: `${model.id}: ${model.name} <${model.email}>`
+
+      required property string id
+      required property string name
+      required property string email
+
+      text: `${id}: ${name} <${email}>`
     }
   }
 }
