@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<protocol version="2026.09.20.00">
+  <item id="0">
+    <name>Давление газа</name>
+    <byte>100</byte>
+    <size>2</size>
+    <rawMin>0</rawMin>
+    <rawMax>32767</rawMax>
+    <valueMin>0</valueMin>
+    <valueMax>20</valueMax>
+    <unit>МПа</unit>
+  </item>
+  <item id="1">
+    <name>Перепад давления газа</name>
+    <byte>102</byte>
+    <size>2</size>
+    <rawMin>0</rawMin>
+    <rawMax>32767</rawMax>
+    <valueMin>0</valueMin>
+    <valueMax>20000</valueMax>
+    <unit>кПа</unit>
+  </item>
+</protocol>
