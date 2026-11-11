@@ -1,0 +1,35 @@
+
+{
+  "version": 10,
+  "configurePresets": [
+    {
+      "name": "default",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/../../build/spix",
+      "cacheVariables": {
+        "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_INSTALL_PREFIX": "${sourceDir}/../../install",
+        "CMAKE_PREFIX_PATH": "${sourceDir}/../../install",
+        "CMAKE_FIND_PACKAGE_PREFER_CONFIG": true,
+        "BUILD_SHARED_LIBS": false,
+        "SPIX_QT_MAJOR": "6",
+        "SPIX_BUILD_QTQUICK": true,
+        "SPIX_BUILD_QTWIDGETS": false,
+        "SPIX_BUILD_EXAMPLES": false,
+        "SPIX_BUILD_TESTS": false
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "default",
+      "configurePreset": "default"
+    },
+    {
+      "name": "install",
+      "configurePreset": "default",
+      "targets": ["install"]
+    }
+  ]
+}

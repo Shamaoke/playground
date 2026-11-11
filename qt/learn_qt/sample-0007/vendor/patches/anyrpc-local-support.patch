@@ -1,0 +1,46 @@
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index 87991bb..7a6c0a0 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -112,3 +112,9 @@ endif()
+ install(DIRECTORY include/anyrpc
+     DESTINATION "${INCLUDE_INSTALL_DIR}"
+     COMPONENT dev)
++
++
++install(
++  FILES "${CMAKE_CURRENT_SOURCE_DIR}/AnyRPCConfig.cmake"
++  DESTINATION lib/cmake/AnyRPC
++)
+diff --git a/AnyRPCConfig.cmake b/AnyRPCConfig.cmake
+new file mode 100644
+index 0000000..653df8e
+--- /dev/null
++++ b/AnyRPCConfig.cmake
+@@ -0,0 +1,26 @@
++
++include(CMakeFindDependencyMacro)
++
++find_dependency(Threads)
++
++cmake_path(
++  SET _anyrpc_prefix
++  NORMALIZE "${CMAKE_CURRENT_LIST_DIR}/../../.."
++)
++
++if(NOT TARGET AnyRPC::anyrpc)
++  add_library(AnyRPC::anyrpc SHARED IMPORTED)
++
++  set_target_properties(
++    AnyRPC::anyrpc
++
++    PROPERTIES
++      IMPORTED_LOCATION "${_anyrpc_prefix}/lib/libanyrpc.so"
++      IMPORTED_SONAME "libanyrpc.so.1"
++      INTERFACE_INCLUDE_DIRECTORIES "${_anyrpc_prefix}/include"
++      INTERFACE_LINK_LIBRARIES Threads::Threads
++  )
++endif()
++
++unset(_anyrpc_prefix)
++

@@ -1,0 +1,6 @@
+/.cache/
+/bin/
+/build/
+/vendor/source/
+/vendor/build/
+/vendor/install/

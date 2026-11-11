@@ -1,0 +1,213 @@
+diff --git a/libs/Scenes/QtQuick/src/QtEvents.cpp b/libs/Scenes/QtQuick/src/QtEvents.cpp
+index fe4b0e9..b09b0b1 100644
+--- a/libs/Scenes/QtQuick/src/QtEvents.cpp
++++ b/libs/Scenes/QtQuick/src/QtEvents.cpp
+@@ -20,10 +20,35 @@
+ #include <QDragMoveEvent>
+ #include <QMimeData>
+ 
++#include <type_traits>
++
+ namespace spix {
+ 
+ namespace {
+ 
++// Prefer floating-point drag positions when supported by the Qt headers.
++// Older Qt releases need integer positions; preserve the previous truncation.
++template <typename Event>
++auto dragEventPosition(const QPointF& position)
++{
++  if constexpr (std::is_constructible_v<
++    Event, QPointF, Qt::DropActions, const QMimeData*, Qt::MouseButtons, Qt::KeyboardModifiers>) {
++    return position;
++  } else {
++    return QPoint(static_cast<int>(position.x()), static_cast<int>(position.y()));
++  }
++}
++
++auto globalPositionForWindow(QQuickWindow* window, const QPointF& position) -> QPointF
++{
++#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
++  return window->mapToGlobal(position);
++#else
++  // Qt 5 maps integer positions only. Keep the fractional event coordinates.
++  return QPointF(window->mapToGlobal(QPoint())) + position;
++#endif
++}
++
+ QQuickWindow* getWindowAndPositionForItem(Item* item, Point relToItemPos, QPointF& windowPos)
+ {
+     auto qtitem = dynamic_cast<QtItem*>(item);
+@@ -103,7 +128,8 @@ void QtEvents::mouseDown(Item* item, Point loc, MouseButton button, KeyModifier
+     Qt::MouseButtons activeButtons = getQtMouseButtonValue(m_pressedMouseButtons);
+ 
+     auto qtmod = getQtKeyboardModifiers(mod);
+-    QMouseEvent* event = new QMouseEvent(QEvent::MouseButtonPress, windowLoc, eventCausingButton, activeButtons, qtmod);
++    QMouseEvent* event = new QMouseEvent(QEvent::MouseButtonPress, windowLoc, globalPositionForWindow(window, windowLoc),
++      eventCausingButton, activeButtons, qtmod);
+     QGuiApplication::postEvent(window, event);
+ }
+ 
+@@ -127,7 +153,8 @@ void QtEvents::mouseUp(Item* item, Point loc, MouseButton button, KeyModifier mo
+ #endif
+     auto qtmod = getQtKeyboardModifiers(mod);
+     QMouseEvent* event
+-        = new QMouseEvent(QEvent::MouseButtonRelease, windowLoc, eventCausingButton, activeButtons, qtmod);
++        = new QMouseEvent(QEvent::MouseButtonRelease, windowLoc, globalPositionForWindow(window, windowLoc),
++      eventCausingButton, activeButtons, qtmod);
+     QGuiApplication::postEvent(window, event);
+ }
+ 
+@@ -143,13 +170,15 @@ void QtEvents::mouseMove(Item* item, Point loc)
+     // Wiggle the cursor a bit. This is needed to correctly recognize drag events
+     windowLoc.rx() -= 1;
+     QMouseEvent* mouseMoveEvent
+-        = new QMouseEvent(QEvent::MouseMove, windowLoc, Qt::MouseButton::NoButton, activeButtons, Qt::NoModifier);
++        = new QMouseEvent(QEvent::MouseMove, windowLoc, globalPositionForWindow(window, windowLoc),
++      Qt::MouseButton::NoButton, activeButtons, Qt::NoModifier);
+     QGuiApplication::postEvent(window, mouseMoveEvent);
+ 
+     // Wiggle the cursor a bit. This is needed to correctly recognize drag events
+     windowLoc.rx() += 1;
+     mouseMoveEvent
+-        = new QMouseEvent(QEvent::MouseMove, windowLoc, Qt::MouseButton::NoButton, activeButtons, Qt::NoModifier);
++        = new QMouseEvent(QEvent::MouseMove, windowLoc, globalPositionForWindow(window, windowLoc),
++      Qt::MouseButton::NoButton, activeButtons, Qt::NoModifier);
+     QGuiApplication::postEvent(window, mouseMoveEvent);
+ }
+ 
+@@ -185,7 +214,6 @@ void QtEvents::extMouseDrop(Item* item, Point loc, PasteboardContent& content)
+ 
+     QPointF qtlocalPoint(loc.x, loc.y);
+     QPointF windowLoc = qtitem->qquickitem()->mapToScene(qtlocalPoint);
+-    QPoint windowLocInt(windowLoc.rx(), windowLoc.ry());
+ 
+     auto mimeData = new QMimeData();
+     QList<QUrl> urlList;
+@@ -195,12 +223,12 @@ void QtEvents::extMouseDrop(Item* item, Point loc, PasteboardContent& content)
+     }
+     mimeData->setUrls(urlList);
+ 
+-    auto enter = new QDragEnterEvent(windowLocInt, Qt::CopyAction | Qt::MoveAction | Qt::LinkAction, mimeData,
+-        Qt::MouseButton::NoButton, Qt::NoModifier);
++    auto enter = new QDragEnterEvent(dragEventPosition<QDragEnterEvent>(windowLoc),
++      Qt::CopyAction | Qt::MoveAction | Qt::LinkAction, mimeData, Qt::MouseButton::NoButton, Qt::NoModifier);
+     QGuiApplication::postEvent(window, enter);
+ 
+-    auto move = new QDragMoveEvent(windowLocInt, Qt::CopyAction | Qt::MoveAction | Qt::LinkAction, mimeData,
+-        Qt::MouseButton::NoButton, Qt::NoModifier);
++    auto move = new QDragMoveEvent(dragEventPosition<QDragMoveEvent>(windowLoc),
++      Qt::CopyAction | Qt::MoveAction | Qt::LinkAction, mimeData, Qt::MouseButton::NoButton, Qt::NoModifier);
+     QGuiApplication::postEvent(window, move);
+ 
+     auto drop = new QDropEvent(windowLoc, Qt::CopyAction | Qt::MoveAction | Qt::LinkAction, mimeData,
+diff --git a/libs/Scenes/QtQuick/src/QtItemTools.cpp b/libs/Scenes/QtQuick/src/QtItemTools.cpp
+index d2fedc2..2afdcbc 100644
+--- a/libs/Scenes/QtQuick/src/QtItemTools.cpp
++++ b/libs/Scenes/QtQuick/src/QtItemTools.cpp
+@@ -7,6 +7,7 @@
+ #include "QtItemTools.h"
+ 
+ #include <QDateTime>
++#include <QMetaType>
+ #include <QQmlContext>
+ #include <QQuickItem>
+ #include <QRegularExpression>
+@@ -208,7 +209,7 @@ Variant QVariantToVariant(const QVariant& var)
+         return QVariantToVariant(jsval.toVariant());
+     }
+ 
+-    if (var.canConvert(QMetaType::Type::QVariantList)) {
++    if (var.canConvert<QVariantList>()) {
+         const QVariantList& list = var.toList();
+         Variant::ListType ret;
+         for (const QVariant& elem : list) {
+@@ -218,7 +219,7 @@ Variant QVariantToVariant(const QVariant& var)
+         return Variant(ret);
+     }
+ 
+-    if (var.canConvert(QMetaType::Type::QVariantMap)) {
++    if (var.canConvert<QVariantMap>()) {
+         const QVariantMap& map = var.toMap();
+         Variant::MapType ret;
+         for (auto ptr = map.constBegin(); ptr != map.constEnd(); ptr++) {
+@@ -228,7 +229,7 @@ Variant QVariantToVariant(const QVariant& var)
+         return Variant(ret);
+     }
+ 
+-    if (var.canConvert(QMetaType::Type::QString)) {
++    if (var.canConvert<QString>()) {
+         return Variant(var.toString().toStdString());
+     }
+ 
+@@ -263,14 +264,20 @@ Variant QMLReturnVariantToVariant(const QMLReturnVariant& var)
+ 
+ bool CanConvertArgTypes(const QMetaMethod& metaMethod, const std::vector<QVariant>& varargs)
+ {
+-    if (metaMethod.parameterCount() != varargs.size())
+-        return false;
+-    for (size_t i = 0; i < metaMethod.parameterCount(); i++) {
+-        int targetType = metaMethod.parameterType(i);
+-        if (targetType != QMetaType::Type::QVariant && !varargs[i].canConvert(targetType))
+-            return false;
+-    }
+-    return true;
++  if (metaMethod.parameterCount() != varargs.size())
++    return false;
++  for (size_t i = 0; i < metaMethod.parameterCount(); i++) {
++#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
++    auto targetType { metaMethod.parameterMetaType(i) };
++    if (targetType.id() != QMetaType::Type::QVariant && !varargs[i].canConvert(targetType))
++      return false;
++#else
++    int targetType = metaMethod.parameterType(i);
++    if (targetType != QMetaType::Type::QVariant && !varargs[i].canConvert(targetType))
++      return false;
++#endif
++  }
++  return true;
+ }
+ 
+ bool GetMethodMetaForArgs(
+@@ -288,22 +295,26 @@ bool GetMethodMetaForArgs(
+ }
+ 
+ std::vector<QGenericArgument> ConvertAndCreateQArgumentsForMethod(
+-    const QMetaMethod& metaMethod, std::vector<QVariant>& varargs)
++  const QMetaMethod& metaMethod, std::vector<QVariant>& varargs)
+ {
+-    std::vector<QGenericArgument> qtArgs;
+-    for (size_t i = 0; i < 10; i++) {
+-        if (i < varargs.size()) {
+-            int targetType = metaMethod.parameterType(i);
+-            if (targetType != QMetaType::Type::QVariant) {
+-                varargs[i].convert(targetType);
+-                qtArgs.push_back(QGenericArgument(varargs[i].typeName(), varargs[i].data()));
+-            } else {
+-                qtArgs.push_back(QArgument<QVariant>("QVariant", varargs[i]));
+-            }
+-        } else
+-            qtArgs.push_back(QGenericArgument());
+-    }
+-    return qtArgs;
++  std::vector<QGenericArgument> qtArgs;
++  for (size_t i = 0; i < 10; i++) {
++    if (i < varargs.size()) {
++      int targetType = metaMethod.parameterType(i);
++      if (targetType != QMetaType::Type::QVariant) {
++#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
++        varargs[i].convert(QMetaType { targetType });
++#else
++        varargs[i].convert(targetType);
++#endif
++        qtArgs.push_back(QGenericArgument(varargs[i].typeName(), varargs[i].data()));
++      } else {
++        qtArgs.push_back(QArgument<QVariant>("QVariant", varargs[i]));
++      }
++    } else
++      qtArgs.push_back(QGenericArgument());
++  }
++  return qtArgs;
+ }
+ 
+ } // namespace qt
