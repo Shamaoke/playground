@@ -78,7 +78,7 @@ auto main(int argc, char** argv) -> int {
 
                 anchors.fill: parent
 
-                onClicked: main.status = "Клик мышью!"
+                onPressed: main.status = "Клик мышью!"
               }
 
               Keys.onSpacePressed: ( ) => {
