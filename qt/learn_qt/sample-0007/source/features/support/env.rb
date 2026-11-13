@@ -18,3 +18,7 @@ After do
   Process.wait(@server_pid)
 end
 
+AfterStep do
+  sleep(Float(ENV.fetch('STEP_DELAY', '0')))
+end
+
