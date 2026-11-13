@@ -56,7 +56,7 @@ auto main(int argc, char** argv) -> int {
 
               radius: 6
 
-              color: (mousePressed || spacePressed) ? "#65001b" : "#2266aa"
+              color: (mousePressed || spacePressed) ? "#aa2266" : "#2266aa"
 
               focus: true
 
