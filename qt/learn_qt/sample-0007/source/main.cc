@@ -42,6 +42,11 @@ auto main(int argc, char** argv) -> int {
 
             Rectangle {
 
+              id: button
+
+              property bool spacePressed: false
+              property bool mousePressed: mouseArea.pressed
+
               objectName: "button"
 
               anchors.horizontalCenter: parent.horizontalCenter
@@ -51,7 +56,7 @@ auto main(int argc, char** argv) -> int {
 
               radius: 6
 
-              color: "#2266aa"
+              color: (mousePressed || spacePressed) ? "#65001b" : "#2266aa"
 
               focus: true
 
@@ -69,12 +74,24 @@ auto main(int argc, char** argv) -> int {
 
               MouseArea {
 
+                id: mouseArea
+
                 anchors.fill: parent
 
                 onClicked: main.status = "Клик мышью!"
               }
 
-              Keys.onSpacePressed: main.status = "Нажат пробел!"
+              Keys.onSpacePressed: ( ) => {
+                button.spacePressed = true
+                main.status = "Нажат пробел!"
+              }
+
+              Keys.onReleased: (event) => {
+                if (event.key == Qt.Key_Space) {
+                  button.spacePressed = false
+                  event.accepted = true
+                }
+              }
             }
 
             Text {

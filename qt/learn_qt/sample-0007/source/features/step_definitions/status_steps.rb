@@ -28,15 +28,23 @@ end
 
 Step "я кликаю по кнопке" do
 
-  @client.call('mouseClick', 'window/main/button')
+  @client.call('mousePress', 'window/main/button')
+  @client.call('wait', 0)
 
+  sleep(0.1)
+
+  @client.call('mouseRelease', 'window/main/button')
   @client.call('wait', 0)
 end
 
 Step "я нажимаю пробел на кнопке" do
 
-  @client.call('enterKey', 'window/main/button', 0x20, 0)
+  @client.call('keyPress', 'window/main/button', 0x20, 0)
+  @client.call('wait', 0)
 
+  sleep(0.1)
+
+  @client.call('keyRelease', 'window/main/button', 0x20, 0)
   @client.call('wait', 0)
 end
 
