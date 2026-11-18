@@ -38,25 +38,27 @@ if(BUILD_TESTING)
     REQUIRED
   )
 
-  add_executable(status-test)
+  add_executable(status-provider-test)
 
-  target_compile_features(status-test PRIVATE cxx_std_23)
+  set_target_properties(status-provider-test PROPERTIES AUTOMOC ON)
 
-  target_sources(status-test PRIVATE status_test.cc)
+  target_compile_features(status-provider-test PRIVATE cxx_std_23)
 
-  target_link_libraries(status-test PRIVATE Qt::Test)
+  target_sources(status-provider-test PRIVATE status_provider_test.cc status_provider.cc)
 
-  set_target_properties(status-test PROPERTIES AUTOMOC ON)
+  target_link_libraries(status-provider-test PRIVATE Qt::Test)
 
-  add_test(NAME status COMMAND status-test)
+  add_test(NAME status-provider COMMAND status-provider-test)
 
 endif( )
 
 add_executable(sample-0007)
 
+set_target_properties(sample-0007 PROPERTIES AUTOMOC ON)
+
 target_compile_features(sample-0007 PRIVATE cxx_std_23)
 
-target_sources(sample-0007 PRIVATE main.cc)
+target_sources(sample-0007 PRIVATE main.cc status_provider.cc)
 
 target_link_libraries(
   sample-0007
@@ -67,3 +69,4 @@ target_link_libraries(
     Qt::Quick
     Spix::QtQuick
 )
+

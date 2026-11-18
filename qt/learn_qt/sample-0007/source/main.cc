@@ -2,6 +2,8 @@
 #include <QGuiApplication>
 #include <QQuickView>
 #include <QQmlComponent>
+#include <QVariantMap>
+#include <QVariant>
 #include <QByteArray>
 #include <QUrl>
 #include <QDebug>
@@ -9,9 +11,12 @@
 #include <Spix/AnyRpcServer.h>
 #include <Spix/QtQmlBot.h>
 
+#include "status_provider.hh"
+
 auto main(int argc, char** argv) -> int {
 
   auto app { QGuiApplication { argc, argv } };
+  auto statusProvider { StatusProvider { } };
   auto view { QQuickView { } };
   auto component { QQmlComponent { view.engine( ) } };
   auto url { QUrl { } };
@@ -27,7 +32,9 @@ auto main(int argc, char** argv) -> int {
 
           objectName: "main"
 
-          property string status: "Готов!"
+          required property QtObject statusProvider
+
+          property string status: main.statusProvider.ready( )
 
           width: 800
           height: 600
@@ -78,12 +85,12 @@ auto main(int argc, char** argv) -> int {
 
                 anchors.fill: parent
 
-                onPressed: main.status = "Клик мышью!"
+                onPressed: main.status = main.statusProvider.mousePressed( )
               }
 
               Keys.onSpacePressed: ( ) => {
                 button.spacePressed = true
-                main.status = "Нажат пробел!"
+                main.status = main.statusProvider.spacePressed( )
               }
 
               Keys.onReleased: (event) => {
@@ -113,7 +120,15 @@ auto main(int argc, char** argv) -> int {
 
   component.setData(data, url);
 
-  auto root { component.create( ) };
+  auto initialProperties {
+    QVariantMap {
+      { "statusProvider", QVariant::fromValue(&statusProvider) }
+    }
+  };
+
+  auto root {
+    component.createWithInitialProperties(initialProperties)
+  };
 
   if (root == nullptr) {
     qWarning( ) << component.errors( );
