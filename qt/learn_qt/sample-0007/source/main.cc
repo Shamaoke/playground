@@ -7,6 +7,7 @@
 #include <QByteArray>
 #include <QUrl>
 #include <QDebug>
+#include <QtQml/qqml.h>
 
 #include <Spix/AnyRpcServer.h>
 #include <Spix/QtQmlBot.h>
@@ -16,6 +17,14 @@
 auto main(int argc, char** argv) -> int {
 
   auto app { QGuiApplication { argc, argv } };
+
+  qmlRegisterUncreatableType<StatusProvider>(
+    "Sample_0007",
+    1, 0,
+    "StatusProvider",
+    QStringLiteral("StatusProvider cannot be created from QML.")
+  );
+
   auto statusProvider { StatusProvider { } };
   auto view { QQuickView { } };
   auto component { QQmlComponent { view.engine( ) } };
@@ -26,13 +35,15 @@ auto main(int argc, char** argv) -> int {
       R"qml(
         import QtQuick
 
+        import Sample_0007 1.0
+
         Rectangle {
 
           id: main
 
           objectName: "main"
 
-          required property QtObject statusProvider
+          required property StatusProvider statusProvider
 
           property string status: main.statusProvider.ready( )
 
