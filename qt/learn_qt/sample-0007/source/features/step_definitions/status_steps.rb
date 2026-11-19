@@ -1,7 +1,7 @@
 
 Step "приложение запущено" do
 
-  server_path = File.expand_path('../../../build/sample-0007', __dir__)
+  server_path = File.expand_path('../../../build-test/sample-0007', __dir__)
 
   @server_pid = Process.spawn(server_path, err: File::NULL, out: File::NULL)
 

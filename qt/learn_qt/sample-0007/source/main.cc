@@ -9,8 +9,10 @@
 #include <QDebug>
 #include <QtQml/qqml.h>
 
+#if defined(BUILD_TESTING)
 #include <Spix/AnyRpcServer.h>
 #include <Spix/QtQmlBot.h>
+#endif
 
 #include "status_provider.hh"
 
@@ -151,10 +153,12 @@ auto main(int argc, char** argv) -> int {
   view.resize(800, 600);
   view.show( );
 
+#if defined(BUILD_TESTING)
   auto bot { spix::QtQmlBot { } };
   auto server { spix::AnyRpcServer { 9000 } };
 
   bot.runTestServer(server);
+#endif
 
   auto result { app.exec( ) };
 

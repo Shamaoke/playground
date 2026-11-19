@@ -1,6 +1,6 @@
 /.cache/
 /bin/
-/build/
+/build-*/
 /vendor/source/
 /vendor/build/
 /vendor/bundle/

@@ -16,19 +16,20 @@ find_package(
   REQUIRED
 )
 
-find_package(
-  Spix
-
-  CONFIG
-
-  COMPONENTS
-    Core
-    QtQuick
-
-  REQUIRED
-)
-
 if(BUILD_TESTING)
+
+  find_package(
+    Spix
+
+    CONFIG
+
+    COMPONENTS
+      Core
+      QtQuick
+
+    REQUIRED
+  )
+
   find_package(
     Qt6 6.12
 
@@ -67,6 +68,13 @@ target_link_libraries(
     Qt::Gui
     Qt::Qml
     Qt::Quick
-    Spix::QtQuick
 )
+
+if(BUILD_TESTING)
+
+  target_link_libraries(sample-0007 PRIVATE Spix::QtQuick)
+
+  target_compile_definitions(sample-0007 PRIVATE BUILD_TESTING)
+
+endif( )
 
