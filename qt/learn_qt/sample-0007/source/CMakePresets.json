@@ -18,7 +18,24 @@
         "CMAKE_PREFIX_PATH": "${sourceDir}/../vendor/install"
       }
     },
-
+    {
+      "name": "release",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/../build-release",
+      "cacheVariables": {
+        "CMAKE_CXX_STANDARD": "23",
+        "CMAKE_CXX_STANDARD_REQUIRED": true,
+        "CMAKE_CXX_EXTENSIONS": false,
+        "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_BUILD_TYPE": "MinSizeRel",
+        "CMAKE_CXX_FLAGS_MINSIZEREL": "-Oz -DNDEBUG",
+        "CMAKE_EXE_LINKER_FLAGS_MINSIZEREL": "LINKER:--strip-all",
+        "CMAKE_INTERPROCEDURAL_OPTIMIZATION_MINSIZEREL": true,
+        "BUILD_TESTING": false,
+        "CMAKE_EXPORT_COMPILE_COMMANDS": false,
+        "CMAKE_PREFIX_PATH": "${sourceDir}/../vendor/install"
+      }
+    },
     {
       "name": "test",
       "inherits": "debug",
@@ -35,6 +52,11 @@
     {
       "name": "debug",
       "configurePreset": "debug"
+    },
+    {
+
+      "name": "release",
+      "configurePreset": "release"
     },
     {
       "name": "test",
